@@ -26,6 +26,8 @@ public class Zed {
         org.newdawn.slick.BasicGame game = new org.newdawn.slick.BasicGame("zed") {
             Image link_down_bot;
             Image link_down_top;
+            
+            Zed_Level test;
 
             @Override
             public void init(GameContainer gc) throws SlickException {
@@ -33,6 +35,8 @@ public class Zed {
                         false, Image.FILTER_NEAREST);
                 link_down_top = new Image("images/link-down-top.png",
                         false, Image.FILTER_NEAREST);
+                
+                test = new Zed_Level("levels/test.lvl");
                 // TODO: code initialization
             }
 
@@ -43,6 +47,8 @@ public class Zed {
 
             @Override
             public void render(GameContainer gc, Graphics g) throws SlickException {
+                
+                test.display(gc, g);
                 
                 g.drawImage(link_down_bot, 50, 100);
                 g.drawImage(link_down_top, 50, 84);

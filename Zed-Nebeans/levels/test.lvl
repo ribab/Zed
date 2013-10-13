@@ -1,0 +1,13 @@
+width:4
+height:4
+xpos:200
+ypos:200
+scale:4
+
+a = images/link-down-bot.png
+b = images/link-down-top.png
+
+baab
+abab
+baba
+abba
