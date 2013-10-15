@@ -1,1 +1,0 @@
-This directory was made using Netbeans and might not work with Eclipse, but still has the Slick2d library files that might be useful
