@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/lib/slick/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/jinput.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/jinput-2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zed/lib/natives/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/lwjgl_util-2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/lwjgl-2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ribab/Documents/GitHub/Zed/Zed-Eclipse/lib/Slick2D/slick.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
