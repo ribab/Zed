@@ -27,7 +27,7 @@ public class Zed {
             Image link_down_bot;
             Image link_down_top;
             
-            Zed_Level test;
+            Level_Manager test;
 
             @Override
             public void init(GameContainer gc) throws SlickException {
@@ -36,7 +36,7 @@ public class Zed {
                 link_down_top = new Image("images/link-down-top.png",
                         false, Image.FILTER_NEAREST);
                 
-                test = new Zed_Level("levels/test.lvl");
+                test = new Level_Manager("levels/test.lvl");
                 // TODO: code initialization
             }
 

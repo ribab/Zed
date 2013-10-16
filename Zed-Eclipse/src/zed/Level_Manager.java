@@ -18,7 +18,7 @@ import org.newdawn.slick.SlickException;
  * @author ribab
  */
 
-public class Zed_Level {   
+public class Level_Manager {   
     private static final int MAX_WIDTH = 100;
     private static final int MAX_HEIGHT = 100;
     private static final int TILE_SIZE = 16;
@@ -31,7 +31,7 @@ public class Zed_Level {
     Image[][] tile = new Image[MAX_HEIGHT][MAX_WIDTH];
     
     // Instantiate Level
-    public Zed_Level(Image[][] newtile,
+    public Level_Manager(Image[][] newtile,
             int newxpos, int newypos,
             int newwidth, int newheight,
             int newscale){
@@ -49,7 +49,7 @@ public class Zed_Level {
         height = newheight;
         scale = newscale;
     }
-    public Zed_Level(String filepath){
+    public Level_Manager(String filepath){
         
         BufferedReader br = null;
         
@@ -115,7 +115,7 @@ public class Zed_Level {
                             }
                         } catch (SlickException ex) {
                             ex.printStackTrace();
-                            Logger.getLogger(Zed_Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                            Logger.getLogger(Level_Manager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                         }
                     }
                     cur_y++;
