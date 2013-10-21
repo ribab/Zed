@@ -42,7 +42,7 @@ public class Zed {
 
             @Override
             public void update(GameContainer gc, int i) throws SlickException {
-                // TODO: code update
+                // TODO: call character input functions
             }
 
             @Override

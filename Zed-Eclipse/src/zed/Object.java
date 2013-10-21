@@ -23,21 +23,45 @@ public class Object {
     int Y_Position;
     Image[][] Frames_List_Bot;
     Image[][] Frames_List_Top;
-    int Frames_Count;
+    int State_Count;
     int Frame_Count[];
-    int Current_Frames;
-    int Current_Frame;
-    boolean Visible;
+    boolean Top_Visible;
+    boolean Bot_Visible;
+    
+    int Frame_State;
+    int Frame_Top;
+    int Frame_Bot;
         
+    // Constructor for just bot_frame
     public Object(int x_position, int y_position,
-            String frame[][], int frames_count,
-            int frame_count[], int current_frames,
-            boolean visible){
+            String bot_frame[][], int frames_count,
+            int frame_count[],
+            boolean bot_visible){
         
         Init(x_position, y_position,
-            frame, frames_count,
-            frame_count, current_frames,
-            visible);
+            bot_frame, frames_count,
+            frame_count,
+            false, bot_visible);
+        
+        Frame_State = 0;
+        Frame_Top = 0;
+        Frame_Bot = 0;
+    }
+    
+    // Constructor for bot_frame and top_frame
+    public Object(int x_position, int y_position,
+            String bot_frame[][], String top_frame[][],
+            int frames_count, int frame_count[],
+            boolean top_visible, boolean bot_visible){
+        
+        Init(x_position, y_position,
+            bot_frame, top_frame,
+            frames_count, frame_count,
+            top_visible, bot_visible);
+        
+        Frame_State = 0;
+        Frame_Top = 0;
+        Frame_Bot = 0;
     }
     
     public Object(){
@@ -45,13 +69,18 @@ public class Object {
         int[] temp = new int[1];
         temp[0] = 0;
         
-        Init(0, 0, null, 0, temp, 0, false);
+        Init(0, 0, null, 0, temp, false, false);
+        
+        Frame_State = 0;
+        Frame_Top = 0;
+        Frame_Bot = 0;
     }
     
+    // Init for only bot frame
     public void Init(int x_position, int y_position,
             String frame[][], int frames_count,
-            int frame_count[], int current_frames,
-            boolean visible){
+            int frame_count[],
+            boolean top_visible, boolean bot_visible){
         
         X_Position = x_position;
         Y_Position = y_position;
@@ -68,21 +97,27 @@ public class Object {
             }
             
         }
-        Current_Frames = current_frames;
-        Current_Frame = 0;
-        Visible = visible;
+        Top_Visible = top_visible;
+        Bot_Visible = bot_visible;
+        
+        Frame_State = 0;
+        Frame_Top = 0;
+        Frame_Bot = 0;
     }
     
+    // Init for both top frame and bot frame
     public void Init(int x_position, int y_position,
             String frame[][], String frame_top[][], int frames_count,
-            int frame_count[], int current_frames,
-            boolean visible){
+            int frame_count[],
+            boolean top_visible, boolean bot_visible){
         
+        // call init for bot frame
         Init(x_position, y_position,
             frame, frames_count,
-            frame_count, current_frames,
-            visible);
+            frame_count,
+            top_visible, bot_visible);
         
+        // add in top frame
         for (int i = 0; i < frames_count; i++)
         {
             for (int j = 0; j < frame_count[i]; j++)
@@ -120,27 +155,66 @@ public class Object {
                 Y_Position % zoom == 0);
     }
     
-    public void Render_Bot(GameContainer gc,
-            Graphics g, int zoom){
+    public void Render_Bot(int zoom,
+            GameContainer gc, Graphics g){
         
-        g.drawImage(Frames_List_Bot[Current_Frames][Current_Frame],
-                X_Position,
-                Y_Position,
-                X_Position + 16*zoom,
-                Y_Position + 16*zoom,
-                0, 0,
-                16, 16);
+        if (Frame_Top >= Frame_Count[Frame_State])
+        {
+            Frame_Top = 0;
+        }
+        if (Bot_Visible)
+        {
+            if (Frame_Bot < Frame_Count[Frame_State] && Frame_Bot >= 0)
+            {
+                g.drawImage(Frames_List_Bot[Frame_State][Frame_Bot],
+                        X_Position,
+                        Y_Position,
+                        X_Position + 16*zoom,
+                        Y_Position + 16*zoom,
+                        0, 0,
+                        16, 16);
+            }
+        }
+        Frame_Bot++;
     }
     
-    public void Render_Top(GameContainer gc,
-            Graphics g, int zoom){
+    public void Render_Top(int zoom,
+            GameContainer gc, Graphics g){
         
-        g.drawImage(Frames_List_Top[Current_Frames][Current_Frame],
-                X_Position,
-                Y_Position - 16*zoom,
-                X_Position + 16*zoom,
-                Y_Position,
-                0, 0,
-                16, 16);
+        if (Frame_Top >= Frame_Count[Frame_State])
+        {
+            Frame_Top = 0;
+        }
+        // render corrent frame
+        if (Top_Visible)
+        {
+            if (Frame_Top < Frame_Count[Frame_State]
+                    && Frame_Top >= 0)
+            {
+                g.drawImage(Frames_List_Top[Frame_State][Frame_Top],
+                        X_Position,
+                        Y_Position,
+                        X_Position + 16*zoom,
+                        Y_Position + 16*zoom,
+                        0, 0,
+                        16, 16);
+            }
+        }
+        Frame_Top++;
+    }
+    
+    public void Change_Frame_State(int new_state){
+        
+        if (new_state >= 0 && new_state < State_Count)
+        {
+            Frame_State = new_state;
+            Frame_Bot = 0;
+            Frame_Top = 0;
+        }
+    }
+    
+    public int Get_Frame_State(){
+        
+        return Frame_State;
     }
 }

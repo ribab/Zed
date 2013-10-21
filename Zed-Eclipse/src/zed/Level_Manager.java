@@ -18,7 +18,10 @@ import org.newdawn.slick.SlickException;
  * @author ribab
  */
 
+// TODO: Edit Level Manager
+
 public class Level_Manager {   
+    
     private static final int MAX_WIDTH = 100;
     private static final int MAX_HEIGHT = 100;
     private static final int TILE_SIZE = 16;
@@ -28,28 +31,12 @@ public class Level_Manager {
     int xpos;
     int ypos;
     int scale;
-    Image[][] tile = new Image[MAX_HEIGHT][MAX_WIDTH];
+    Image[][] bot_tile = new Image[MAX_HEIGHT][MAX_WIDTH];
+    
+    Player_Character player;
     
     // Instantiate Level
-    public Level_Manager(Image[][] newtile,
-            int newxpos, int newypos,
-            int newwidth, int newheight,
-            int newscale){
-        
-        for (int i = 0; i < newwidth; i++)
-        {
-            for (int j = 0; j < newheight; j++)
-            {
-                tile[i][j].equals(newtile[i][j]);
-            }
-        }
-        xpos = newxpos;
-        ypos = newypos;
-        width = newwidth;
-        height = newheight;
-        scale = newscale;
-    }
-    public Level_Manager(String filepath){
+    public Level_Manager(String filepath){ // TODO: design lvl file and then make this to parse that file
         
         BufferedReader br = null;
         
@@ -109,7 +96,7 @@ public class Level_Manager {
                             }
                             if (i < MAX_WIDTH && cur_y < MAX_HEIGHT && loc < 256)
                             {
-                                tile[i][cur_y] = new Image(
+                                bot_tile[i][cur_y] = new Image(
                                         file_files[loc],
                                         false, Image.FILTER_NEAREST);
                             }
@@ -156,7 +143,7 @@ public class Level_Manager {
     }
     public void settile(Image newtile, int x, int y){
         
-        tile[x][y].equals(newtile);
+        bot_tile[x][y].equals(newtile);
     }
     
     public void display(GameContainer gc, Graphics g){
@@ -165,7 +152,7 @@ public class Level_Manager {
         {
             for (int j = 0; j < height; j++)
             {
-                g.drawImage(tile[i][j],
+                g.drawImage(bot_tile[i][j],
                         xpos + i*TILE_SIZE*scale,
                         ypos + j*TILE_SIZE*scale,
                         xpos + i*TILE_SIZE*scale + TILE_SIZE*scale,
