@@ -1,15 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package zed;
 
+// Slick for input
 import org.newdawn.slick.Input;
 import org.newdawn.slick.GameContainer;
 
 /**
  *
- * @author ribab
+ * @author Richard Barella Jr
+ * @author Adam Bennett
+ * @author Ryan Slyter
  */
 public class Player_Character extends Character {
     
@@ -22,12 +22,20 @@ public class Player_Character extends Character {
     private static final int FRAME_STATE_LEFT_WALK = 7;
     private static final int FRAME_STATE_RIGHT_WALK = 8;
     
-    public void Update(boolean collided, GameContainer gc){
-        Input input = gc.getInput();
+    // Replaces the Update function in Character.java
+    // Updates the Player_Character
+    public void Update(Object collision_objects[], GameContainer gc){
+        
+        Input input = gc.getInput(); // get the current input
+        
+        boolean collided = Collision(collision_objects); // Find out if Player will collide
+        
         if (!collided)
         {
-            Update_Position();
+            Update_Position(); // Updates the position
         }
+        
+        // Replace Artificial Intelligence with user input
         boolean left = false;
         boolean right = false;
         boolean up = false;

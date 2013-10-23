@@ -4,10 +4,15 @@
  */
 package zed;
 
+// Java for file reading
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+// Java for exception handling
 import java.util.logging.Logger;
+
+// Slick for drawing to screen and input
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,7 +20,9 @@ import org.newdawn.slick.SlickException;
 
 /**
  *
- * @author ribab
+ * @author Richard Barella Jr.
+ * @author Adam Bennett
+ * @author Ryan Slyter
  */
 
 // TODO: Edit Level Manager

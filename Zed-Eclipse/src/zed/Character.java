@@ -1,12 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package zed;
 
-
+/*
+ * @author Richard Barella Jr.
+ * @author Adam Bennett
+ * @author Ryan Slyter
+ */
 public class Character extends Object {
     
+    // animations are defined for Character
     private static final int FRAME_STATE_DOWN = 0;
     private static final int FRAME_STATE_UP = 1;
     private static final int FRAME_STATE_LEFT = 2;
@@ -16,14 +18,15 @@ public class Character extends Object {
     private static final int FRAME_STATE_LEFT_WALK = 7;
     private static final int FRAME_STATE_RIGHT_WALK = 8;
     
-    int Health;
+    int Health; // current health for Character
+    int Max_Health; // maximum health for Character
     float Speed; // tiles per second
-    int X_Movement;
-    int Y_Movement;
+    int X_Movement; // {-1, 0, 1} tells movement direction in x-axis
+    int Y_Movement; // {-1, 0, 1} tells movement direction in y-axis
     
-    long last_move; // time of last update
+    long last_move; // time in nanoseconds of last movement
     
-    int AI_State;
+    int AI_State; // For use in Artificial_Intelligence function
     
     public Character(int x_position, int y_position,
             String[][] frame, int frames_count,
@@ -31,31 +34,44 @@ public class Character extends Object {
             boolean top_visible, boolean bot_visible,
             int health, float speed,
             int x_movement, int y_movement) {
+        
+        // Constructs the "Object" part of Character
         super(x_position, y_position, frame, frames_count,
                 frame_count, bot_visible);
         
+        // Initialze health
         Health = health;
+        Max_Health = health;
+        
+        // Initialize movement parameters
         Speed = speed;
         X_Movement = x_movement;
         Y_Movement = y_movement;
         
+        // Initialize movement
         last_move = System.nanoTime();
         
+        // Initialize Artificail Intelligence
         AI_State = 0;
     }
 
+    // Default Constructor
     public Character() {
         String[][] frame_top = new String[4][5];
         String[][] frame_bot = new String[4][5];
         Init(0, 0, frame_bot, frame_top, false, false,
                 0, 0, 0, 0);
         Health = 0;
+        Max_Health = 0;
         Speed = 0;
         X_Movement = 0;
         last_move = System.nanoTime();
     }
     
-    // frames cannot have array size less than 4x5
+    // frames cannot have array size less than 4x5 because these
+    // are the frames that Character is using.
+    
+    // Initialization for 16x32 Character
     public void Init(int x_position, int y_position,
             String[][] frame_bot, String[][] frame_top, 
             boolean top_visible, boolean bot_visible,
@@ -82,6 +98,8 @@ public class Character extends Object {
         
         last_move = System.nanoTime();
     }
+    
+    // Initialization for 16x16 Character
     public void Init(int x_position, int y_position,
             String[][] frame_bot,
             int current_frames, boolean top_visible,
@@ -110,7 +128,12 @@ public class Character extends Object {
         last_move = System.nanoTime();
     }
     
-    public void Update(boolean collided){
+    // Updates the Character
+    public void Update(Object collision_objects[]){
+        
+        Update_Frame_State();
+        
+        boolean collided = Collision(collision_objects);
         
         if (!collided)
         {
@@ -119,7 +142,16 @@ public class Character extends Object {
         Artificial_Intelligence(collided);
     }
     
-    public void Update_Frame_State(){
+    // can tell if Character will collide with another object or not.
+    boolean Collision(Object collision_objects[]){
+        
+        // TODO: write collision code
+        
+        return false;// TODO: return if collided or not
+    }
+    
+    // updates the current animation being played based on current movement
+    void Update_Frame_State(){
         
         if (Y_Movement == 1)
             Frame_State = FRAME_STATE_DOWN_WALK;
@@ -149,7 +181,10 @@ public class Character extends Object {
         }
     }
     
-    public void Update_Position(){
+    // Updates current position based on movement
+    void Update_Position(){
+        
+        // Move Diagonally
         if (X_Position != 0 && Y_Position != 0)
         {
             if (System.nanoTime() >= last_move
@@ -161,6 +196,8 @@ public class Character extends Object {
                 last_move = System.nanoTime();
             }
         }
+        
+        // Move vertically or horizontally
         else 
         {
             if (System.nanoTime() >= last_move
@@ -174,18 +211,38 @@ public class Character extends Object {
         }
     }
     
+    // Get the current health of the character
     public int Get_Health(){
         
         return Health;
     }
+    
+    // Decriment the current health
+    public void Decriment_Health(){
+        
+        Health--;
+    }
+    
+    // Get the maximum health of the character
+    public int Get_Max_Health(){
+        
+        return Max_Health;
+    }
+    
+    // Get the speed (in tiles per second) of the character
     public float Get_Speed(){
         
         return Speed;
     }
+    
+    // Get the current movement on the x axis of the character
+    // can be {-1, 0, 1}
     public int Get_X_Movement(){
         
         return X_Movement;
     }
+    // Get the current movement on the y axis of the character
+    // can be {-1, 0, 1}
     public int Get_Y_Movement(){
         
         return Y_Movement;
