@@ -4,12 +4,14 @@ package zed;
 // Java for exceptions
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.newdawn.slick.Animation;
 
 // Slick for drawing to the screen
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 /**
  *
@@ -25,122 +27,59 @@ import org.newdawn.slick.SlickException;
 // objects and can also print itself to the screen.
 public class Object {
     
-    private static final int ANIMATION_SPEED = 10;
+    private static final int ANIMATION_SPEED = 200;
     
     // Holds the pixel-location of top-left of Object
     int X_Position;
     int Y_Position;
     
-    // Holds the image files for the object.
-    Image[][] Frames_List_Bot; // Image files for the bottom-half of the character.
-    Image[][] Frames_List_Top; // Image files for the top-half of the character.
-    // The separation is for draw-order so an object can stand in front of another object.
+    // Holds the animations for the object.
+    Animation[] Animation_List;
+    Animation Current_Animation;
     
-    // Holds the number of animations and the number of image files used in each animation.
-    int State_Count;
-    int Frame_Count[];
+    int Sprite_Shift;
     
     // Holds the visibility of Object
-    boolean Top_Visible; // top visibility
-    boolean Bot_Visible; // bottom visibility
-    
-    // Locates the current image being displayed
-    int Frame_State; // which animation to play
-    int Frame_Top; // which frame in animation to display for top
-    int Frame_Bot; // which frame in animation to display for bottom
-        
-    // Constructor for just bottom frame
-    public Object(int x_position, int y_position,
-            String bot_frame[][], int frames_count,
-            int frame_count[],
-            boolean bot_visible){
-        
-        Init(x_position, y_position,
-            bot_frame, frames_count,
-            frame_count,
-            false, bot_visible);
-        
-        Frame_State = 0;
-        Frame_Top = 0;
-        Frame_Bot = 0;
-    }
-    
-    // Constructor for bottom frame and top frame
-    public Object(int x_position, int y_position,
-            String bot_frame[][], String top_frame[][],
-            int frames_count, int frame_count[],
-            boolean top_visible, boolean bot_visible){
-        
-        Init(x_position, y_position,
-            bot_frame, top_frame,
-            frames_count, frame_count,
-            top_visible, bot_visible);
-    }
+    boolean Visible;
     
     // Default constructor
     public Object(){
         
-        int[] temp = new int[1];
-        temp[0] = 0;
+        Init(0, 0, false, 0, 1, null, null, null, 0);
+    }
+    
+    // Specific Constructor
+    public Object(int tile_x, int tile_y, boolean visible,
+            int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
+            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
+            int current_animation){
         
-        Init(0, 0, null, 0, temp, false, false);
+        this.Init(tile_x, tile_y, visible, sprite_shift, tilesize, sprites,
+                spritesheet_index, animation_length, current_animation);
     }
     
     // Init for only bottom frame
-    public void Init(int x_position, int y_position,
-            String frame[][], int frames_count,
-            int frame_count[],
-            boolean top_visible, boolean bot_visible){
+    public void Init(int tile_x, int tile_y, boolean visible,
+            int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
+            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
+            int current_animation){
         
-        X_Position = x_position;
-        Y_Position = y_position;
-        for (int i = 0; i < frames_count; i++)
+        X_Position = tile_x*tilesize;
+        Y_Position = tile_y*tilesize;
+        
+        Visible = visible;
+        
+        Sprite_Shift = sprite_shift;
+        
+        for (int i = 0; i < spritesheet_index.length; i++)
         {
-            for (int j = 0; j < frame_count[i]; j++)
-            {
-                try {
-                    Frames_List_Bot[i][j] = new Image(frame[i][j],
-                            false, Image.FILTER_NEAREST);
-                } catch (SlickException ex) {
-                    Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
+            Animation_List[i] = new Animation(sprites,
+                    0,                       spritesheet_index[i], // first sprite
+                    animation_length[i] - 1, spritesheet_index[i], // last sprite
+                    false, // horizontalScan true?
+                    ANIMATION_SPEED, true /*autoupdate?*/);
         }
-        Top_Visible = top_visible;
-        Bot_Visible = bot_visible;
-        
-        Frame_State = 0;
-        Frame_Top = 0;
-        Frame_Bot = 0;
-    }
-    
-    // Init for both top frame and bot frame
-    public void Init(int x_position, int y_position,
-            String frame[][], String frame_top[][], int frames_count,
-            int frame_count[],
-            boolean top_visible, boolean bot_visible){
-        
-        // call init for bot frame
-        Init(x_position, y_position,
-            frame, frames_count,
-            frame_count,
-            top_visible, bot_visible);
-        
-        // add in top frame
-        for (int i = 0; i < frames_count; i++)
-        {
-            for (int j = 0; j < frame_count[i]; j++)
-            {
-                try {
-                    Frames_List_Top[i][j] = new Image(frame_top[i][j],
-                            false, Image.FILTER_NEAREST);
-                } catch (SlickException ex) {
-                    Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-        }
+        Current_Animation = Animation_List[current_animation];
     }
     
     // Change the position of Object
@@ -170,75 +109,37 @@ public class Object {
                 Y_Position % zoom == 0);
     }
     
-    // Renders the current bottom image
-    // must give zoom value, and location of top-left of tiles
-    public void Render_Bot(int zoom,
-            int current_tile_x, int current_tile_y,
+    public void Render(int zoom,
+            int current_tile_x, int current_tile_y, // position of tiles
             GameContainer gc, Graphics g){
         
-        if (Frame_Top >= Frame_Count[Frame_State])
+        if (Visible)
         {
-            Frame_Top = 0; // Reset the current frame being displayed
+            Current_Animation.draw(
+                    X_Position*zoom + current_tile_x,
+                    Y_Position*zoom + current_tile_y,
+                    16*zoom, 32*zoom);
         }
-        // render current frame
-        if (Bot_Visible)
-        {
-            if (Frame_Bot < Frame_Count[Frame_State] && Frame_Bot >= 0)
-            {
-                g.drawImage(Frames_List_Bot[Frame_State][Frame_Bot],
-                        X_Position + current_tile_x,
-                        Y_Position + current_tile_y,
-                        X_Position + current_tile_x + 16*zoom,
-                        Y_Position + current_tile_y + 16*zoom,
-                        0, 0,
-                        16, 16);
-            }
-        }
-        Frame_Bot++; // Incriment the current frame being displayed
     }
-    
-    // renders the current top image
-    // must give zoom value and locaiton of top-left of tiles
-    public void Render_Top(int zoom, 
-            int current_tile_x, int current_tile_y,
-            GameContainer gc, Graphics g){
-        
-        if (Frame_Top >= Frame_Count[Frame_State])
-        {
-            Frame_Top = 0; // Reset the current frame being displayed
-        }
-        // render corrent frame
-        if (Top_Visible)
-        {
-            if (Frame_Top < Frame_Count[Frame_State]
-                    && Frame_Top >= 0)
-            {
-                g.drawImage(Frames_List_Top[Frame_State][Frame_Top],
-                        X_Position + current_tile_x,
-                        Y_Position + current_tile_y,
-                        X_Position + current_tile_x + 16*zoom,
-                        Y_Position + current_tile_y + 16*zoom,
-                        0, 0,
-                        16, 16);
-            }
-        }
-        Frame_Top++; // Incriment the current frame being displayed
-    }
-    
     // Play a different animation for the object
-    public void Change_Frame_State(int new_state){
+    public void Change_Animation(int new_animation){
         
-        if (new_state >= 0 && new_state < State_Count)
-        {
-            Frame_State = new_state;
-            Frame_Bot = 0;
-            Frame_Top = 0;
-        }
+        if (new_animation < Animation_List.length
+                && new_animation >= 0)
+            Current_Animation = Animation_List[new_animation];
     }
     
     // Get the number for the current animation being played
+    // has an error if current animation can't be found.
     public int Get_Frame_State(){
         
-        return Frame_State;
+        for (int i = 0; i < Animation_List.length; i++)
+        {
+            if (Current_Animation == Animation_List[i])
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }

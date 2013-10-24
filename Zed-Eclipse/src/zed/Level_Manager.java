@@ -17,6 +17,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 /**
  *
@@ -29,20 +30,35 @@ import org.newdawn.slick.SlickException;
 
 public class Level_Manager {   
     
-    private static final int MAX_WIDTH = 100;
+    private static final int MAX_WIDTH = 100; // TODO: might not need this
     private static final int MAX_HEIGHT = 100;
     private static final int TILE_SIZE = 16;
     
-    int width;
-    int height;
-    int xpos;
-    int ypos;
-    int scale;
-    Image[][] bot_tile = new Image[MAX_HEIGHT][MAX_WIDTH];
+    private SpriteSheet tileset; // data for tiles
+    private SpriteSheet character_sprites; // data for character sprites
     
-    Player_Character player;
+    int width; // Number of tile columns
+    int height; // Number of tile rows
+    int xpos; // x position of top-left of tiles
+    int ypos; // y position of top-left of tiles
+    int scale; // By how many times is the pixels larger?
+    int[][] bot_tile_x; // tileset x index of bot_tile[x][y]
+    int[][] bot_tile_y; // tileset y index of bot_tile[x][y]
+    int[][] top_tile_x; // tileset x index of top_tile[x][y]
+    int[][] top_tile_y; // tileset y index of top_tile[x][y]
     
-    // Instantiate Level
+    Player_Character player; // data for player character
+    
+    // Default instantiation for Level_Manager
+    public Level_Manager() throws SlickException{
+        tileset = new SpriteSheet("images/tileset.png", 16, 16);
+        character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
+        
+        player = new Player_Character(/*todo:initialization parameters*/);
+        
+    }
+    
+    // Instantiate Level_Manager with file
     public Level_Manager(String filepath){ // TODO: design lvl file and then make this to parse that file
         
         BufferedReader br = null;
@@ -65,55 +81,7 @@ public class Level_Manager {
             
             while ((cur_line = br.readLine()) != null)
             {
-                if (cur_line.contains(" = "))
-                {
-                    file_files[file_num] = cur_line.substring(4);
-                    file_chars[file_num] = cur_line.charAt(0);
-                    file_num++;
-                }
-                else if (cur_line.trim().startsWith("width:"))
-                {
-                    width = Integer.parseInt(cur_line.trim().substring(6).trim());
-                }
-                else if (cur_line.trim().startsWith("height:"))
-                {
-                    height = Integer.parseInt(cur_line.trim().substring(7).trim());
-                }
-                else if (cur_line.trim().startsWith("xpos:"))
-                {
-                    xpos = Integer.parseInt(cur_line.trim().substring(5).trim());
-                }
-                else if (cur_line.trim().startsWith("ypos:"))
-                {
-                    ypos = Integer.parseInt(cur_line.trim().substring(5).trim());
-                }
-                else if (cur_line.trim().startsWith("scale:"))
-                {
-                    scale = Integer.parseInt(cur_line.trim().substring(6).trim());
-                }
-                else if (!cur_line.trim().isEmpty())
-                {
-                    for (int i = 0; i < cur_line.trim().length(); i++)
-                    {
-                        try {
-                            int loc = 0;
-                            while (loc < 256 && file_chars[loc] != cur_line.charAt(i))
-                            {
-                                loc++;
-                            }
-                            if (i < MAX_WIDTH && cur_y < MAX_HEIGHT && loc < 256)
-                            {
-                                bot_tile[i][cur_y] = new Image(
-                                        file_files[loc],
-                                        false, Image.FILTER_NEAREST);
-                            }
-                        } catch (SlickException ex) {
-                            ex.printStackTrace();
-                            Logger.getLogger(Level_Manager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                        }
-                    }
-                    cur_y++;
-                }
+                // TODO: parse text file to load a new level
             }
         }
         catch (IOException e){

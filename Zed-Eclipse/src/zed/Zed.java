@@ -57,7 +57,7 @@ public class Zed {
 
             // Game Updates
             @Override
-            public void update(GameContainer gc, int i) throws SlickException {
+            public void update(GameContainer gc, int delta) throws SlickException {
                 // TODO: call character input functions
             }
 
