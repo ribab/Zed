@@ -37,6 +37,7 @@ public class Level_Manager {
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
     
+    
     int width; // Number of tile columns
     int height; // Number of tile rows
     int xpos; // x position of top-left of tiles
@@ -118,7 +119,7 @@ public class Level_Manager {
     }
     public void settile(Image newtile, int x, int y){
         
-        bot_tile[x][y].equals(newtile);
+        tileset.equals(newtile);
     }
     
     public void display(GameContainer gc, Graphics g){
@@ -127,7 +128,7 @@ public class Level_Manager {
         {
             for (int j = 0; j < height; j++)
             {
-                g.drawImage(bot_tile[i][j],
+                g.drawImage(tileset,
                         xpos + i*TILE_SIZE*scale,
                         ypos + j*TILE_SIZE*scale,
                         xpos + i*TILE_SIZE*scale + TILE_SIZE*scale,

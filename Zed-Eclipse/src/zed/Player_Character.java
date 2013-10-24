@@ -24,6 +24,10 @@ public class Player_Character extends Character {
     
     // Replaces the Update function in Character.java
     // Updates the Player_Character
+   /**
+    *We're not using method update for now 
+    */
+    
     public void Update(Object collision_objects[], GameContainer gc){
         
         Input input = gc.getInput(); // get the current input
