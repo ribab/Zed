@@ -6,6 +6,8 @@ package zed;
 
 // Java for file reading
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -49,14 +51,14 @@ public class Level_Manager {
     int[][] bot_tile_y; // tileset y index of bot_tile[x][y]
     //int[][] top_tile_x; // tileset x index of top_tile[x][y]
     //int[][] top_tile_y; // tileset y index of top_tile[x][y]
-    
+    File_Manager Files;
     Player_Character player; // data for player character
     
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException{
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
-
+        Files = new File_Manager();
         
         // initialize player
         int[] player_spritesheet_index = {3, 1, 0, 2,
@@ -76,12 +78,24 @@ public class Level_Manager {
         scale = 2;
         bot_tile_x = new int[width][height];
         bot_tile_y = new int[width][height];
+        File Default_Level = new File("levels/test.lvl");
         for (int i = 0; i < width; i++ ){
         	for(int j = 0; j < height; j++){
-        		bot_tile_x[i][j] = 6;
-        		bot_tile_y[i][j] = 0;
+        		try {
+					bot_tile_x[i][j] = Files.Scan_LVL(Default_Level);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		try {
+					bot_tile_y[i][j] = Files.Scan_LVL(Default_Level);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	}
         }
+        Files.Close_LVL();
         //top_tile_x = null;
         //top_tile_y = null;
     }
