@@ -14,17 +14,7 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Player_Character extends Character {
     
-	//NOT SURE WE'RE EVER GOING TO USE THESE
-	/**
-    private static final int FRAME_STATE_UP = 0;
-    private static final int FRAME_STATE_LEFT = 1;
-    private static final int FRAME_STATE_DOWN = 2;
-    private static final int FRAME_STATE_RIGHT = 3;
-    private static final int FRAME_STATE_UP_WALK = 4;
-    private static final int FRAME_STATE_LEFT_WALK = 5;
-    private static final int FRAME_STATE_DOWN_WALK = 6;
-    private static final int FRAME_STATE_RIGHT_WALK = 7;
-    **/
+	
     
 
     public Player_Character() {
@@ -61,7 +51,7 @@ public class Player_Character extends Character {
     public void Update(Object collision_objects[]){
         boolean collided;
         
-	Update_Frame_State();
+        Update_Frame_State();
 	    
         if (collision_objects != null)
         {
@@ -72,10 +62,10 @@ public class Player_Character extends Character {
             collided = false;
         }
 	        
-	if (!collided)
-	{
+        if (!collided)
+        {
             Update_Position();
-	}
+        }
     }
     
     public void New_Movement(int new_x_mov, int new_y_mov){
