@@ -24,7 +24,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
- *
  * @author Richard Barella Jr.
  * @author Adam Bennett
  * @author Ryan Slyter
@@ -61,7 +60,7 @@ public class Zed {
             // Game Updates
             @Override
             public void update(GameContainer gc, int delta) throws SlickException {
-            	 boolean left = false;
+            	 boolean left = false; //these arent currently being used be needed
                  boolean right = false;
                  boolean up = false;
                  boolean down = false;

@@ -133,11 +133,7 @@ public class Level_Manager {
         {
             for (int j = 0; j < height; j++)
             {
-<<<<<<< HEAD
                 g.drawImage(tileset.getSubImage(bot_tile_x[i][j], bot_tile_y[i][j]),
-=======
-                g.drawImage(tileset,
->>>>>>> 98002c170f8ce4f3579653717892ce3368a6cef9
                         xpos + i*TILE_SIZE*scale,
                         ypos + j*TILE_SIZE*scale,
                         xpos + i*TILE_SIZE*scale + TILE_SIZE*scale,

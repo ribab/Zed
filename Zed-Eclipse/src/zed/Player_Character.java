@@ -14,6 +14,7 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Player_Character extends Character {
     
+	//NOT SURE WE'RE EVER GOING TO USE THESE
 	/**
 	private static final int FRAME_STATE_DOWN = 0;
     private static final int FRAME_STATE_UP = 1;
@@ -25,20 +26,11 @@ public class Player_Character extends Character {
     private static final int FRAME_STATE_RIGHT_WALK = 8;
     **/
     
-<<<<<<< HEAD
+
     public Player_Character() {
         String[][] frame_top = new String[4][5];
         String[][] frame_bot = new String[4][5];
-=======
-    // Replaces the Update function in Character.java
-    // Updates the Player_Character
-   /**
-    *We're not using method update for now 
-    */
-    
-    public void Update(Object collision_objects[], GameContainer gc){
->>>>>>> 98002c170f8ce4f3579653717892ce3368a6cef9
-        
+   	
         Init(0, 0, false,
             0, 0, // how far sprite is shifted and size in pixels
             null, null, null,
