@@ -65,6 +65,7 @@ public class Zed {
                  boolean right = false;
                  boolean up = false;
                  boolean down = false;
+                 gc.setVSync(true);
                  
               	Input input = gc.getInput(); // get the current input
                  
