@@ -69,16 +69,16 @@ public class Level_Manager {
             5, 5.0f,
             0, 0);
         
-        width = 16;
-        height = 16;
+        width = 20;
+        height = 15;
         xpos = 0;
         ypos = 0;
         scale = 2;
         bot_tile_x = new int[width][height];
         bot_tile_y = new int[width][height];
-        for (int i = 0; i < 16; i++ ){
-        	for(int j = 0; j < 16; j++){
-        		bot_tile_x[i][j] = 5;
+        for (int i = 0; i < width; i++ ){
+        	for(int j = 0; j < height; j++){
+        		bot_tile_x[i][j] = 6;
         		bot_tile_y[i][j] = 0;
         	}
         }
