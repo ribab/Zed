@@ -16,6 +16,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+
+
 
 // Slick for exception handling
 import org.newdawn.slick.SlickException;
@@ -27,7 +30,6 @@ import org.newdawn.slick.SlickException;
  * @author Ryan Slyter
  */
 public class Zed {
-
     // Main function
     public static void main(String[] args) {
         
@@ -37,10 +39,11 @@ public class Zed {
             // Test-images
             Image link_down_bot;
             Image link_down_top;
-            
+            float x_pos = 50;
+            float y_pos = 50;
+           
             // Test-level
             Level_Manager test;
-
             // Game Initialization
             @Override
             public void init(GameContainer gc) throws SlickException {
@@ -58,33 +61,33 @@ public class Zed {
             // Game Updates
             @Override
             public void update(GameContainer gc, int delta) throws SlickException {
-                // TODO: call character input functions
+            	 boolean left = false;
+                 boolean right = false;
+                 boolean up = false;
+                 boolean down = false;
+                 
+              	Input input = gc.getInput(); // get the current input
+                 
+                 if (input.isKeyDown(input.KEY_UP) || input.isKeyDown(input.KEY_W))
+                     y_pos-=.05;
+                 if (input.isKeyDown(input.KEY_LEFT) || input.isKeyDown(input.KEY_A))
+                     x_pos-=.05;
+                 if (input.isKeyDown(input.KEY_DOWN) || input.isKeyDown(input.KEY_S))
+                     y_pos+=.05;
+                 if (input.isKeyDown(input.KEY_RIGHT) || input.isKeyDown(input.KEY_D))
+                     x_pos+=.05;
+          
             }
-
+            
             // Game Rendering
             @Override
             public void render(GameContainer gc, Graphics g) throws SlickException {
                 
                 test.display(gc, g);
                 
-                g.drawImage(link_down_bot, 50, 100);
-                g.drawImage(link_down_top, 50, 84);
-                
-                g.drawImage(link_down_bot,
-                        -20,
-                        100,
-                        -20 + link_down_bot.getWidth()*2,
-                        100 + link_down_bot.getHeight()*2,
-                        0, 0,
-                        link_down_bot.getWidth(),
-                        link_down_bot.getHeight());
-                g.drawImage(link_down_top,
-                        -20,
-                        100 - 16*2,
-                        -20 + 16*2,
-                        100,
-                        0, 0,
-                        16, 16);
+                g.drawImage(link_down_bot, x_pos, y_pos);
+                g.drawImage(link_down_top, x_pos, y_pos-16);
+
                 
                 // TODO: code render
                 

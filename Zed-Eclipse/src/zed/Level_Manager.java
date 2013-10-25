@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 // Java for exception handling
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 // Slick for drawing to screen and input
@@ -36,6 +37,7 @@ public class Level_Manager {
     
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
+    ArrayList<Object> objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
     
     
     int width; // Number of tile columns
@@ -59,16 +61,19 @@ public class Level_Manager {
         
     }
     
+    
+    
     // Instantiate Level_Manager with file
     public Level_Manager(String filepath){ // TODO: design lvl file and then make this to parse that file
         
         BufferedReader br = null;
-        
+        //player = new Player_Character(/*todo:initialization parameters*/);
         width = 0;
         height = 0;
         xpos = 0;
         ypos = 0;
         scale = 0;
+        objectlist = new ArrayList();
         
         try
         {
@@ -128,7 +133,11 @@ public class Level_Manager {
         {
             for (int j = 0; j < height; j++)
             {
+<<<<<<< HEAD
+                g.drawImage(tileset.getSubImage(bot_tile_x[i][j], bot_tile_y[i][j]),
+=======
                 g.drawImage(tileset,
+>>>>>>> 98002c170f8ce4f3579653717892ce3368a6cef9
                         xpos + i*TILE_SIZE*scale,
                         ypos + j*TILE_SIZE*scale,
                         xpos + i*TILE_SIZE*scale + TILE_SIZE*scale,

@@ -78,6 +78,8 @@ public class Character extends Object {
     // are the frames that Character is using.
     
     // Initialization for 16x32 Character
+    
+    
     public void Init(int tile_x, int tile_y, boolean visible,
             int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
             SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
@@ -85,13 +87,7 @@ public class Character extends Object {
             int health, float speed,
             int x_movement, int y_movement){
         
-        int frames_count = 5;
-        int[] frame_count = new int[5];
-        frame_count[0] = 1;
-        frame_count[1] = 4;
-        frame_count[2] = 4;
-        frame_count[3] = 4;
-        frame_count[4] = 4;
+        
         
         Init(tile_x, tile_y, visible,
             sprite_shift, tilesize, // how far sprite is shifted and size in pixels
