@@ -57,17 +57,33 @@ public class Level_Manager {
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
         
-        player = new Player_Character(/*todo:initialization parameters*/);
+        // initialize player
+        int[] player_spritesheet_index = {3, 1, 0, 2,
+                                          3, 1, 0, 2};
+        int[] player_animation_length  = {1, 1, 1, 1,
+                                          3, 3, 3, 3};
+        player = new Player_Character(5, 5, true,
+            16, 16, // how far sprite is shifted and size in pixels
+            character_sprites, player_spritesheet_index, player_animation_length, 0,
+            5, 5.0f,
+            0, 0);
         
+        width = 0;
+        height = 0;
+        xpos = 0;
+        ypos = 0;
+        scale = 2;
+        bot_tile_x = null; // todo: make level
+        bot_tile_y = null;
+        top_tile_x = null;
+        top_tile_y = null;
     }
-    
-    
     
     // Instantiate Level_Manager with file
     public Level_Manager(String filepath){ // TODO: design lvl file and then make this to parse that file
         
         BufferedReader br = null;
-        //player = new Player_Character(/*todo:initialization parameters*/);
+        player = new Player_Character(/*todo:initialization parameters*/);
         width = 0;
         height = 0;
         xpos = 0;
@@ -129,6 +145,8 @@ public class Level_Manager {
     
     public void display(GameContainer gc, Graphics g){
         
+        player.Render(scale, xpos, ypos, gc, g);
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -142,6 +160,11 @@ public class Level_Manager {
                         TILE_SIZE, TILE_SIZE);
             }
         }
+    }
+    
+    public void update()
+    {
+        player.Update(null);
     }
     
     public void move_player(int new_x_mov, int new_y_mov)

@@ -71,6 +71,8 @@ public class Object {
         
         Sprite_Shift = sprite_shift;
         
+        Animation_List = new Animation[spritesheet_index.length];
+        
         for (int i = 0; i < spritesheet_index.length; i++)
         {
             Animation_List[i] = new Animation(sprites,

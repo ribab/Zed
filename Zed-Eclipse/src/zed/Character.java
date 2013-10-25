@@ -11,14 +11,14 @@ import org.newdawn.slick.SpriteSheet;
 public class Character extends Object {
     
     // animations are defined for Character
-    private static final int FRAME_STATE_DOWN = 0;
-    private static final int FRAME_STATE_UP = 1;
-    private static final int FRAME_STATE_LEFT = 2;
-    private static final int FRAME_STATE_RIGHT = 4;
-    private static final int FRAME_STATE_DOWN_WALK = 5;
-    private static final int FRAME_STATE_UP_WALK = 6;
-    private static final int FRAME_STATE_LEFT_WALK = 7;
-    private static final int FRAME_STATE_RIGHT_WALK = 8;
+    private static final int FRAME_STATE_UP = 0;
+    private static final int FRAME_STATE_LEFT = 1;
+    private static final int FRAME_STATE_DOWN = 2;
+    private static final int FRAME_STATE_RIGHT = 3;
+    private static final int FRAME_STATE_UP_WALK = 4;
+    private static final int FRAME_STATE_LEFT_WALK = 5;
+    private static final int FRAME_STATE_DOWN_WALK = 6;
+    private static final int FRAME_STATE_RIGHT_WALK = 7;
     
     int Health; // current health for Character
     int Max_Health; // maximum health for Character
@@ -134,10 +134,18 @@ public class Character extends Object {
     
     // Updates the Character
     public void Update(Object collision_objects[]){
+        boolean collided;
         
         Update_Frame_State();
         
-        boolean collided = Collision(collision_objects);
+        if (collision_objects != null)
+        {
+            collided = Collision(collision_objects);
+        }
+        else
+        {
+            collided = false;
+        }
         
         if (!collided)
         {
@@ -171,7 +179,7 @@ public class Character extends Object {
                 Current_Animation = Animation_List[FRAME_STATE_RIGHT_WALK];
             }
             
-            else if (Y_Movement == -1) {
+            else if (X_Movement == -1) {
                 Current_Animation = Animation_List[FRAME_STATE_LEFT_WALK];
             }
             
