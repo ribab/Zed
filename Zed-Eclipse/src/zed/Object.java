@@ -119,7 +119,7 @@ public class Object {
         {
             Current_Animation.draw(
                     X_Position*zoom + current_tile_x,
-                    Y_Position*zoom + current_tile_y - Sprite_Shift,
+                    Y_Position*zoom + current_tile_y - Sprite_Shift*zoom,
                     16*zoom, 32*zoom);
         }
     }

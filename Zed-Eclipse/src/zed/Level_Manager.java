@@ -64,7 +64,7 @@ public class Level_Manager {
         int[] player_animation_length  = {1, 1, 1, 1,
                                           4, 4, 4, 4};
         player = new Player_Character(0, 0, true,
-            32, 16, // how far sprite is shifted and size in pixels
+            16, 16, // how far sprite is shifted and size in pixels
             character_sprites, player_spritesheet_index, player_animation_length, 0,
             5, 5.0f,
             0, 0);
