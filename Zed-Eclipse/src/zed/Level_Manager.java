@@ -47,8 +47,8 @@ public class Level_Manager {
     int scale; // By how many times is the pixels larger?
     int[][] bot_tile_x; // tileset x index of bot_tile[x][y]
     int[][] bot_tile_y; // tileset y index of bot_tile[x][y]
-    int[][] top_tile_x; // tileset x index of top_tile[x][y]
-    int[][] top_tile_y; // tileset y index of top_tile[x][y]
+    //int[][] top_tile_x; // tileset x index of top_tile[x][y]
+    //int[][] top_tile_y; // tileset y index of top_tile[x][y]
     
     Player_Character player; // data for player character
     
@@ -56,27 +56,34 @@ public class Level_Manager {
     public Level_Manager() throws SlickException{
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
+
         
         // initialize player
         int[] player_spritesheet_index = {3, 1, 0, 2,
                                           3, 1, 0, 2};
         int[] player_animation_length  = {1, 1, 1, 1,
                                           4, 4, 4, 4};
-        player = new Player_Character(5, 5, true,
-            16, 16, // how far sprite is shifted and size in pixels
+        player = new Player_Character(0, 0, true,
+            32, 16, // how far sprite is shifted and size in pixels
             character_sprites, player_spritesheet_index, player_animation_length, 0,
             5, 5.0f,
             0, 0);
         
-        width = 0;
-        height = 0;
+        width = 16;
+        height = 16;
         xpos = 0;
         ypos = 0;
         scale = 2;
-        bot_tile_x = null; // todo: make level
-        bot_tile_y = null;
-        top_tile_x = null;
-        top_tile_y = null;
+        bot_tile_x = new int[width][height];
+        bot_tile_y = new int[width][height];
+        for (int i = 0; i < 16; i++ ){
+        	for(int j = 0; j < 16; j++){
+        		bot_tile_x[i][j] = 5;
+        		bot_tile_y[i][j] = 0;
+        	}
+        }
+        //top_tile_x = null;
+        //top_tile_y = null;
     }
     
     // Instantiate Level_Manager with file
@@ -145,8 +152,6 @@ public class Level_Manager {
     
     public void display(GameContainer gc, Graphics g){
         
-        player.Render(scale, xpos, ypos, gc, g);
-        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -160,6 +165,8 @@ public class Level_Manager {
                         TILE_SIZE, TILE_SIZE);
             }
         }
+        
+        player.Render(scale, xpos, ypos, gc, g);
     }
     
     public void update()

@@ -66,7 +66,7 @@ public class Zed {
                  boolean up = false;
                  boolean down = false;
                  gc.setVSync(true);
-                 //gc.setTargetFrameRate(fps);
+                 //gc.setTargetFrameRate(120);
                  
               	Input input = gc.getInput(); // get the current input
                  
