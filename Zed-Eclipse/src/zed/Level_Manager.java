@@ -143,4 +143,9 @@ public class Level_Manager {
             }
         }
     }
+    
+    public void move_player(int new_x_mov, int new_y_mov)
+    {
+        player.New_Movement(new_x_mov, new_y_mov);
+    }
 }

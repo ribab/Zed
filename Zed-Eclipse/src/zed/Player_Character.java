@@ -43,16 +43,20 @@ public class Player_Character extends Character {
         last_move = System.nanoTime();
     }
 
-	public void Update(Object collision_objects[]){
-		 Update_Frame_State();
+    public void Update(Object collision_objects[]){
+	Update_Frame_State();
 	        
-	        boolean collided = Collision(collision_objects);
+        boolean collided = Collision(collision_objects);
 	        
-	        if (!collided)
-	        {
-	            Update_Position();
-	        }
-	        
+	if (!collided)
+	{
+            Update_Position();
 	}
-	
+    }
+    
+    public void New_Movement(int new_x_mov, int new_y_mov){
+        
+        X_Movement = new_x_mov;
+        Y_Movement = new_y_mov;
+    }
 }
