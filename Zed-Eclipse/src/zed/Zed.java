@@ -46,15 +46,7 @@ public class Zed {
             // Game Initialization
             @Override
             public void init(GameContainer gc) throws SlickException {
-                /*
-                // Initialize test-images
-                link_down_bot = new Image("images/link-down-bot.png",
-                        false, Image.FILTER_NEAREST);
-                link_down_top = new Image("images/link-down-top.png",
-                        false, Image.FILTER_NEAREST);
-                */
                 
-                // Initialize test-level
                 test = new Level_Manager();
             }
 
@@ -66,31 +58,31 @@ public class Zed {
                  boolean up = false;
                  boolean down = false;
                  gc.setVSync(true);
-                 //gc.setTargetFrameRate(120);
+                 
                  
               	Input input = gc.getInput(); // get the current input
                  
                  if (input.isKeyDown(input.KEY_UP) || input.isKeyDown(input.KEY_W))
                  {
                      up = true;
-                     //y_pos-=.05;
+                     
                  }
                  if (input.isKeyDown(input.KEY_LEFT) || input.isKeyDown(input.KEY_A))
                  {
                      left = true;
-                     //x_pos-=.05;
+                    
                  }
                  if (input.isKeyDown(input.KEY_DOWN) || input.isKeyDown(input.KEY_S))
                  {
                      down = true;
-                     //y_pos+=.05;
+                    
                  }
                  if (input.isKeyDown(input.KEY_RIGHT) || input.isKeyDown(input.KEY_D))
                  {
                      right = true;
-                     //x_pos+=.05;
+                   
                  }
-                 // change the player's movement value
+                 
                  test.move_player((right? 1:0) - (left? 1:0),
                          (down? 1:0) - (up? 1:0));
                  
@@ -102,10 +94,7 @@ public class Zed {
             public void render(GameContainer gc, Graphics g) throws SlickException {
                 
                 test.display(gc, g);
-                /*
-                g.drawImage(link_down_bot, x_pos, y_pos);
-                g.drawImage(link_down_top, x_pos, y_pos-16);
-                */
+              
                 
                 // TODO: code render
                 
