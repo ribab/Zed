@@ -1,9 +1,6 @@
 
 package zed;
 
-// Slick for input
-import org.newdawn.slick.Input;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SpriteSheet;
 
 /**
@@ -18,9 +15,7 @@ public class Player_Character extends Character {
     
 
     public Player_Character() {
-        String[][] frame_top = new String[4][5];
-        String[][] frame_bot = new String[4][5];
-   	
+
         Init(0, 0, false,
             0, 0, // how far sprite is shifted and size in pixels
             null, null, null,

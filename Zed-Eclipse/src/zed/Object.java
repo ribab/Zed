@@ -1,16 +1,11 @@
 
 package zed;
 
-// Java for exceptions
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 
 // Slick for drawing to the screen
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 /**

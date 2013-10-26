@@ -4,16 +4,11 @@
  */
 package zed;
 
-// Java for file reading
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 // Java for exception handling
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 // Slick for drawing to screen and input
 import org.newdawn.slick.GameContainer;
@@ -32,9 +27,7 @@ import org.newdawn.slick.SpriteSheet;
 // TODO: Edit Level Manager
 
 public class Level_Manager {   
-    
-    private static final int MAX_WIDTH = 100; // TODO: might not need this
-    private static final int MAX_HEIGHT = 100;
+
     private static final int TILE_SIZE = 16;
     
     private SpriteSheet tileset; // data for tiles
@@ -102,11 +95,12 @@ public class Level_Manager {
         //top_tile_y = null;
     }
     
+    /*
     // Instantiate Level_Manager with file
     public Level_Manager(String filepath){ // TODO: design lvl file and then make this to parse that file
         
         BufferedReader br = null;
-        player = new Player_Character(/*todo:initialization parameters*/);
+        player = new Player_Character(initialization parameters);
         width = 0;
         height = 0;
         xpos = 0;
@@ -139,6 +133,7 @@ public class Level_Manager {
             }
         }
     }
+    */
     
     // Edit class variables
     public void setwidth(int newwidth){

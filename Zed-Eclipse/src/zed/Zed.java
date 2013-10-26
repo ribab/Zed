@@ -12,10 +12,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 
-// Slick for drawing to screen
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 
@@ -34,12 +31,6 @@ public class Zed {
         
         // create game
         org.newdawn.slick.BasicGame game = new org.newdawn.slick.BasicGame("zed") {
-            
-            // Test-images
-            Image link_down_bot;
-            Image link_down_top;
-            float x_pos = 50;
-            float y_pos = 50;
            
             // Test-level
             Level_Manager test;
@@ -70,22 +61,22 @@ public class Zed {
                  
               	Input input = gc.getInput(); // get the current input
                  
-                 if (input.isKeyDown(input.KEY_UP) || input.isKeyDown(input.KEY_W))
+                 if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
                  {
                      up = true;
                      //y_pos-=.05;
                  }
-                 if (input.isKeyDown(input.KEY_LEFT) || input.isKeyDown(input.KEY_A))
+                 if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
                  {
                      left = true;
                      //x_pos-=.05;
                  }
-                 if (input.isKeyDown(input.KEY_DOWN) || input.isKeyDown(input.KEY_S))
+                 if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
                  {
                      down = true;
                      //y_pos+=.05;
                  }
-                 if (input.isKeyDown(input.KEY_RIGHT) || input.isKeyDown(input.KEY_D))
+                 if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
                  {
                      right = true;
                      //x_pos+=.05;

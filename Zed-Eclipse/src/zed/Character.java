@@ -59,9 +59,7 @@ public class Character extends Object {
 
     // Default Constructor
     public Character() {
-        String[][] frame_top = new String[4][5];
-        String[][] frame_bot = new String[4][5];
-        
+    	
         Init(0, 0, false,
             0, 0, // how far sprite is shifted and size in pixels
             null, null, null,
