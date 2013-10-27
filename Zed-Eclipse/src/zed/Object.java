@@ -31,8 +31,10 @@ public class Object {
     // Holds the animations for the object.
     Animation[] Animation_List;
     Animation Current_Animation;
+    int Current_Animation_Index;
     
-    int Sprite_Shift;
+    int[] Sprite_Shift_X;
+    int[] Sprite_Shift_Y;
     
     // Holds the visibility of Object
     boolean Visible;
@@ -40,22 +42,29 @@ public class Object {
     // Default constructor
     public Object(){
         
-        Init(0, 0, false, 0, 1, null, null, null, 0);
+        Init(0, 0, false, null, null, 1, null, null, null, 0);
     }
     
     // Specific Constructor
     public Object(int tile_x, int tile_y, boolean visible,
-            int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
+            int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
             SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
             int current_animation){
         
-        this.Init(tile_x, tile_y, visible, sprite_shift, tilesize, sprites,
+        this.Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, current_animation);
     }
     
-    // Init for only bottom frame
+    public Object(int tile_x, int tile_y, boolean visible,
+    		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
+    		Animation[] animation_list, int current_animation){
+    	
+    	this.Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
+    }
+    
+    // Initialization function that generates animations based on SpriteSheet
     public void Init(int tile_x, int tile_y, boolean visible,
-            int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
+            int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
             SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
             int current_animation){
         
@@ -64,7 +73,8 @@ public class Object {
         
         Visible = visible;
         
-        Sprite_Shift = sprite_shift;
+        Sprite_Shift_X = sprite_shift_x;
+        Sprite_Shift_Y = sprite_shift_y;
         
         Animation_List = new Animation[spritesheet_index.length];
         
@@ -77,6 +87,24 @@ public class Object {
                     ANIMATION_SPEED, true /*autoupdate?*/);
         }
         Current_Animation = Animation_List[current_animation];
+        Current_Animation_Index = current_animation;
+    }
+    
+    public void Init(int tile_x, int tile_y, boolean visible,
+    		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
+    		Animation[] animation_list, int current_animation)
+    {
+    	X_Position = tile_x*tilesize;
+    	Y_Position = tile_y*tilesize;
+    	
+    	Visible = visible;
+    	
+    	Sprite_Shift_X = sprite_shift_x;
+    	Sprite_Shift_Y = sprite_shift_y;
+    	
+    	Animation_List = animation_list;
+    	
+    	Current_Animation = Animation_List[current_animation];
     }
     
     // Change the position of Object
@@ -113,8 +141,8 @@ public class Object {
         if (Visible)
         {
             Current_Animation.draw(
-                    X_Position*zoom + current_tile_x,
-                    Y_Position*zoom + current_tile_y - Sprite_Shift*zoom,
+                    X_Position*zoom + current_tile_x - Sprite_Shift_X[Current_Animation_Index]*zoom,
+                    Y_Position*zoom + current_tile_y - Sprite_Shift_Y[Current_Animation_Index]*zoom,
                     16*zoom, 32*zoom);
         }
     }
@@ -123,7 +151,10 @@ public class Object {
         
         if (new_animation < Animation_List.length
                 && new_animation >= 0)
+        {
             Current_Animation = Animation_List[new_animation];
+        }
+        Current_Animation_Index = new_animation;
     }
     
     // Get the number for the current animation being played

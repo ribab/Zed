@@ -1,6 +1,7 @@
 
 package zed;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;
 
 /*
@@ -31,16 +32,42 @@ public class Character extends Object {
     int AI_State; // For use in Artificial_Intelligence function
     
     public Character(int tile_x, int tile_y, boolean visible,
-            int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
+            int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
             SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
             int current_animation,
             int health, float speed,
             int x_movement, int y_movement) {
         
         // Constructs the "Object" part of Character
-        super(tile_x, tile_y, visible, sprite_shift, tilesize, sprites,
+        super(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, current_animation);
         
+        // Initialze health
+        Health = health;
+        Max_Health = health;
+        
+        // Initialize movement parameters
+        Speed = speed;
+        X_Movement = x_movement;
+        Y_Movement = y_movement;
+        
+        // Initialize movement
+        last_move = System.nanoTime();
+        
+        // Initialize Artificial Intelligence
+        AI_State = 0;
+    }
+    
+    // Initialization with Animations already defined
+    public Character(int tile_x, int tile_y, boolean visible,
+    		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
+    		Animation[] animation_list, int current_animation,
+    		int health, float speed,
+    		int x_movement, int y_movement){
+    	
+    	super(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y,
+    			tilesize, animation_list, current_animation);
+    	
         // Initialze health
         Health = health;
         Max_Health = health;
@@ -61,7 +88,7 @@ public class Character extends Object {
     public Character() {
     	
         Init(0, 0, false,
-            0, 0, // how far sprite is shifted and size in pixels
+            null, null, 0, // how far sprite is shifted and size in pixels
             null, null, null,
             0);
         
@@ -77,58 +104,26 @@ public class Character extends Object {
     
     // Initialization for 16x32 Character
     
-    
     public void Init(int tile_x, int tile_y, boolean visible,
-            int sprite_shift, int tilesize, // how far sprite is shifted and size in pixels
+            int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
             SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
             int current_animation,
-            int health, float speed,
+            int health, int max_health, float speed,
             int x_movement, int y_movement){
         
-        
-        
         Init(tile_x, tile_y, visible,
-            sprite_shift, tilesize, // how far sprite is shifted and size in pixels
+            sprite_shift_x, sprite_shift_y, tilesize, // how far sprite is shifted and size in pixels
             sprites, spritesheet_index, animation_length,
             current_animation);
         
         Health = health;
+        Max_Health = max_health;
         Speed = speed;
         X_Movement = x_movement;
         Y_Movement = y_movement;
         
         last_move = System.nanoTime();
     }
-    /*
-    // Initialization for 16x16 Character
-    public void Init(int x_position, int y_position,
-            String[][] frame_bot,
-            int current_frames, boolean top_visible,
-            boolean bot_visible,
-            int health, float speed, int x_movement,
-            int y_movement){
-        
-        int frames_count = 5;
-        int[] frame_count = new int[5];
-        frame_count[0] = 1;
-        frame_count[1] = 4;
-        frame_count[2] = 4;
-        frame_count[3] = 4;
-        frame_count[4] = 4;
-        
-        Init(x_position, y_position,
-            frame_bot, frames_count,
-            frame_count,
-            top_visible, bot_visible);
-        
-        Health = health;
-        Speed = speed;
-        X_Movement = x_movement;
-        Y_Movement = y_movement;
-        
-        last_move = System.nanoTime();
-    }
-*/
     
     // Updates the Character
     public void Update(Object collision_objects[]){
@@ -238,7 +233,43 @@ public class Character extends Object {
     // Decriment the current health
     public void Decriment_Health(){
         
-        Health--;
+    	if (Health > 0)
+    	{
+    		Health--;
+    	}
+    	else
+    	{
+    		Health = 0;
+    	}
+    }
+    
+    public void Decrease_Health(int health_dec){
+    	
+    	if (Health - health_dec <= 0)
+    	{
+    		Health = 0;
+    	}
+    	else
+    	{
+    		Health -= health_dec;
+    	}
+    }
+    
+    public void Reset_Health(){
+    	
+    	Health = Max_Health;
+    }
+    
+    public void Increase_Health(int health_inc){
+    	
+    	if (Health + health_inc >= Max_Health)
+    	{
+    		Health = Max_Health;
+    	}
+    	else
+    	{
+    		Health = Health + health_inc;
+    	}
     }
     
     // Get the maximum health of the character
