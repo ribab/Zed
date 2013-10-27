@@ -44,6 +44,7 @@ public class Player_Character extends Character {
     }
 
     public void Update(Object collision_objects[]){
+    	
         boolean collided;
         
         Update_Frame_State();

@@ -56,7 +56,7 @@ public class Zed {
                  boolean right = false;
                  boolean up = false;
                  boolean down = false;
-                 gc.setVSync(true);
+                 gc.setVSync(true); // makes it so computer doesn't heat up
                  //gc.setTargetFrameRate(120);
                  
               	Input input = gc.getInput(); // get the current input
