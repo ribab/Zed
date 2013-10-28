@@ -42,17 +42,17 @@ public class Object {
     // Default constructor
     public Object(){
         
-        Init(0, 0, false, null, null, 1, null, null, null, 0);
+        Init(0, 0, false, null, null, 1, null, null, null, null, 0);
     }
     
     // Specific Constructor
     public Object(int tile_x, int tile_y, boolean visible,
             int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
-            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
+            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length, boolean[] looping,
             int current_animation){
         
         this.Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
-                spritesheet_index, animation_length, current_animation);
+                spritesheet_index, animation_length, looping, current_animation);
     }
     
     public Object(int tile_x, int tile_y, boolean visible,
@@ -65,7 +65,7 @@ public class Object {
     // Initialization function that generates animations based on SpriteSheet
     public void Init(int tile_x, int tile_y, boolean visible,
             int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
-            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
+            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length, boolean[] looping,
             int current_animation){
         
         X_Position = tile_x*tilesize;
@@ -85,6 +85,8 @@ public class Object {
                     animation_length[i] - 1, spritesheet_index[i], // last sprite
                     false, // horizontalScan true?
                     ANIMATION_SPEED, true /*autoupdate?*/);
+            Animation_List[i].setLooping(looping[i]);
+            Animation_List[i].setPingPong(true);
         }
         Current_Animation = Animation_List[current_animation];
         Current_Animation_Index = current_animation;
@@ -143,7 +145,7 @@ public class Object {
             Current_Animation.draw(
                     X_Position*zoom + current_tile_x - Sprite_Shift_X[Current_Animation_Index]*zoom,
                     Y_Position*zoom + current_tile_y - Sprite_Shift_Y[Current_Animation_Index]*zoom,
-                    16*zoom, 32*zoom);
+                    Current_Animation.getWidth()*zoom, Current_Animation.getHeight()*zoom);
         }
     }
     // Play a different animation for the object

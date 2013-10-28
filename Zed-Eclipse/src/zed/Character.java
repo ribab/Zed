@@ -33,14 +33,14 @@ public class Character extends Object {
     
     public Character(int tile_x, int tile_y, boolean visible,
             int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
-            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
+            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length, boolean[] looping,
             int current_animation,
             int health, float speed,
             int x_movement, int y_movement) {
         
         // Constructs the "Object" part of Character
         super(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
-                spritesheet_index, animation_length, current_animation);
+                spritesheet_index, animation_length, looping, current_animation);
         
         // Initialze health
         Health = health;
@@ -89,7 +89,7 @@ public class Character extends Object {
     	
         Init(0, 0, false,
             null, null, 0, // how far sprite is shifted and size in pixels
-            null, null, null,
+            null, null, null, null,
             0);
         
         Health = 0;
@@ -106,15 +106,13 @@ public class Character extends Object {
     
     public void Init(int tile_x, int tile_y, boolean visible,
             int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
-            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length,
+            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length, boolean[] looping,
             int current_animation,
             int health, int max_health, float speed,
             int x_movement, int y_movement){
         
-        Init(tile_x, tile_y, visible,
-            sprite_shift_x, sprite_shift_y, tilesize, // how far sprite is shifted and size in pixels
-            sprites, spritesheet_index, animation_length,
-            current_animation);
+        Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+                spritesheet_index, animation_length, looping, current_animation);
         
         Health = health;
         Max_Health = max_health;
@@ -159,36 +157,36 @@ public class Character extends Object {
     void Update_Frame_State(){
         
         if (Y_Movement == 1) {
-            Current_Animation = Animation_List[FRAME_STATE_DOWN_WALK];
+            Change_Animation(FRAME_STATE_DOWN_WALK);
         }
         
         else if (Y_Movement == -1) {
-            Current_Animation = Animation_List[FRAME_STATE_UP_WALK];
+        	Change_Animation(FRAME_STATE_UP_WALK);
         }
         
         else
         {
             if (X_Movement == 1) {
-                Current_Animation = Animation_List[FRAME_STATE_RIGHT_WALK];
+                Change_Animation(FRAME_STATE_RIGHT_WALK);
             }
             
             else if (X_Movement == -1) {
-                Current_Animation = Animation_List[FRAME_STATE_LEFT_WALK];
+            	Change_Animation(FRAME_STATE_LEFT_WALK);
             }
             
             else
             {
                 if (Current_Animation == Animation_List[FRAME_STATE_UP_WALK]) {
-                    Current_Animation = Animation_List[FRAME_STATE_UP];
+                	Change_Animation(FRAME_STATE_UP);
                 }
                 else if (Current_Animation == Animation_List[FRAME_STATE_LEFT_WALK]) {
-                    Current_Animation = Animation_List[FRAME_STATE_LEFT];
+                    Change_Animation(FRAME_STATE_LEFT);
                 }
                 else if (Current_Animation == Animation_List[FRAME_STATE_DOWN_WALK]) {
-                    Current_Animation = Animation_List[FRAME_STATE_DOWN];
+                    Change_Animation(FRAME_STATE_DOWN);
                 }
                 else if (Current_Animation == Animation_List[FRAME_STATE_RIGHT_WALK]) {
-                    Current_Animation = Animation_List[FRAME_STATE_RIGHT];
+                    Change_Animation(FRAME_STATE_RIGHT);
                 }
             }
         }

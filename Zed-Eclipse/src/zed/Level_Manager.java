@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 // Slick for drawing to screen and input
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -48,21 +49,54 @@ public class Level_Manager {
     Player_Character player; // data for player character
     
     // Default instantiation for Level_Manager
-    public Level_Manager() throws SlickException{
+    public Level_Manager() throws SlickException {
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
         Files = new File_Manager();
+
+        // ============================
+        // initialize player info START
+        boolean f = false;
+        boolean t = true;
+        int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3};
+        int[] player_spritesheet_index_x = {1,  1,  1,  1,  0,  0,  0,  0};
+        int[] player_animation_length  = {1,  1,  1,  1,  3,  3,  3,  3};
+        int[] player_sprite_shift_x    = {0,  0,  0,  0,  0,  0,  0,  0,  16, 16, 16, 16};
+        int[] player_sprite_shift_y    = {16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16};
+        boolean[] player_looping       = {f,  f,  f,  f,  t,  t,  t,  t};
+        int player_animation_speed = 200;
+        int player_attack_animation_speed = 50;
         
-        // initialize player
-        int[] player_spritesheet_index = {3,  1,  0,  2,  3,  1,  0,  2};
-        int[] player_animation_length  = {1,  1,  1,  1,  4,  4,  4,  4};
-        int[] player_sprite_shift_x    = {0,  0,  0,  0,  0,  0,  0,  0};
-        int[] player_sprite_shift_y    = {16, 16, 16, 16, 16, 16, 16, 16};
+        Animation[] player_animation_list = new Animation[12];
+        for (int i = 0; i < 8; i++)
+        {
+	        player_animation_list[i] = new Animation(character_sprites,
+	                player_spritesheet_index_x[i],                                  player_spritesheet_index_y[i], // first sprite
+	                player_spritesheet_index_x[i] + player_animation_length[i] - 1, player_spritesheet_index_y[i], // last sprite
+	                false, // horizontalScan true?
+	                player_animation_speed, true /*autoupdate?*/);
+	        player_animation_list[i].setLooping(player_looping[i]);
+	        player_animation_list[i].setPingPong(true);
+        }
+        for (int i = 0; i < 4 ; i++)
+        {
+        	Image[] frames = new Image[3];
+        	for (int j = 0; j < 3; j++)
+        	{
+        		frames[j] = character_sprites.getSubImage(j*48, 4*32 + i*48, 48, 48);
+        	}
+        	player_animation_list[i + 8] = new Animation(frames, player_attack_animation_speed, true);
+        	player_animation_list[i + 8].setLooping(false);
+        	player_animation_list[i + 8].setPingPong(false);
+        }
+        
         player = new Player_Character(0, 0, true,
             player_sprite_shift_x, player_sprite_shift_y, 16, // how far sprite is shifted and size in pixels
-            character_sprites, player_spritesheet_index, player_animation_length, 0,
+            player_animation_list, 0,
             5, 5.0f,
             0, 0);
+        // Initialize Player Info END
+        // ==========================
         
         width = 20;
         height = 15;

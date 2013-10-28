@@ -81,6 +81,14 @@ public class Zed {
                      right = true;
                      //x_pos+=.05;
                  }
+                 if (input.isKeyDown(Input.KEY_SPACE))
+                 {
+                	 test.player.Start_Sword_Attack();
+                 }
+                 else
+                 {
+                	 test.player.End_Sword_Attack();
+                 }
                  // change the player's movement value
                  test.move_player((right? 1:0) - (left? 1:0),
                          (down? 1:0) - (up? 1:0));
