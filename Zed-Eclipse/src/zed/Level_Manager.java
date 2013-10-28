@@ -87,7 +87,7 @@ public class Level_Manager {
         	}
         	player_animation_list[i + 8] = new Animation(frames, player_attack_animation_speed, true);
         	player_animation_list[i + 8].setLooping(false);
-        	player_animation_list[i + 8].setPingPong(false);
+        	player_animation_list[i + 8].setPingPong(true);
         }
         
         player = new Player_Character(0, 0, true,
