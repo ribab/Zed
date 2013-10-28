@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 // Java for exception handling
 import java.util.ArrayList;
 
+
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -35,6 +36,10 @@ public class Level_Manager {
     private SpriteSheet character_sprites; // data for character sprites
     ArrayList<Object> objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
     
+    Image Full_Heart; //full heart image
+    Image Empty_Heart; //empty heart image
+    final int maxHealth; //players maximum hp
+    boolean[] lifeBar; //array representing which HUD images are full hearts or empty hearts
     
     int width; // Number of tile columns
     int height; // Number of tile rows
@@ -97,6 +102,15 @@ public class Level_Manager {
             0, 0);
         // Initialize Player Info END
         // ==========================
+        
+        //start of initializing heart images and life bar for HUD display
+        Full_Heart = new Image("images/fullheart.png");
+        Empty_Heart = new Image("images/emptyheart.png");
+        maxHealth = player.Get_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
+        lifeBar = new boolean[maxHealth];
+        for (int i = 0; i < maxHealth; i++){
+        	lifeBar[i] = true;
+        }
         
         width = 20;
         height = 15;
@@ -195,6 +209,44 @@ public class Level_Manager {
         tileset.equals(newtile);
     }
     
+    //method update_HUD takes boolean array representing player_character's health,
+    //the fixed maximum health of said characters, the hero itself to get its current health,
+    //and the full and empty hearts so that they can be drawn on the screen; the method
+    //is meant to be called every time the game updates so as to check if the player
+    //has been hurt/killed or not so that the HUD in the top left can reflect that
+    public static void update_HUD(boolean[] lifebar, int maxhealth, Player_Character hero, Image full, Image empty){
+    	int current_Health = hero.Get_Health();
+    	if (maxhealth == current_Health){
+    		for (int i = 0; i < maxhealth; i++){
+    			lifebar[i] = true; //supports getting full-health potions this way
+    		}
+    	}
+    	else if (current_Health == 0){
+    		for (int i = 0; i < maxhealth; i++){
+    			lifebar[i] = false;
+    			/**
+    			 * code here to handle telling level manager that game is over
+    			 * possibly setting a flag so empty hearts can be drawn first
+    			 */
+    		}
+    	}
+    	else{
+    		for (int i = 0; i <=current_Health; i++){
+    			lifebar[i] = true;
+    		}
+    		for (int i = current_Health+1; i < maxhealth; i++){
+    			lifebar[i] = false;
+    		}
+    		//I'm *guessing* here (for the sake of performance) that drawing the objects
+    		//to the screen is more costly than having more for-loops
+    		for (int i = 0; i < maxhealth; i++){
+    			if (lifebar[i] == true){full.draw(i,0,2);}
+    			else {empty.draw(i,0,2);}
+    		}
+    	}
+    	return;
+    }
+    
     public void display(GameContainer gc, Graphics g){
         
         for (int i = 0; i < width; i++)
@@ -217,6 +269,7 @@ public class Level_Manager {
     public void update()
     {
         player.Update(null);
+        update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart);
     }
     
     public void move_player(int new_x_mov, int new_y_mov)
