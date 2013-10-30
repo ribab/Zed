@@ -13,7 +13,7 @@
 	<classpathentry kind="lib" path="lib/Slick2D/lwjgl-2.jar"/>
 	<classpathentry kind="lib" path="lib/Slick2D/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zed/lib/natives/linux"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Zed/lib/natives/windows"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/Slick2D/slick.jar"/>
