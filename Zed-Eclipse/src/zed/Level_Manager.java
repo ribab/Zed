@@ -104,8 +104,8 @@ public class Level_Manager {
         // ==========================
         
         //start of initializing heart images and life bar for HUD display
-        Full_Heart = new Image("images/link-down-bot.png", false, Image.FILTER_NEAREST);
-        Empty_Heart = new Image("images/link-down-top.png", false, Image.FILTER_NEAREST);
+        Full_Heart = new Image("images/fullheart.png", false, Image.FILTER_NEAREST);
+        Empty_Heart = new Image("images/emptyheart.png", false, Image.FILTER_NEAREST);
         Full_Heart.setAlpha(0.5f);
         Empty_Heart.setAlpha(0.5f);
         maxHealth = player.Get_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
