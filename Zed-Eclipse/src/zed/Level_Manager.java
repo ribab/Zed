@@ -104,8 +104,10 @@ public class Level_Manager {
         // ==========================
         
         //start of initializing heart images and life bar for HUD display
-        Full_Heart = new Image("images/fullheart.png");
-        Empty_Heart = new Image("images/emptyheart.png");
+        Full_Heart = new Image("images/link-down-bot.png", false, Image.FILTER_NEAREST);
+        Empty_Heart = new Image("images/link-down-top.png", false, Image.FILTER_NEAREST);
+        Full_Heart.setAlpha(0.5f);
+        Empty_Heart.setAlpha(0.5f);
         maxHealth = player.Get_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
         lifeBar = new boolean[maxHealth];
         for (int i = 0; i < maxHealth; i++){
@@ -214,7 +216,7 @@ public class Level_Manager {
     //and the full and empty hearts so that they can be drawn on the screen; the method
     //is meant to be called every time the game updates so as to check if the player
     //has been hurt/killed or not so that the HUD in the top left can reflect that
-    public static void update_HUD(boolean[] lifebar, int maxhealth, Player_Character hero, Image full, Image empty){
+    public void update_HUD(boolean[] lifebar, int maxhealth, Player_Character hero, Image full, Image empty, Graphics g){
     	int current_Health = hero.Get_Health();
     	if (maxhealth == current_Health){
     		for (int i = 0; i < maxhealth; i++){
@@ -237,13 +239,36 @@ public class Level_Manager {
     		for (int i = current_Health+1; i < maxhealth; i++){
     			lifebar[i] = false;
     		}
+    	}
     		//I'm *guessing* here (for the sake of performance) that drawing the objects
     		//to the screen is more costly than having more for-loops
     		for (int i = 0; i < maxhealth; i++){
-    			if (lifebar[i] == true){full.draw(i,0,2);}
-    			else {empty.draw(i,0,2);}
+    			if (i < player.Get_Health())
+    			{
+    				g.drawImage(
+    						full, 				// image
+    						i*full.getWidth()*scale, 	// x pos
+    						0, 					// y pos
+    						(i + 1)*full.getWidth()*scale, 	// x2 pos
+    						full.getHeight()*scale, 	// y2 pos
+    						0, 0,			 	// ???
+    						full.getWidth(), 	// width
+    						full.getHeight()); 	// height
+    			}
+    			else
+    			{
+    				g.drawImage(
+    						empty,
+    						i*empty.getWidth()*scale,
+    						0,
+    						(i + 1)*empty.getWidth()*scale, 
+    						empty.getHeight()*scale,
+    						0, 0,
+    						empty.getWidth(),
+    						empty.getHeight());
+    			}
     		}
-    	}
+    	
     	return;
     }
     
@@ -264,12 +289,13 @@ public class Level_Manager {
         }
         
         player.Render(scale, xpos, ypos, gc, g);
+        
+        update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
     }
     
     public void update()
     {
         player.Update(null);
-        update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart);
     }
     
     public void move_player(int new_x_mov, int new_y_mov)

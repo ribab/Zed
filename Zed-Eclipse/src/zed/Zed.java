@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 // Slick for creating game
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Music;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -27,13 +28,17 @@ import org.newdawn.slick.SlickException;
  */
 public class Zed {
     // Main function
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SlickException {
         
         // create game
         org.newdawn.slick.BasicGame game = new org.newdawn.slick.BasicGame("zed") {
            
             // Test-level
             Level_Manager test;
+            
+            // Sounds
+            Music music = new Music("soundtrack/tense_adventure.wav");
+            
             // Game Initialization
             @Override
             public void init(GameContainer gc) throws SlickException {
@@ -47,6 +52,8 @@ public class Zed {
                 
                 // Initialize test-level
                 test = new Level_Manager();
+                
+                music.loop();
             }
 
             // Game Updates
