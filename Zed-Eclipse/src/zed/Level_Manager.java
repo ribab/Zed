@@ -243,7 +243,8 @@ public class Level_Manager {
     		//I'm *guessing* here (for the sake of performance) that drawing the objects
     		//to the screen is more costly than having more for-loops
     		for (int i = 0; i < maxhealth; i++){
-    			if (i < player.Get_Health())
+    			//if (lifebar[i] = true)
+    			if (i < player.Get_Health()) // TODO: above code has errors so replaced lifebar with player.Get_Health()
     			{
     				g.drawImage(
     						full, 				// image
@@ -296,6 +297,12 @@ public class Level_Manager {
     public void update()
     {
         player.Update(null);
+        
+        if (player.Get_Sword_Pos_X() > 0 && player.Get_Sword_Pos_X() < 16*player.Get_Health()
+        		&& player.Get_Sword_Pos_Y() > 0 && player.Get_Sword_Pos_Y() < 16)
+        {
+        	player.Decriment_Health();
+        }
     }
     
     public void move_player(int new_x_mov, int new_y_mov)

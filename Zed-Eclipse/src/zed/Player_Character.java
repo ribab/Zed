@@ -155,7 +155,7 @@ public class Player_Character extends Character {
     // If sword isn't drawn, returns -1
     public int Get_Sword_Pos_X(){
     	
-    	if (Sword_Drawn && Current_Animation.isStopped())
+    	if (Sword_Drawn && Current_Animation.getFrame() == 1)
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
@@ -181,7 +181,7 @@ public class Player_Character extends Character {
     // If the sword isn't drawn, returns -1
     public int Get_Sword_Pos_Y(){
     	
-    	if (Sword_Drawn && Current_Animation.isStopped())
+    	if (Sword_Drawn && Current_Animation.getFrame() == 1)
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
