@@ -114,13 +114,14 @@ public class Level_Manager {
         	lifeBar[i] = true;
         }
         
+        //initialize level
         width = 20;
         height = 15;
         xpos = 0;
         ypos = 0;
         scale = 2;
-        bot_tile_x = new int[width][height];
-        bot_tile_y = new int[width][height];
+        bot_tile_x = new int[height][width];
+        bot_tile_y = new int[height][width];
         File Default_Level = new File("levels/test.lvl");
         short Tile_List[];
         int Field_Size = width*height*2;
@@ -132,9 +133,10 @@ public class Level_Manager {
 			e.printStackTrace();
 		}
         Files.Close_LVL();
+        //end initialize level
         int k = 0;
-        for (int i = 0; i < width; i++ ){
-        	for(int j = 0; j < height; j++){
+        for (int i = 0; i < height; i++ ){
+        	for(int j = 0; j < width; j++){
 				bot_tile_x[i][j] = Tile_List[k];
 				bot_tile_y[i][j] = Tile_List[++k];
 				k++;
@@ -275,15 +277,15 @@ public class Level_Manager {
     
     public void display(GameContainer gc, Graphics g){
         
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < width; j++)
             {
                 g.drawImage(tileset.getSubImage(bot_tile_x[i][j], bot_tile_y[i][j]),
-                        xpos + i*TILE_SIZE*scale,
-                        ypos + j*TILE_SIZE*scale,
-                        xpos + i*TILE_SIZE*scale + TILE_SIZE*scale,
-                        ypos + j*TILE_SIZE*scale + TILE_SIZE*scale,
+                        xpos + j*TILE_SIZE*scale,
+                        ypos + i*TILE_SIZE*scale,
+                        xpos + j*TILE_SIZE*scale + TILE_SIZE*scale,
+                        ypos + i*TILE_SIZE*scale + TILE_SIZE*scale,
                         0, 0,
                         TILE_SIZE, TILE_SIZE);
             }
