@@ -4,6 +4,7 @@
  */
 package zed;
 
+// java for file input
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -59,49 +60,7 @@ public class Level_Manager {
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
         Files = new File_Manager();
 
-        // ============================
-        // initialize player info START
-        boolean f = false;
-        boolean t = true;
-        int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3};
-        int[] player_spritesheet_index_x = {1,  1,  1,  1,  0,  0,  0,  0};
-        int[] player_animation_length  = {1,  1,  1,  1,  3,  3,  3,  3};
-        int[] player_sprite_shift_x    = {0,  0,  0,  0,  0,  0,  0,  0,  16, 16, 16, 16};
-        int[] player_sprite_shift_y    = {16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16};
-        boolean[] player_looping       = {f,  f,  f,  f,  t,  t,  t,  t};
-        int player_animation_speed = 200;
-        int player_attack_animation_speed = 50;
-        
-        Animation[] player_animation_list = new Animation[12];
-        for (int i = 0; i < 8; i++)
-        {
-	        player_animation_list[i] = new Animation(character_sprites,
-	                player_spritesheet_index_x[i],                                  player_spritesheet_index_y[i], // first sprite
-	                player_spritesheet_index_x[i] + player_animation_length[i] - 1, player_spritesheet_index_y[i], // last sprite
-	                false, // horizontalScan true?
-	                player_animation_speed, true /*autoupdate?*/);
-	        player_animation_list[i].setLooping(player_looping[i]);
-	        player_animation_list[i].setPingPong(true);
-        }
-        for (int i = 0; i < 4 ; i++)
-        {
-        	Image[] frames = new Image[3];
-        	for (int j = 0; j < 3; j++)
-        	{
-        		frames[j] = character_sprites.getSubImage(j*48, 4*32 + i*48, 48, 48);
-        	}
-        	player_animation_list[i + 8] = new Animation(frames, player_attack_animation_speed, true);
-        	player_animation_list[i + 8].setLooping(false);
-        	player_animation_list[i + 8].setPingPong(true);
-        }
-        
-        player = new Player_Character(0, 0, true,
-            player_sprite_shift_x, player_sprite_shift_y, 16, // how far sprite is shifted and size in pixels
-            player_animation_list, 0,
-            5, 5.0f,
-            0, 0);
-        // Initialize Player Info END
-        // ==========================
+        Initialize_Player_Information();
         
         //start of initializing heart images and life bar for HUD display
         Full_Heart = new Image("images/fullheart.png", false, Image.FILTER_NEAREST);
@@ -147,45 +106,68 @@ public class Level_Manager {
         //top_tile_y = null;
     }
     
-    /*
-    // Instantiate Level_Manager with file
-    public Level_Manager(String filepath){ // TODO: design lvl file and then make this to parse that file
+    // default initialization for the player's animations, position, attack speed, animation speed
+    // within the level
+    public void Initialize_Player_Information()
+    {
+    	boolean f = false; // f stands for false
+        boolean t = true; // t stands for true
+        // spritesheet information for standing and walking animations
+        int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3}; // row in spritesheet for each animation
+        int[] player_spritesheet_index_x = {1,  1,  1,  1,  0,  0,  0,  0}; // starting frame in each animation
+        int[] player_animation_length  = {1,  1,  1,  1,  3,  3,  3,  3}; // length for each animation
+        // sprite information for all animations
+        int[] player_sprite_shift_x    = {0,  0,  0,  0,  0,  0,  0,  0,  16, 16, 16, 16}; // how many pixels to shift animation in x direction
+        int[] player_sprite_shift_y    = {16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16}; // how many pixels to shift animation in y direction
+        boolean[] player_looping       = {f,  f,  f,  f,  t,  t,  t,  t}; // whether each animation is looping or not
+        int player_animation_speed = 200; // speed in milliseconds for the walking animations
+        int player_attack_animation_speed = 50; // speed in milliseconds for the attack animations
         
-        BufferedReader br = null;
-        player = new Player_Character(initialization parameters);
-        width = 0;
-        height = 0;
-        xpos = 0;
-        ypos = 0;
-        scale = 0;
-        objectlist = new ArrayList();
-        
-        try
+        // start intializing array values for each animation
+        Animation[] player_animation_list = new Animation[12]; // intialize animation array length
+        for (int i = 0; i < 8; i++) // initialize walking and standing animations
         {
-            String cur_line;
-            char[] file_chars = new char[256];
-            String[] file_files = new String[256];
-            int file_num = 0;
-            int cur_y = 0;
-            
-            br = new BufferedReader(new FileReader(filepath));
-            
-            while ((cur_line = br.readLine()) != null)
-            {
-                // TODO: parse text file to load a new level
-            }
+	        player_animation_list[i] = new Animation(character_sprites, // spritesheet to use
+	        		// location of first sprite in spritesheet
+	                player_spritesheet_index_x[i],                                  player_spritesheet_index_y[i],
+	                // location of last sprite in spritesheet
+	                player_spritesheet_index_x[i] + player_animation_length[i] - 1, player_spritesheet_index_y[i],
+	                false, // horizontalScan value
+	                player_animation_speed, // speed value for animation
+	                true // autoupdate value
+	                );
+	        player_animation_list[i].setLooping(player_looping[i]); // intialize whether animation loops
+	        player_animation_list[i].setPingPong(true); // initialize whether animation ping-pongs between last and first frame
         }
-        catch (IOException e){
-            e.printStackTrace();
-        } finally {
-            try {
-                if (br != null) br.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        for (int i = 0; i < 4 ; i++) // initialize each attack animation
+        {
+        	Image[] frames = new Image[3]; // initialize length of attack animation in frames
+        	for (int j = 0; j < 3; j++)
+        	{
+        		// intialize each frame in attackanimation
+        		frames[j] = character_sprites.getSubImage(j*48, 4*32 + i*48, 48, 48);
+        	}
+        	// initialize animation with created frames
+        	player_animation_list[i + 8] = new Animation(frames, player_attack_animation_speed, true);
+        	player_animation_list[i + 8].setLooping(false); // set animation to not loop automatically
+        	player_animation_list[i + 8].setPingPong(true); // set whether the animation ping-pongs between first and last frame 
         }
+        
+        player = new Player_Character(
+        		0, // intialize character's x position w.r.t. tiles
+        		0, // initialize character's y position w.r.t. tiles
+        		true, // character is visible
+        		player_sprite_shift_x, // give character sprite shift value in the x axis
+        		player_sprite_shift_y, // give character sprite shift value in the y axis
+        		16, // give player_character the size of a tile
+        		player_animation_list, // give the created list of animations
+        		0, // give which animation to start with
+        		5, // give health of character
+        		5.0f, // give speed in tiles per second of character
+        		0, // set initial x_movement value to 0
+        		0 // set initial y_movement value to 0
+        		);
     }
-    */
     
     // Edit class variables
     public void setwidth(int newwidth){
@@ -274,11 +256,13 @@ public class Level_Manager {
     	return;
     }
     
+    // the display function for the Level_Manager that is called every frame
+    // to render the level
     public void display(GameContainer gc, Graphics g){
         
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < height; i++) // display each row
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < width; j++) // display each column
             {
                 g.drawImage(tileset.getSubImage(bot_tile_x[i][j], bot_tile_y[i][j]),
                         xpos + j*TILE_SIZE*scale,
@@ -295,6 +279,8 @@ public class Level_Manager {
         update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
     }
     
+    // the update funciton that is called each time Slick updates to update the information
+    // in the level
     public void update()
     {
         player.Update(null);
@@ -306,6 +292,7 @@ public class Level_Manager {
         }
     }
     
+    // change the player's X_Movement and Y_Movement values within Zed.java
     public void move_player(int new_x_mov, int new_y_mov)
     {
         player.New_Movement(new_x_mov, new_y_mov);
