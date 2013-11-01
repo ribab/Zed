@@ -245,8 +245,7 @@ public class Level_Manager {
     		//I'm *guessing* here (for the sake of performance) that drawing the objects
     		//to the screen is more costly than having more for-loops
     		for (int i = 0; i < maxhealth; i++){
-    			//if (lifebar[i] = true)
-    			if (i < player.Get_Health()) // TODO: above code has errors so replaced lifebar with player.Get_Health()
+    			if (lifebar[i] = true)
     			{
     				g.drawImage(
     						full, 				// image
