@@ -196,7 +196,7 @@ public class Character extends Object {
     void Update_Position(){
         
         // Move Diagonally
-        if (X_Position != 0 && Y_Position != 0)
+        if (X_Movement != 0 && Y_Movement != 0)
         {
             if (System.nanoTime() >= last_move
                 + (long)(1000000000.0/(Speed*0.70710678118*16.0)))
