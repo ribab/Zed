@@ -82,16 +82,15 @@ public class Level_Manager {
         bot_tile_x = new int[height][width];
         bot_tile_y = new int[height][width];
         File Default_Level = new File("levels/test.lvl");
-        short Tile_List[][];
+        short Tile_List[][] = null;
         int Field_Size = width*height*2;
-        Tile_List = new short[1][Field_Size];
+        short Field_Types = 4;
         try {
-			Tile_List = Files.Scan_LVL(Default_Level, Field_Size);
+			Tile_List = Files.Scan_LVL(Default_Level, Field_Size, Field_Types);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Files.Close_LVL();
         //end initialize level
         int k = 0;
         for (int i = 0; i < height; i++ ){
@@ -101,7 +100,6 @@ public class Level_Manager {
 				k++;
         	}
         }
-        Files.Close_LVL();
         //top_tile_x = null;
         //top_tile_y = null;
     }

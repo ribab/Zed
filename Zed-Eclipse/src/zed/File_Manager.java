@@ -5,19 +5,19 @@ import java.util.Scanner;
 
 public class File_Manager {
 	Scanner Current_Level;
-	public short[][] Scan_LVL(File level, int size) throws FileNotFoundException{
+	public short[][] Scan_LVL(File level, int size, int types) throws FileNotFoundException{
 		Current_Level = new Scanner(level);
 		short tile[][];
-		tile = new short[1][size];
+		tile = new short[types][];
+		tile[0] = new short[size];
 		int i = 0;
+		int j = 0;
 		while(Current_Level.hasNext()){
-			tile[0][i] = Current_Level.nextShort();
+			tile[j][i] = Current_Level.nextShort();
 			i++;
 		}
-		return tile;
-	}
-	public void Close_LVL(){
 		Current_Level.close();
+		return tile;
 	}
 	public File_Manager(){
 		Current_Level = null;
