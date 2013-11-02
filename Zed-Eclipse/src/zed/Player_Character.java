@@ -12,8 +12,11 @@ import org.newdawn.slick.SpriteSheet;
  */
 public class Player_Character extends Character {
     
-	private boolean Sword_Drawn;
+	private boolean Sword_Drawn; // holds whether the sword is currently drawn
+	                             // character is currently swinging the sword
 	
+	// default initialization for Player_Character
+	// that initializes everything to 0 and null
     public Player_Character() {
 
         Init(0, 0, false,
@@ -31,15 +34,23 @@ public class Player_Character extends Character {
     }
     
     // Initialize with SpriteSheet and animation locations defined
-    public Player_Character(int tile_x, int tile_y, boolean visible,
-            int[] sprite_shift_x, int[] sprite_shift_y, int tilesize, // how far sprite is shifted and size in pixels
-            SpriteSheet sprites, int[] spritesheet_index, int[] animation_length, boolean[] looping,
-            int current_animation,
-            int health, float speed,
-            int x_movement, int y_movement){
+    public Player_Character(
+    		int tile_x, int tile_y, // tile to start in 
+    		boolean visible, // whether the character is visible
+            int[] sprite_shift_x, int[] sprite_shift_y, // sprite shift for each animation
+            int tilesize, // how far sprite is shifted and size in pixels
+            SpriteSheet sprites, // give the spritesheet to fetch animations from
+            int[] spritesheet_index, // give rows to fetch each animation from
+            int[] animation_length, // give number of frames in each animation
+            boolean[] looping, // set whether each animation loops
+            int current_animation, // set the animation to start with
+            int health, // set the player's health 
+            float speed, // set speed in tiles per second
+            int x_movement, int y_movement // set starting movement values (-1, 0, 1)
+            ){
         
         super(tile_x, tile_y, visible,
-            sprite_shift_x, sprite_shift_y, tilesize, // how far sprite is shifted and size in pixels
+            sprite_shift_x, sprite_shift_y, tilesize,
             sprites, spritesheet_index, animation_length, looping,
             current_animation,
             health, speed,
@@ -62,14 +73,18 @@ public class Player_Character extends Character {
     	Sword_Drawn = false;
     }
 
+    // The character's update function that is called every time slick updates
     public void Update(Object collision_objects[]){
     	
-        boolean collided;
+        boolean collided; // holds whether character will collide with
+                          // a collision_object
         
-        Update_Frame_State();
+        Update_Frame_State(); // update the current animation being played
+                              // based on movement and attacking
 	    
         if (collision_objects != null)
         {
+        	// check for collision based on movement values
             collided = Collision(collision_objects);
         }
         else
@@ -79,17 +94,20 @@ public class Player_Character extends Character {
 	        
         if (!collided)
         {
+        	// update the character's position based on movement values
             Update_Position();
         }
     }
     
+    // change the current movement values (-1, 0, 1)
     public void New_Movement(int new_x_mov, int new_y_mov){
         
         X_Movement = new_x_mov;
         Y_Movement = new_y_mov;
     }
     
-    // sets the correct 
+    // starts the sword attack
+    // and sets the correct animation to play
     public void Start_Sword_Attack(){
     	
     	if (Current_Animation == Animation_List[0] || Current_Animation == Animation_List[4]) // attack up
@@ -117,6 +135,8 @@ public class Player_Character extends Character {
     	}
     }
     
+    // ends the sword attack
+    // and selects the correct animation to play
     public void End_Sword_Attack(){
     	
     	Sword_Drawn = false;
@@ -143,6 +163,7 @@ public class Player_Character extends Character {
     	}
     }
     
+    // updates the current frame being displayed based on movement values
     void Update_Frame_State(){
     	
     	if (Sword_Drawn == false)

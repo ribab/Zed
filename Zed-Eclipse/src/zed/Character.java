@@ -144,9 +144,11 @@ public class Character extends Object {
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
             ){
         
+    	// Initialize object part of character
         Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
+        // initialize character part of character
         Health = health;
         Max_Health = max_health;
         Speed = speed;
