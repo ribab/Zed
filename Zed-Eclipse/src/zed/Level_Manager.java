@@ -36,6 +36,7 @@ public class Level_Manager {
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
     ArrayList<Object> objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
+    Character npclist; // array to hold NPCs in particular TODO:make into list
     
     Image Full_Heart; //full heart image
     Image Empty_Heart; //empty heart image
@@ -61,6 +62,8 @@ public class Level_Manager {
         Files = new File_Manager();
 
         Initialize_Player_Information();
+        
+        Init_NPC();
         
         //start of initializing heart images and life bar for HUD display
         Full_Heart = new Image("images/fullheart.png", false, Image.FILTER_NEAREST);
@@ -165,6 +168,37 @@ public class Level_Manager {
         		0, // set initial x_movement value to 0
         		0 // set initial y_movement value to 0
         		);
+    }
+    
+    // made this for testing initialization for NPCs
+    public void Init_NPC() throws SlickException{
+    	
+    	SpriteSheet enemysheet = new SpriteSheet("images/enemies.png", 16, 24);
+    	
+    	int[] spritesheet_index = {3, 1, 0, 2, 3, 1, 0, 2};
+    	int[] animation_length = {1, 1, 1, 1, 3, 3, 3, 3};
+    	int[] x_shift = {0, 0, 0, 0, 0, 0, 0, 0};
+    	int[] y_shift = {16, 16, 16, 16, 16, 16, 16, 16};
+    	boolean[] looping = {false, false, false, false, true, true, true, true};
+    	
+    	Character newnpc = new Character(
+        		10, // initial x position of the character w.r.t. the game tiles
+        		7, // initial y position of the character w.r.t. the game tiles
+        		true, // initialize wheter the character is visible
+                x_shift, // by how many pixels each animation is shifted in x direction
+                y_shift, // by how many pixels each animation is shifted in y direction
+                16, // Give the character how large each tile is
+                enemysheet, // Give the character the spritesheet file for fetching its animation frames
+                spritesheet_index, // Give the character the indexes for the rows of the SpriteSheet to fetch each animation from
+                animation_length, // Give the character the length of each animation
+                looping, // tell which animations are looping
+                0, // intialize which animation to start out with
+                1, // intialize the character's max_health and health
+                200, // Give the character its speed in tiles per second 
+                0, // Give the character its initial x_movement value (-1, 0, 1)
+                0); // Give the character its initial y_movement value (-1, 0, 1))
+    	
+    	npclist = newnpc;
     }
     
     // Edit class variables
@@ -272,6 +306,8 @@ public class Level_Manager {
             }
         }
         
+        npclist.Render(scale, xpos, ypos, gc, g);
+        
         player.Render(scale, xpos, ypos, gc, g);
         
         update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
@@ -288,6 +324,8 @@ public class Level_Manager {
         {
         	player.Decriment_Health();
         }
+        
+        npclist.Update(null); // TODO: add collision objects
     }
     
     // change the player's X_Movement and Y_Movement values within Zed.java

@@ -4,6 +4,8 @@ package zed;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;
 
+import java.util.Random;
+
 /*
  * @author Richard Barella Jr.
  * @author Adam Bennett
@@ -12,6 +14,7 @@ import org.newdawn.slick.SpriteSheet;
 public class Character extends Object {
     
     // index locations for each walking state within Animation_List are defined for Character
+	// Animation_List might be created before or after initialization
     private static final int FRAME_STATE_UP = 0;
     private static final int FRAME_STATE_LEFT = 1;
     private static final int FRAME_STATE_DOWN = 2;
@@ -30,6 +33,8 @@ public class Character extends Object {
     long last_move; // time in nanoseconds of last movement
     
     int AI_State; // For use in Artificial_Intelligence function
+    long Last_AI_State_Change; // For use in Artificial_Intelligence function
+    Random rnd = new Random();
     
     // Constructor for character that makes use of SpriteSheet to construct its
     // Animation array
@@ -42,6 +47,7 @@ public class Character extends Object {
             int tilesize, // Give the character how large each tile is
             SpriteSheet sprites, // Give the character the spritesheet file for fetching its animation frames
             int[] spritesheet_index, // Give the character the indexes for the rows of the SpriteSheet to fetch each animation from
+                                     // index are defined {up,left,down,right,upwalk,leftwalk,downwalk,rightwalk}
             int[] animation_length, // Give the character the length of each animation
             boolean[] looping, // tell which animations are looping
             int current_animation, // intialize which animation to start out with
@@ -69,6 +75,7 @@ public class Character extends Object {
         
         // Initialize Artificial Intelligence
         AI_State = 0;
+        Last_AI_State_Change = System.currentTimeMillis();
     }
     
     // Constructor for Character that takes an already defined Animation array
@@ -104,6 +111,7 @@ public class Character extends Object {
         
         // Initialize Artificial Intelligence
         AI_State = 0;
+        Last_AI_State_Change = System.currentTimeMillis();
     }
 
     // Default Constructor sets everything to equal either 0 or null
@@ -134,6 +142,7 @@ public class Character extends Object {
             int tilesize, // Give the character how large each tile is
             SpriteSheet sprites, // Give the character the spritesheet file for fetching its animation frames
             int[] spritesheet_index, // Give the character the indexes for the rows of the SpriteSheet to fetch each animation from
+                                     // index are defined {up,left,down,right,upwalk,leftwalk,downwalk,rightwalk}
             int[] animation_length, // Give the character the length of each animation
             boolean[] looping, // tell which animations are looping
             int current_animation, // intialize which animation to start out with
@@ -340,9 +349,35 @@ public class Character extends Object {
     // The default artificial intelligence code for the character
     // that updates the character's movement values
     private void Artificial_Intelligence(
-    		boolean collided // so the character knows if it collided with something
-    		){
+    		boolean collided){ // so the character knows if it collided with something
         
-        // TODO: Make AI Code
+    	if (System.currentTimeMillis() > Last_AI_State_Change + 200)
+    	{
+    		if (rnd.nextBoolean())
+    		{
+    			Y_Movement = 0;
+		    	if (rnd.nextBoolean())
+		    	{
+		    		X_Movement = 1;
+		    	}
+		    	else
+		    	{
+		    		X_Movement = -1;
+		    	}
+    		}
+    		else
+    		{
+    			X_Movement = 0;
+		    	if (rnd.nextBoolean())
+		    	{
+		    		Y_Movement = 1;
+		    	}
+		    	else
+		    	{
+		    		Y_Movement = -1;
+		    	}
+    		}
+	    	Last_AI_State_Change = System.currentTimeMillis();
+    	}
     }
 }

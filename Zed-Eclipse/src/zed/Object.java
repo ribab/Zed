@@ -22,7 +22,7 @@ import org.newdawn.slick.SpriteSheet;
 // objects and can also print itself to the screen.
 public class Object {
     
-    private static final int ANIMATION_SPEED = 200;
+    private static final int ANIMATION_SPEED = 100;
     
     // Holds the pixel-location of top-left of Object
     int X_Position;
