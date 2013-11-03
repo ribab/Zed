@@ -37,7 +37,7 @@ public class Zed {
             Level_Manager test;
             
             // Sounds
-            Music music = new Music("soundtrack/tense_adventure.wav");
+            Music music = new Music("soundtrack/kawfy/braintwoquart.wav");
             
             // Game Initialization
             @Override
