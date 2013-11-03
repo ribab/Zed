@@ -41,7 +41,8 @@ public class Character extends Object {
     public Character(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
-    		boolean visible, // initialize wheter the character is visible
+    		boolean visible, // initialize whether the character is visible
+    		boolean solid,
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -58,7 +59,7 @@ public class Character extends Object {
             ) {
         
         // Constructs the "Object" part of Character
-        super(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
         // Initialze health
@@ -82,19 +83,20 @@ public class Character extends Object {
     public Character(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
-    		boolean visible, // initialize wheter the character is visible
+    		boolean visible, // initialize whether the character is visible
+    		boolean solid, // initialize solidity for collision
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
     		Animation[] animation_list, // Give the character the animations it will be using
-            int current_animation, // intialize which animation to start out with
-            int health, // intialize the character's max_health and health
+            int current_animation, // initialize which animation to start out with
+            int health, // initialize the character's max_health and health
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
     		){
     	
-    	super(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation);
     	
         // Initialze health
@@ -117,7 +119,7 @@ public class Character extends Object {
     // Default Constructor sets everything to equal either 0 or null
     public Character() {
     	
-        Init(0, 0, false,
+        Init(0, 0, false, false,
             null, null, 0, // how far sprite is shifted and size in pixels
             null, null, null, null,
             0);
@@ -137,6 +139,7 @@ public class Character extends Object {
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
     		boolean visible, // initialize wheter the character is visible
+    		boolean solid, // initialize solidity for collision
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -154,7 +157,7 @@ public class Character extends Object {
             ){
         
     	// Initialize object part of character
-        Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
         // initialize character part of character
@@ -193,9 +196,19 @@ public class Character extends Object {
     // can tell if Character will collide with another object or not
     boolean Collision(Object collision_objects[]){
         
-        // TODO: write collision code
-        
-        return false;// TODO: return if collided or not
+        for (int i = 0; i < collision_objects.length; i++)
+        {
+        	if (      (collision_objects[i].X_Position + 16 >= X_Position + X_Movement
+        			&& collision_objects[i].Y_Position + 16 >= Y_Position + Y_Movement
+        			&& collision_objects[i].X_Position      <= X_Position + X_Movement + 16
+        			&& collision_objects[i].Y_Position      <= Y_Position + Y_Movement + 16)
+        			|| X_Position + X_Movement >= 16*20 || X_Position + X_Movement < 0
+        			|| Y_Position + Y_Movement >= 16*15 || Y_Position + Y_Movement < 0)
+        	{
+        		return true; // did collide
+        	}
+        }
+        return false; // didn't collide
     }
     
     // updates the current animation being played based on current movement

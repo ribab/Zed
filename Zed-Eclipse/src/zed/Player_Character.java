@@ -19,7 +19,7 @@ public class Player_Character extends Character {
 	// that initializes everything to 0 and null
     public Player_Character() {
 
-        Init(0, 0, false,
+        Init(0, 0, false, false,
             null, null, 0, // how far sprite is shifted and size in pixels
             null, null, null, null,
             0);
@@ -37,6 +37,7 @@ public class Player_Character extends Character {
     public Player_Character(
     		int tile_x, int tile_y, // tile to start in 
     		boolean visible, // whether the character is visible
+    		boolean solid,
             int[] sprite_shift_x, int[] sprite_shift_y, // sprite shift for each animation
             int tilesize, // how far sprite is shifted and size in pixels
             SpriteSheet sprites, // give the spritesheet to fetch animations from
@@ -49,7 +50,7 @@ public class Player_Character extends Character {
             int x_movement, int y_movement // set starting movement values (-1, 0, 1)
             ){
         
-        super(tile_x, tile_y, visible,
+        super(tile_x, tile_y, visible, solid,
             sprite_shift_x, sprite_shift_y, tilesize,
             sprites, spritesheet_index, animation_length, looping,
             current_animation,
@@ -60,13 +61,13 @@ public class Player_Character extends Character {
     }
     
     // Initialize with animations defined
-    public Player_Character(int tile_x, int tile_y, boolean visible,
+    public Player_Character(int tile_x, int tile_y, boolean visible, boolean solid,
     		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
     		Animation[] animation_list, int current_animation,
     		int health, float speed,
     		int x_movement, int y_movement){
     	
-    	super(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation,
     			health, speed, x_movement, y_movement);
     	

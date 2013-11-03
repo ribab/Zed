@@ -158,6 +158,7 @@ public class Level_Manager {
         		0, // intialize character's x position w.r.t. tiles
         		0, // initialize character's y position w.r.t. tiles
         		true, // character is visible
+        		true, // character is solid
         		player_sprite_shift_x, // give character sprite shift value in the x axis
         		player_sprite_shift_y, // give character sprite shift value in the y axis
         		16, // give player_character the size of a tile
@@ -178,17 +179,18 @@ public class Level_Manager {
     	int[] spritesheet_index = {3, 1, 0, 2, 3, 1, 0, 2};
     	int[] animation_length = {1, 1, 1, 1, 3, 3, 3, 3};
     	int[] x_shift = {0, 0, 0, 0, 0, 0, 0, 0};
-    	int[] y_shift = {16, 16, 16, 16, 16, 16, 16, 16};
+    	int[] y_shift = {8, 8, 8, 8, 8, 8, 8, 8};
     	boolean[] looping = {false, false, false, false, true, true, true, true};
     	
     	Character newnpc = new Character(
         		10, // initial x position of the character w.r.t. the game tiles
         		7, // initial y position of the character w.r.t. the game tiles
-        		true, // initialize wheter the character is visible
+        		true, // character is visible
+        		false, // character is not solid
                 x_shift, // by how many pixels each animation is shifted in x direction
                 y_shift, // by how many pixels each animation is shifted in y direction
                 16, // Give the character how large each tile is
-                enemysheet, // Give the character the spritesheet file for fetching its animation frames
+                enemysheet, // Give the character the SpriteSheet file for fetching its animation frames
                 spritesheet_index, // Give the character the indexes for the rows of the SpriteSheet to fetch each animation from
                 animation_length, // Give the character the length of each animation
                 looping, // tell which animations are looping
@@ -317,7 +319,10 @@ public class Level_Manager {
     // in the level
     public void update()
     {
-        player.Update(null);
+    	Object[] tmp = new Object[1]; // TODO: temporary code
+    	tmp[0] = npclist;                   // TODO: temporary code
+        player.Update(tmp);
+        //player.Update(npclist); // TODO: uncomment when npclist is a list
         
         if (player.Get_Sword_Pos_X() > 0 && player.Get_Sword_Pos_X() < 16*player.Get_Health()
         		&& player.Get_Sword_Pos_Y() > 0 && player.Get_Sword_Pos_Y() < 16)
@@ -325,7 +330,9 @@ public class Level_Manager {
         	player.Decriment_Health();
         }
         
-        npclist.Update(null); // TODO: add collision objects
+        Object[] tmp2 = new Object[1];
+        tmp2[0] = player;
+        npclist.Update(tmp2); // TODO: add collision objects
     }
     
     // change the player's X_Movement and Y_Movement values within Zed.java

@@ -40,16 +40,21 @@ public class Object {
     // Holds the visibility of Object
     boolean Visible;
     
+    // If true, then all objects collide with it.
+    // If false, then it still collides with other Solid objects.
+    boolean Solid;
+    
     // Default constructor
     public Object(){
         
-        Init(0, 0, false, null, null, 1, null, null, null, null, 0);
+        Init(0, 0, false, false, null, null, 1, null, null, null, null, 0);
     }
     
     // Constructor given SpriteSheet
     public Object(
     		int tile_x, int tile_y, // tell which tile to start in
     		boolean visible, // tell whether the object is visible
+    		boolean solid,
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
             int tilesize, // give size of a tile in pixels
             SpriteSheet sprites, // give the spritesheet used
@@ -59,7 +64,7 @@ public class Object {
             int current_animation // tell which animation to start with
             ){
         
-        this.Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        this.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
     }
     
@@ -67,6 +72,7 @@ public class Object {
     public Object(
     		int tile_x, int tile_y, // tell which tile to start in
     		boolean visible, // tell whether the object is visible
+    		boolean solid, // tell whether the object is solid for collision
     		int[] sprite_shift_x, int[] sprite_shift_y,  // number of pixels each animation is shifted by
     		int tilesize, // give size of a tile in pixels
     		Animation[] animation_list, // give preinitialized animations
@@ -74,13 +80,14 @@ public class Object {
     		){
     	
     	// initialize
-    	this.Init(tile_x, tile_y, visible, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
+    	this.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
     }
     
     // Initialization function that generates animations based on SpriteSheet
     public void Init(
     		int tile_x, int tile_y, // tell which tile to start in
     		boolean visible, // tell whether the object is visible
+    		boolean solid, // tell whether the object is a solid for collision
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
             int tilesize, // give size of a tile in pixels
             SpriteSheet sprites, // give the spritesheet used
@@ -95,6 +102,8 @@ public class Object {
         Y_Position = tile_y*tilesize;
         
         Visible = visible; // set visibility
+        
+        Solid = solid; // set solidity for collision
         
         Sprite_Shift_X = sprite_shift_x; // set the shift of each animation's display
         Sprite_Shift_Y = sprite_shift_y;
@@ -118,7 +127,7 @@ public class Object {
     }
 
     // Initialization given Animation[]
-    public void Init(int tile_x, int tile_y, boolean visible,
+    public void Init(int tile_x, int tile_y, boolean visible, boolean solid,
     		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
     		Animation[] animation_list, int current_animation)
     {
@@ -126,6 +135,8 @@ public class Object {
     	Y_Position = tile_y*tilesize;
     	
     	Visible = visible;
+    	
+    	Solid = solid;
     	
     	Sprite_Shift_X = sprite_shift_x;
     	Sprite_Shift_Y = sprite_shift_y;
