@@ -88,15 +88,14 @@ public class Level_Manager {
         bot_tile_y = new int[height][width];
         File Default_Level = new File("levels/test.lvl");
         short Tile_List[][] = null;
-        int Field_Size = width*height*2;
         short Field_Types = 4;
         try {
-			Tile_List = Files.Scan_LVL(Default_Level, Field_Size, Field_Types);
+			Tile_List = Files.Scan_LVL(Default_Level, Field_Types);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        //end initialize level
+
         int k = 0;
         for (int i = 0; i < height; i++ ){
         	for(int j = 0; j < width; j++){
@@ -105,8 +104,7 @@ public class Level_Manager {
 				k++;
         	}
         }
-        //top_tile_x = null;
-        //top_tile_y = null;
+        //end initialize level
     }
     
     // default initialization for the player's animations, position, attack speed, animation speed
