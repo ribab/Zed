@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
+import java.util.List;
+
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -35,8 +37,8 @@ public class Level_Manager {
     
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
-    ArrayList<Object> objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
-    Character npclist; // array to hold NPCs in particular TODO:make into list
+    GObject[] objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
+    GCharacter[] npclist; // array to hold NPCs in particular TODO:make into list
     
     Image Full_Heart; //full heart image
     Image Empty_Heart; //empty heart image
@@ -165,7 +167,7 @@ public class Level_Manager {
         		player_animation_list, // give the created list of animations
         		0, // give which animation to start with
         		5, // give health of character
-        		5.0f, // give speed in tiles per second of character
+        		8.0f, // give speed in tiles per second of character
         		0, // set initial x_movement value to 0
         		0 // set initial y_movement value to 0
         		);
@@ -173,6 +175,8 @@ public class Level_Manager {
     
     // made this for testing initialization for NPCs
     public void Init_NPC() throws SlickException{
+    	
+    	npclist = new GCharacter[1];
     	
     	SpriteSheet enemysheet = new SpriteSheet("images/enemies.png", 16, 24);
     	
@@ -182,7 +186,7 @@ public class Level_Manager {
     	int[] y_shift = {8, 8, 8, 8, 8, 8, 8, 8};
     	boolean[] looping = {false, false, false, false, true, true, true, true};
     	
-    	Character newnpc = new Character(
+    	npclist[0] = new GCharacter(
         		10, // initial x position of the character w.r.t. the game tiles
         		7, // initial y position of the character w.r.t. the game tiles
         		true, // character is visible
@@ -199,8 +203,11 @@ public class Level_Manager {
                 200, // Give the character its speed in tiles per second 
                 0, // Give the character its initial x_movement value (-1, 0, 1)
                 0); // Give the character its initial y_movement value (-1, 0, 1))
+    }
+    
+    public void Init_GObject(){
     	
-    	npclist = newnpc;
+    	objectlist = new GObject[0];
     }
     
     // Edit class variables
@@ -308,7 +315,10 @@ public class Level_Manager {
             }
         }
         
-        npclist.Render(scale, xpos, ypos, gc, g);
+        for (int i = 0; i < npclist.length; i++)
+        {
+            npclist[i].Render(scale, xpos, ypos, gc, g);
+        }
         
         player.Render(scale, xpos, ypos, gc, g);
         
@@ -319,20 +329,10 @@ public class Level_Manager {
     // in the level
     public void update()
     {
-    	Object[] tmp = new Object[1]; // TODO: temporary code
-    	tmp[0] = npclist;                   // TODO: temporary code
-        player.Update(tmp);
+        player.Update(objectlist, npclist);
         //player.Update(npclist); // TODO: uncomment when npclist is a list
         
-        if (player.Get_Sword_Pos_X() > 0 && player.Get_Sword_Pos_X() < 16*player.Get_Health()
-        		&& player.Get_Sword_Pos_Y() > 0 && player.Get_Sword_Pos_Y() < 16)
-        {
-        	player.Decriment_Health();
-        }
-        
-        Object[] tmp2 = new Object[1];
-        tmp2[0] = player;
-        npclist.Update(tmp2); // TODO: add collision objects
+        npclist[0].Update(objectlist, npclist); // TODO: add collision objects
     }
     
     // change the player's X_Movement and Y_Movement values within Zed.java

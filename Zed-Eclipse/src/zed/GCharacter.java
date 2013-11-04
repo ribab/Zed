@@ -11,7 +11,7 @@ import java.util.Random;
  * @author Adam Bennett
  * @author Ryan Slyter
  */
-public class Character extends Object {
+public class GCharacter extends GObject {
     
     // index locations for each walking state within Animation_List are defined for Character
 	// Animation_List might be created before or after initialization
@@ -24,6 +24,8 @@ public class Character extends Object {
     private static final int FRAME_STATE_DOWN_WALK = 6;
     private static final int FRAME_STATE_RIGHT_WALK = 7;
     
+    private static final int INVINCIBILITY_TIME = 1000;
+    
     int Health; // current health for Character
     int Max_Health; // maximum health for Character
     float Speed; // tiles per second
@@ -31,6 +33,7 @@ public class Character extends Object {
     int Y_Movement; // {-1, 0, 1} tells movement direction in y-axis
     
     long last_move; // time in nanoseconds of last movement
+    long last_damage; // time in milliseconds of last time was damaged
     
     int AI_State; // For use in Artificial_Intelligence function
     long Last_AI_State_Change; // For use in Artificial_Intelligence function
@@ -38,7 +41,7 @@ public class Character extends Object {
     
     // Constructor for character that makes use of SpriteSheet to construct its
     // Animation array
-    public Character(
+    public GCharacter(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
     		boolean visible, // initialize whether the character is visible
@@ -73,6 +76,8 @@ public class Character extends Object {
         
         // Initialize movement
         last_move = System.nanoTime();
+        // Initialize damage timer
+        last_damage = System.currentTimeMillis();
         
         // Initialize Artificial Intelligence
         AI_State = 0;
@@ -80,7 +85,7 @@ public class Character extends Object {
     }
     
     // Constructor for Character that takes an already defined Animation array
-    public Character(
+    public GCharacter(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
     		boolean visible, // initialize whether the character is visible
@@ -110,6 +115,8 @@ public class Character extends Object {
         
         // Initialize movement
         last_move = System.nanoTime();
+        // Initialize damage timer
+        last_damage = System.currentTimeMillis();
         
         // Initialize Artificial Intelligence
         AI_State = 0;
@@ -117,7 +124,7 @@ public class Character extends Object {
     }
 
     // Default Constructor sets everything to equal either 0 or null
-    public Character() {
+    public GCharacter() {
     	
         Init(0, 0, false, false,
             null, null, 0, // how far sprite is shifted and size in pixels
@@ -129,6 +136,7 @@ public class Character extends Object {
         Speed = 0;
         X_Movement = 0;
         last_move = System.nanoTime();
+        last_damage = System.currentTimeMillis();
     }
     
     // frames cannot have array size less than 4x5 because these
@@ -171,20 +179,14 @@ public class Character extends Object {
     }
     
     // Updates the Character's position based on artificial intelligence and collision
-    public void Update(Object collision_objects[]){
+    public void Update(GObject[] collision_objects, GCharacter[] npcs){
     	
-        boolean collided;
+        boolean collided = false;
         
         Update_Frame_State();
         
-        if (collision_objects != null) // check if there is something to collide with
-        {
-            collided = Collision(collision_objects); // tell whether character has collided with an object
-        }
-        else
-        {
-            collided = false;
-        }
+        collided |= Collision(collision_objects); // tell whether character has collided with an object
+        collided |= Collision(npcs);
         
         if (!collided)
         {
@@ -194,19 +196,26 @@ public class Character extends Object {
     }
     
     // can tell if Character will collide with another object or not
-    boolean Collision(Object collision_objects[]){
+    boolean Collision(GObject collision_objects[]){
         
-        for (int i = 0; i < collision_objects.length; i++)
+    	if (collision_objects != null)
+    	{
+	        for (int i = 0; i < collision_objects.length; i++)
+	        {
+		        if (collision_objects != null && collision_objects[i] != this
+		        		&& collision_objects[i].X_Position + 16 >= X_Position + X_Movement
+		        		&& collision_objects[i].Y_Position + 16 >= Y_Position + Y_Movement
+		        		&& collision_objects[i].X_Position      <= X_Position + X_Movement + 16
+		        		&& collision_objects[i].Y_Position      <= Y_Position + Y_Movement + 16)
+		        {
+		        	return true; // did collide
+		        }
+	        }
+    	}
+        if (  X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
+    			|| Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
         {
-        	if (      (collision_objects[i].X_Position + 16 >= X_Position + X_Movement
-        			&& collision_objects[i].Y_Position + 16 >= Y_Position + Y_Movement
-        			&& collision_objects[i].X_Position      <= X_Position + X_Movement + 16
-        			&& collision_objects[i].Y_Position      <= Y_Position + Y_Movement + 16)
-        			|| X_Position + X_Movement >= 16*20 || X_Position + X_Movement < 0
-        			|| Y_Position + Y_Movement >= 16*15 || Y_Position + Y_Movement < 0)
-        	{
-        		return true; // did collide
-        	}
+        	return true; // can't go out of bounds
         }
         return false; // didn't collide
     }
@@ -291,13 +300,17 @@ public class Character extends Object {
     // Decriment the current health
     public void Decriment_Health(){
         
-    	if (Health > 0) // no decrimenting past 0
+    	if (System.currentTimeMillis() > last_damage + INVINCIBILITY_TIME)
     	{
-    		Health--; // decriment health
-    	}
-    	else
-    	{
-    		Health = 0; // safeguard in case health is below 0
+	    	if (Health > 0) // no decrimenting past 0
+	    	{
+	    		Health--; // decriment health
+	    	}
+	    	else
+	    	{
+	    		Health = 0; // safeguard in case health is below 0
+	    	}
+	    	last_damage = System.currentTimeMillis();
     	}
     }
     
@@ -305,13 +318,17 @@ public class Character extends Object {
     // if damage dealt needs more decriments
     public void Decrease_Health(int health_dec){
     	
-    	if (Health - health_dec <= 0) // don't decrease below 0
+    	if (System.currentTimeMillis() > last_damage + INVINCIBILITY_TIME)
     	{
-    		Health = 0; // safeguard in case decreased below 0
-    	}
-    	else
-    	{
-    		Health -= health_dec; // decrease health
+	    	if (Health - health_dec <= 0) // don't decrease below 0
+	    	{
+	    		Health = 0; // safeguard in case decreased below 0
+	    	}
+	    	else
+	    	{
+	    		Health -= health_dec; // decrease health
+	    	}
+	    	last_damage = System.currentTimeMillis();
     	}
     }
     
@@ -319,6 +336,7 @@ public class Character extends Object {
     public void Reset_Health(){
     	
     	Health = Max_Health;
+    	last_damage = System.currentTimeMillis();
     }
     
     // Incrase the character's health by a certain amount

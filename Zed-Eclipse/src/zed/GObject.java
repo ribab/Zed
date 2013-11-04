@@ -20,7 +20,7 @@ import org.newdawn.slick.SpriteSheet;
 // ============
 // The most basic out of classes that hold information on in-game
 // objects and can also print itself to the screen.
-public class Object {
+public class GObject {
     
     private static final int ANIMATION_SPEED = 100;
     
@@ -45,13 +45,13 @@ public class Object {
     boolean Solid;
     
     // Default constructor
-    public Object(){
+    public GObject(){
         
         Init(0, 0, false, false, null, null, 1, null, null, null, null, 0);
     }
     
     // Constructor given SpriteSheet
-    public Object(
+    public GObject(
     		int tile_x, int tile_y, // tell which tile to start in
     		boolean visible, // tell whether the object is visible
     		boolean solid,
@@ -69,7 +69,7 @@ public class Object {
     }
     
     // Constructor given Animation[]
-    public Object(
+    public GObject(
     		int tile_x, int tile_y, // tell which tile to start in
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is solid for collision

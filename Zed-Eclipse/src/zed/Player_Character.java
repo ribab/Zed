@@ -10,7 +10,7 @@ import org.newdawn.slick.SpriteSheet;
  * @author Adam Bennett
  * @author Ryan Slyter
  */
-public class Player_Character extends Character {
+public class Player_Character extends GCharacter {
     
 	private boolean Sword_Drawn; // holds whether the sword is currently drawn
 	                             // character is currently swinging the sword
@@ -75,28 +75,27 @@ public class Player_Character extends Character {
     }
 
     // The character's update function that is called every time slick updates
-    public void Update(Object collision_objects[]){
+    public void Update(GObject[] objects, GCharacter[] npcs){
     	
-        boolean collided; // holds whether character will collide with
-                          // a collision_object
+        boolean collided = false; // holds whether character will collide with
+                                  // a collision_object
+        boolean hit_npc = false;
         
         Update_Frame_State(); // update the current animation being played
                               // based on movement and attacking
 	    
-        if (collision_objects != null)
+        // check for collision based on movement values
+        if (!Collision(objects))
+	    {
+	    	// update the character's position based on movement values
+	        Update_Position();
+	    }
+	    
+        // check for collision with npc based on movement values
+        if (Collision(npcs))
         {
-        	// check for collision based on movement values
-            collided = Collision(collision_objects);
-        }
-        else
-        {
-            collided = false;
-        }
-	        
-        if (!collided)
-        {
-        	// update the character's position based on movement values
-            Update_Position();
+        	// damage the character if hits an npc
+        	Decriment_Health();
         }
     }
     
