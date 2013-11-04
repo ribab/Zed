@@ -2,6 +2,8 @@
 package zed;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
 import java.util.Random;
@@ -179,36 +181,49 @@ public class GCharacter extends GObject {
     }
     
     // Updates the Character's position based on artificial intelligence and collision
-    public void Update(GObject[] collision_objects, GCharacter[] npcs){
+    public void Update(GObject[] collision_objects, GCharacter[] npcs, Player_Character player){
     	
-        boolean collided = false;
-        
-        Update_Frame_State();
-        
-        collided |= Collision(collision_objects); // tell whether character has collided with an object
-        collided |= Collision(npcs);
-        
-        if (!collided)
-        {
-            Update_Position(); // can move if there is something to collide with
-        }
-        Artificial_Intelligence(collided); // Proceed with AI code to update the character's movement values
+    	if (Health > 0)
+    	{
+	        boolean collided = false;
+	        
+	        Update_Frame_State();
+	        
+	        collided |= Collision(collision_objects); // tell whether character has collided with an object
+	        collided |= Collision(npcs); // tell whether character has collided with another collidable npc
+	        
+	        if (!collided)
+	        {
+	            Update_Position(); // can move if there is something to collide with
+	        }
+	        if (Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
+	        	Decriment_Health(); // kills this character with a sword
+	        
+	        Artificial_Intelligence(collided); // Proceed with AI code to update the character's movement values
+    	}
     }
     
-    // can tell if Character will collide with another object or not
+    // can tell if GCharacter will collide with another object or not
     boolean Collision(GObject collision_objects[]){
         
     	if (collision_objects != null)
     	{
 	        for (int i = 0; i < collision_objects.length; i++)
 	        {
-		        if (collision_objects != null && collision_objects[i] != this
-		        		&& collision_objects[i].X_Position + 16 >= X_Position + X_Movement
-		        		&& collision_objects[i].Y_Position + 16 >= Y_Position + Y_Movement
-		        		&& collision_objects[i].X_Position      <= X_Position + X_Movement + 16
-		        		&& collision_objects[i].Y_Position      <= Y_Position + Y_Movement + 16)
+		        if (collision_objects[i] != this)
 		        {
-		        	return true; // did collide
+		        	if (Collision(collision_objects[i].Get_X_Position(),
+		        			collision_objects[i].Get_Y_Position()))
+		        		return true;
+		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
+		        			collision_objects[i].Get_Y_Position()))
+		        		return true;
+		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
+		        			collision_objects[i].Get_Y_Position() + 16))
+		        		return true;
+		        	if (Collision(collision_objects[i].Get_X_Position(),
+		        			collision_objects[i].Get_Y_Position() + 16))
+		        		return true;
 		        }
 	        }
     	}
@@ -218,6 +233,49 @@ public class GCharacter extends GObject {
         	return true; // can't go out of bounds
         }
         return false; // didn't collide
+    }
+ // can tell if GCharacter will collide with another GCharacter or not
+    boolean Collision(GCharacter collision_objects[]){
+        
+    	if (collision_objects != null)
+    	{
+	        for (int i = 0; i < collision_objects.length; i++)
+	        {
+	        	// check if collision is accurate
+		        if (collision_objects[i] != this && collision_objects[i].Get_Health() > 0)
+		        {
+		        	if (Collision(collision_objects[i].Get_X_Position(),
+		        			collision_objects[i].Get_Y_Position()))
+		        		return true;
+		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
+		        			collision_objects[i].Get_Y_Position()))
+		        		return true;
+		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
+		        			collision_objects[i].Get_Y_Position() + 16))
+		        		return true;
+		        	if (Collision(collision_objects[i].Get_X_Position(),
+		        			collision_objects[i].Get_Y_Position() + 16))
+		        		return true;
+		        }
+	        }
+    	}
+        if (  X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
+    			|| Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
+        {
+        	return true; // can't go out of bounds
+        }
+        return false; // didn't collide
+    }
+    
+    // can tell if pixel is within GCharacter or not
+    boolean Collision(int x, int y){
+    	
+    	if (x >= X_Position + X_Movement && x < X_Position + X_Movement + 16
+    	 && y >= Y_Position + Y_Movement && y < Y_Position + Y_Movement + 16)
+    	{
+    		return true;
+    	}
+    	return false;
     }
     
     // updates the current animation being played based on current movement
@@ -409,6 +467,16 @@ public class GCharacter extends GObject {
 		    	}
     		}
 	    	Last_AI_State_Change = System.currentTimeMillis();
+    	}
+    }
+    
+    public void Render(int zoom,
+            int current_tile_x, int current_tile_y, // position of tiles
+            GameContainer gc, Graphics g){
+    	
+    	if (Health > 0)
+    	{
+    		super.Render(zoom, current_tile_x, current_tile_y, gc, g);
     	}
     }
 }

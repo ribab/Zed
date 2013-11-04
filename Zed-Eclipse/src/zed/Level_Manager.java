@@ -332,7 +332,7 @@ public class Level_Manager {
         player.Update(objectlist, npclist);
         //player.Update(npclist); // TODO: uncomment when npclist is a list
         
-        npclist[0].Update(objectlist, npclist); // TODO: add collision objects
+        npclist[0].Update(objectlist, npclist, player); // TODO: add collision objects
     }
     
     // change the player's X_Movement and Y_Movement values within Zed.java

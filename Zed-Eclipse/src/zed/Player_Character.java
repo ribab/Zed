@@ -77,26 +77,29 @@ public class Player_Character extends GCharacter {
     // The character's update function that is called every time slick updates
     public void Update(GObject[] objects, GCharacter[] npcs){
     	
-        boolean collided = false; // holds whether character will collide with
-                                  // a collision_object
-        boolean hit_npc = false;
-        
-        Update_Frame_State(); // update the current animation being played
-                              // based on movement and attacking
-	    
-        // check for collision based on movement values
-        if (!Collision(objects))
-	    {
-	    	// update the character's position based on movement values
-	        Update_Position();
-	    }
-	    
-        // check for collision with npc based on movement values
-        if (Collision(npcs))
-        {
-        	// damage the character if hits an npc
-        	Decriment_Health();
-        }
+    	if (Health > 0)
+    	{
+	        boolean collided = false; // holds whether character will collide with
+	                                  // a collision_object
+	        boolean hit_npc = false;
+	        
+	        Update_Frame_State(); // update the current animation being played
+	                              // based on movement and attacking
+		    
+	        // check for collision based on movement values
+	        if (!Collision(objects))
+		    {
+		    	// update the character's position based on movement values
+		        Update_Position();
+		    }
+		    
+	        // check for collision with npc based on movement values
+	        if (Collision(npcs))
+	        {
+	        	// damage the character if hits an npc
+	        	Decriment_Health();
+	        }
+    	}
     }
     
     // change the current movement values (-1, 0, 1)
