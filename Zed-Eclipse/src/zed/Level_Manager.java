@@ -256,17 +256,17 @@ public class Level_Manager {
     		}
     	}
     	else{
-    		for (int i = 0; i <=current_Health; i++){
+    		for (int i = 0; i <current_Health; i++){
     			lifebar[i] = true;
     		}
-    		for (int i = current_Health+1; i < maxhealth; i++){
+    		for (int i = current_Health; i < maxhealth; i++){
     			lifebar[i] = false;
     		}
     	}
     		//I'm *guessing* here (for the sake of performance) that drawing the objects
     		//to the screen is more costly than having more for-loops
     		for (int i = 0; i < maxhealth; i++){
-    			if (lifebar[i] = true)
+    			if (lifebar[i] == true)
     			{
     				g.drawImage(
     						full, 				// image
