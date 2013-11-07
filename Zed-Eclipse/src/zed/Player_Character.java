@@ -145,25 +145,28 @@ public class Player_Character extends GCharacter {
     	
     	Sword_Drawn = false;
     	
-    	if (Current_Animation == Animation_List[8]) // Stop attacking up
+    	if (Current_Animation.isStopped())
     	{
-    		Current_Animation.restart();
-    		Change_Animation(0);
-    	}
-    	else if (Current_Animation == Animation_List[9]) // Stop attacking left
-    	{
-    		Current_Animation.restart();
-    		Change_Animation(1);
-    	}
-    	else if (Current_Animation == Animation_List[10]) // Stop attacking down
-    	{
-    		Current_Animation.restart();
-    		Change_Animation(2);
-    	}
-    	else if (Current_Animation == Animation_List[11]) // Stop attacking right
-    	{
-    		Current_Animation.restart();
-    		Change_Animation(3);
+	    	if (Current_Animation == Animation_List[8]) // Stop attacking up
+	    	{
+	    		Current_Animation.restart();
+	    		Change_Animation(0);
+	    	}
+	    	else if (Current_Animation == Animation_List[9]) // Stop attacking left
+	    	{
+	    		Current_Animation.restart();
+	    		Change_Animation(1);
+	    	}
+	    	else if (Current_Animation == Animation_List[10]) // Stop attacking down
+	    	{
+	    		Current_Animation.restart();
+	    		Change_Animation(2);
+	    	}
+	    	else if (Current_Animation == Animation_List[11]) // Stop attacking right
+	    	{
+	    		Current_Animation.restart();
+	    		Change_Animation(3);
+	    	}
     	}
     }
     

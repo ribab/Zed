@@ -44,7 +44,7 @@ public class Zombie extends GCharacter {
         // Initialize zombie based on constructor
 		super.Init(tile_x, tile_y, true, false,
 				sprite_shift_x, sprite_shift_y, 16, zombie_animations,
-				0, 5, 1.0f, 0, 0);
+				0, 3, 1.0f, 0, 0);
 		
 		AI_State_Change_Time = 500;
 	}
