@@ -34,7 +34,7 @@ public class Player_Character extends GCharacter {
     }
     
     // Initialize with SpriteSheet and animation locations defined
-    public Player_Character(
+   /* public Player_Character(
     		int tile_x, int tile_y, // tile to start in 
     		boolean visible, // whether the character is visible
     		boolean solid,
@@ -58,7 +58,7 @@ public class Player_Character extends GCharacter {
             x_movement, y_movement);
         
         Sword_Drawn = false;
-    }
+    }*/
     
     // Initialize with animations defined
     public Player_Character(int tile_x, int tile_y, boolean visible, boolean solid,

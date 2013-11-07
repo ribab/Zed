@@ -105,8 +105,6 @@ public class Level_Manager {
     // within the level
     public void Initialize_Player_Information()
     {
-    	boolean f = false; // f stands for false
-        boolean t = true; // t stands for true
         // spritesheet information for standing and walking animations
         int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3}; // row in spritesheet for each animation
         int[] player_spritesheet_index_x = {1,  1,  1,  1,  0,  0,  0,  0}; // starting frame in each animation
@@ -114,7 +112,7 @@ public class Level_Manager {
         // sprite information for all animations
         int[] player_sprite_shift_x    = {0,  0,  0,  0,  0,  0,  0,  0,  16, 16, 16, 16}; // how many pixels to shift animation in x direction
         int[] player_sprite_shift_y    = {16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16}; // how many pixels to shift animation in y direction
-        boolean[] player_looping       = {f,  f,  f,  f,  t,  t,  t,  t}; // whether each animation is looping or not
+        boolean[] player_looping       = {false,  false,  false,  false,  true,  true,  true,  true}; // whether each animation is looping or not
         int player_animation_speed = 200; // speed in milliseconds for the walking animations
         int player_attack_animation_speed = 50; // speed in milliseconds for the attack animations
         
