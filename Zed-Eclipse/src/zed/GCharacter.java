@@ -26,7 +26,8 @@ public class GCharacter extends GObject {
     int FRAME_STATE_DOWN_WALK = 6;
     int FRAME_STATE_RIGHT_WALK = 7;
     
-    private static final int INVINCIBILITY_TIME = 1000;
+    final int INVINCIBILITY_TIME = 1000;
+    final int STUN_TIME = 200;
     
     int Health; // current health for Character
     int Max_Health; // maximum health for Character
@@ -222,12 +223,14 @@ public class GCharacter extends GObject {
 	        collided |= Collision(collision_objects); // tell whether character has collided with an object
 	        collided |= Collision(npcs); // tell whether character has collided with another collidable npc
 	        
-	        if (!collided)
+	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME)
 	        {
 	            Update_Position(); // can move if there is something to collide with
 	        }
 	        if (Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
+	        {
 	        	Decriment_Health(); // kills this character with a sword
+	        }
 	        
 	        Artificial_Intelligence(collided, player); // Proceed with AI code to update the character's movement values
     	}
