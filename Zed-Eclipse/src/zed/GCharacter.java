@@ -39,6 +39,7 @@ public class GCharacter extends GObject {
     
     int AI_State; // For use in Artificial_Intelligence function
     long Last_AI_State_Change; // For use in Artificial_Intelligence function
+    long AI_State_Change_Time;
     Random rnd = new Random();
     
     // Constructor for character that makes use of SpriteSheet to construct its
@@ -84,6 +85,7 @@ public class GCharacter extends GObject {
         // Initialize Artificial Intelligence
         AI_State = 0;
         Last_AI_State_Change = System.currentTimeMillis();
+        AI_State_Change_Time = 200;
     }
     
     // Constructor for Character that takes an already defined Animation array
@@ -469,7 +471,7 @@ public class GCharacter extends GObject {
     		boolean collision, // so the character knows if it collided with something
     		Player_Character player){ 
         
-    	if (System.currentTimeMillis() > Last_AI_State_Change + 200)
+    	if (System.currentTimeMillis() > Last_AI_State_Change + AI_State_Change_Time)
     	{
     		if (rnd.nextBoolean())
     		{
