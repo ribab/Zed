@@ -66,7 +66,7 @@ public class Zed {
                  gc.setVSync(true); // makes it so computer doesn't heat up
                  //gc.setTargetFrameRate(120);
                  
-              	Input input = gc.getInput(); // get the current input
+                 Input input = gc.getInput(); // get the current input
                  
                  if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
                  {
