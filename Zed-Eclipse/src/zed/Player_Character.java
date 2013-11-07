@@ -184,7 +184,7 @@ public class Player_Character extends GCharacter {
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
-    			return X_Position + 16;
+    			return X_Position + 16/2;
     		}
     		else if (Current_Animation == Animation_List[9]) // attack left
     		{
@@ -192,7 +192,7 @@ public class Player_Character extends GCharacter {
     		}
     		else if (Current_Animation == Animation_List[10]) // attack down
     		{
-    			return X_Position + 16;
+    			return X_Position + 16/2;
     		}
     		else if (Current_Animation == Animation_List[11]) // attack right
     		{
@@ -214,7 +214,7 @@ public class Player_Character extends GCharacter {
     		}
     		else if (Current_Animation == Animation_List[9]) // attack left
     		{
-    			return Y_Position + 16;
+    			return Y_Position + 16/2;
     		}
     		else if (Current_Animation == Animation_List[10]) // attack down
     		{
@@ -222,7 +222,7 @@ public class Player_Character extends GCharacter {
     		}
     		else if (Current_Animation == Animation_List[11]) // attack right
     		{
-    			return Y_Position + 16;
+    			return Y_Position + 16/2;
     		}
     	}
     	return -1;

@@ -274,7 +274,7 @@ public class Level_Manager {
     // the display function for the Level_Manager that is called every frame
     // to render the level
     public void display(GameContainer gc, Graphics g){
-        
+    	
         for (int i = 0; i < height; i++) // display each row
         {
             for (int j = 0; j < width; j++) // display each column
@@ -289,12 +289,19 @@ public class Level_Manager {
             }
         }
         
+        sort_render_order(npclist); // sort main list for efficiency
+        GObject[] objlist = new GObject[npclist.length + 1]; // create temp list
         for (int i = 0; i < npclist.length; i++)
         {
-            npclist[i].Render(scale, xpos, ypos, gc, g);
+        	objlist[i + 1] = npclist[i]; // put npcs in temp list
         }
+        objlist[0] = player; // put player inside of temp list
+        sort_render_order(objlist); // sort temp list for render order
         
-        player.Render(scale, xpos, ypos, gc, g);
+        for (int i = 0; i < objlist.length; i++)
+        {
+            objlist[i].Render(scale, xpos, ypos, gc, g); // render in order
+        }
         
         update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
     }
@@ -315,5 +322,25 @@ public class Level_Manager {
     public void move_player(int new_x_mov, int new_y_mov)
     {
         player.New_Movement(new_x_mov, new_y_mov);
+    }
+    
+    private void sort_render_order(GObject[] list)
+    {
+    	GObject temp;
+    	boolean flag = true;
+    	while (flag)
+    	{
+    		flag = false;
+    		for (int i = 0; i < list.length - 1; i++)
+        	{
+        		if (list[i].Get_Y_Position() > list[i + 1].Get_Y_Position())
+        		{
+            		temp = list[i];
+            		list[i] = list[i + 1];
+            		list[i + 1] = temp;
+            		flag = true;
+        		}
+        	}
+    	}
     }
 }
