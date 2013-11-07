@@ -166,11 +166,13 @@ public class Level_Manager {
     // made this for testing initialization for NPCs
     public void Init_NPC() throws SlickException{
     	
-    	npclist = new GCharacter[1];
+    	npclist = new GCharacter[3];
     	
     	SpriteSheet enemysheet = new SpriteSheet("images/enemies.png", 16, 24);
 
     	npclist[0] = new Zombie(8, 8, character_sprites);
+    	npclist[1] = new Zombie(8, 5, character_sprites);
+    	npclist[2] = new Zombie(14, 3, character_sprites);
 /*
     	int[] spritesheet_index = {3, 1, 0, 2, 3, 1, 0, 2};
     	int[] animation_length = {1, 1, 1, 1, 3, 3, 3, 3};
@@ -324,7 +326,10 @@ public class Level_Manager {
     {
         player.Update(objectlist, npclist);
         
-        npclist[0].Update(objectlist, npclist, player); // TODO: add collision objects
+        for (int i = 0; i < npclist.length; i++)
+        {
+        	npclist[i].Update(objectlist, npclist, player);
+        }
     }
     
     // change the player's X_Movement and Y_Movement values within Zed.java
