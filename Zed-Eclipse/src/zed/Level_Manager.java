@@ -166,38 +166,17 @@ public class Level_Manager {
     // made this for testing initialization for NPCs
     public void Init_NPC() throws SlickException{
     	
-    	npclist = new GCharacter[3];
+    	npclist = new GCharacter[10];
     	
     	SpriteSheet enemysheet = new SpriteSheet("images/enemies.png", 16, 24);
 
-    	npclist[0] = new Zombie(8, 8, character_sprites);
-    	npclist[1] = new Zombie(8, 5, character_sprites);
-    	npclist[2] = new Zombie(14, 3, character_sprites);
-/*
-    	int[] spritesheet_index = {3, 1, 0, 2, 3, 1, 0, 2};
-    	int[] animation_length = {1, 1, 1, 1, 3, 3, 3, 3};
-    	int[] x_shift = {0, 0, 0, 0, 0, 0, 0, 0};
-    	int[] y_shift = {8, 8, 8, 8, 8, 8, 8, 8};
-    	boolean[] looping = {false, false, false, false, true, true, true, true};
-    	
-    	npclist[0] = new GCharacter(
-        		10, // initial x position of the character w.r.t. the game tiles
-        		7, // initial y position of the character w.r.t. the game tiles
-        		true, // character is visible
-        		false, // character is not solid
-                x_shift, // by how many pixels each animation is shifted in x direction
-                y_shift, // by how many pixels each animation is shifted in y direction
-                16, // Give the character how large each tile is
-                enemysheet, // Give the character the SpriteSheet file for fetching its animation frames
-                spritesheet_index, // Give the character the indexes for the rows of the SpriteSheet to fetch each animation from
-                animation_length, // Give the character the length of each animation
-                looping, // tell which animations are looping
-                0, // intialize which animation to start out with
-                1, // intialize the character's max_health and health
-                200, // Give the character its speed in tiles per second 
-                0, // Give the character its initial x_movement value (-1, 0, 1)
-                0); // Give the character its initial y_movement value (-1, 0, 1))
-*/
+    	for (int i = 0; i < 5; i++)
+    	{
+    		for (int j = 0; j < 2; j++)
+    		{
+    			npclist[i + 5*j] = new Zombie(8+i, 5+j, character_sprites);
+    		}
+    	}
     }
     
     public void Init_GObject(){
