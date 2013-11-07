@@ -174,7 +174,7 @@ public class Level_Manager {
     	{
     		for (int j = 0; j < 2; j++)
     		{
-    			npclist[i + 5*j] = new Zombie(8+i, 5+j, character_sprites);
+    			npclist[i + 5*j] = new Zombie(8+i, 5+j, character_sprites);//make sure to add new files to the repository.
     		}
     	}
     }
