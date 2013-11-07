@@ -8,12 +8,6 @@ package zed;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-// Java for exception handling
-import java.util.ArrayList;
-
-
-import java.util.List;
-
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
