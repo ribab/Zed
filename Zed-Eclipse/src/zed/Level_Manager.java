@@ -177,7 +177,9 @@ public class Level_Manager {
     	npclist = new GCharacter[1];
     	
     	SpriteSheet enemysheet = new SpriteSheet("images/enemies.png", 16, 24);
-    	
+
+    	npclist[0] = new Zombie(8, 8, character_sprites);
+/*
     	int[] spritesheet_index = {3, 1, 0, 2, 3, 1, 0, 2};
     	int[] animation_length = {1, 1, 1, 1, 3, 3, 3, 3};
     	int[] x_shift = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -201,6 +203,7 @@ public class Level_Manager {
                 200, // Give the character its speed in tiles per second 
                 0, // Give the character its initial x_movement value (-1, 0, 1)
                 0); // Give the character its initial y_movement value (-1, 0, 1))
+*/
     }
     
     public void Init_GObject(){
@@ -328,7 +331,6 @@ public class Level_Manager {
     public void update()
     {
         player.Update(objectlist, npclist);
-        //player.Update(npclist); // TODO: uncomment when npclist is a list
         
         npclist[0].Update(objectlist, npclist, player); // TODO: add collision objects
     }

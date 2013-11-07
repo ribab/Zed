@@ -46,8 +46,6 @@ public class GObject {
     
     // Default constructor
     public GObject(){
-        
-        Init(0, 0, false, false, null, null, 1, null, null, null, null, 0);
     }
     
     // Constructor given SpriteSheet

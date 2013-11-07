@@ -17,14 +17,14 @@ public class GCharacter extends GObject {
     
     // index locations for each walking state within Animation_List are defined for Character
 	// Animation_List might be created before or after initialization
-    private static final int FRAME_STATE_UP = 0;
-    private static final int FRAME_STATE_LEFT = 1;
-    private static final int FRAME_STATE_DOWN = 2;
-    private static final int FRAME_STATE_RIGHT = 3;
-    private static final int FRAME_STATE_UP_WALK = 4;
-    private static final int FRAME_STATE_LEFT_WALK = 5;
-    private static final int FRAME_STATE_DOWN_WALK = 6;
-    private static final int FRAME_STATE_RIGHT_WALK = 7;
+    int FRAME_STATE_UP = 0;
+    int FRAME_STATE_LEFT = 1;
+    int FRAME_STATE_DOWN = 2;
+    int FRAME_STATE_RIGHT = 3;
+    int FRAME_STATE_UP_WALK = 4;
+    int FRAME_STATE_LEFT_WALK = 5;
+    int FRAME_STATE_DOWN_WALK = 6;
+    int FRAME_STATE_RIGHT_WALK = 7;
     
     private static final int INVINCIBILITY_TIME = 1000;
     
@@ -127,16 +127,6 @@ public class GCharacter extends GObject {
 
     // Default Constructor sets everything to equal either 0 or null
     public GCharacter() {
-    	
-        Init(0, 0, false, false,
-            null, null, 0, // how far sprite is shifted and size in pixels
-            null, null, null, null,
-            0);
-        
-        Health = 0;
-        Max_Health = 0;
-        Speed = 0;
-        X_Movement = 0;
         last_move = System.nanoTime();
         last_damage = System.currentTimeMillis();
     }
@@ -180,6 +170,44 @@ public class GCharacter extends GObject {
         last_move = System.nanoTime();
     }
     
+    public void Init(
+    		int tile_x, // initial x position of the character w.r.t. the game tiles
+    		int tile_y, // initial y position of the character w.r.t. the game tiles
+    		boolean visible, // initialize whether the character is visible
+    		boolean solid, // initialize solidity for collision
+            int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
+            int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
+            int tilesize, // Give the character how large each tile is
+    		Animation[] animation_list, // Give the character the animations it will be using
+            int current_animation, // initialize which animation to start out with
+            int health, // initialize the character's max_health and health
+            float speed, // Give the character its speed in tiles per second 
+            int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
+            int y_movement // Give the character its initial y_movement value (-1, 0, 1)
+            ){
+    
+	    super.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
+				tilesize, animation_list, current_animation);
+		
+	    // Initialze health
+	    Health = health;
+	    Max_Health = health;
+	    
+	    // Initialize movement parameters
+	    Speed = speed;
+	    X_Movement = x_movement;
+	    Y_Movement = y_movement;
+	    
+	    // Initialize movement
+	    last_move = System.nanoTime();
+	    // Initialize damage timer
+	    last_damage = System.currentTimeMillis();
+	    
+	    // Initialize Artificial Intelligence
+	    AI_State = 0;
+	    Last_AI_State_Change = System.currentTimeMillis();
+    }
+    
     // Updates the Character's position based on artificial intelligence and collision
     public void Update(GObject[] collision_objects, GCharacter[] npcs, Player_Character player){
     	
@@ -199,7 +227,7 @@ public class GCharacter extends GObject {
 	        if (Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
 	        	Decriment_Health(); // kills this character with a sword
 	        
-	        Artificial_Intelligence(collided); // Proceed with AI code to update the character's movement values
+	        Artificial_Intelligence(collided, player); // Proceed with AI code to update the character's movement values
     	}
     }
     
@@ -437,8 +465,9 @@ public class GCharacter extends GObject {
     
     // The default artificial intelligence code for the character
     // that updates the character's movement values
-    private void Artificial_Intelligence(
-    		boolean collided){ // so the character knows if it collided with something
+    public void Artificial_Intelligence(
+    		boolean collision, // so the character knows if it collided with something
+    		Player_Character player){ 
         
     	if (System.currentTimeMillis() > Last_AI_State_Change + 200)
     	{

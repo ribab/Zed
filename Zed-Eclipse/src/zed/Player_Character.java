@@ -33,6 +33,7 @@ public class Player_Character extends GCharacter {
         Sword_Drawn = false;
     }
     
+    
     // Initialize with SpriteSheet and animation locations defined
     public Player_Character(
     		int tile_x, int tile_y, // tile to start in 
