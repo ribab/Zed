@@ -7,6 +7,7 @@ import org.newdawn.slick.state.*;
 public class Menu extends BasicGameState {
 	Image button;
 	Image menu_background;
+	Music music;
 	
 	public Menu(int state){}
 
@@ -15,6 +16,9 @@ public class Menu extends BasicGameState {
 			throws SlickException {
 		button = new Image("images/pressedbutton.png");
 		menu_background = new Image("images/conceptfinallow.png");
+
+        music = new Music("soundtrack/kawfy/braintwoquart.wav");
+        music.loop();
 	}
 
 	@Override

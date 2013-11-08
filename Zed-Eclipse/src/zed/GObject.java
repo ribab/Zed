@@ -182,9 +182,9 @@ public class GObject {
         if (Visible)
         {
             Current_Animation.draw(
-                    X_Position*zoom + current_tile_x - Sprite_Shift_X[Current_Animation_Index]*zoom,
-                    Y_Position*zoom + current_tile_y - Sprite_Shift_Y[Current_Animation_Index]*zoom,
-                    Current_Animation.getWidth()*zoom, Current_Animation.getHeight()*zoom);
+                    X_Position*zoom + current_tile_x - Sprite_Shift_X[Current_Animation_Index]*zoom, // y position to draw
+                    Y_Position*zoom + current_tile_y - Sprite_Shift_Y[Current_Animation_Index]*zoom, // x position to draw
+                    Current_Animation.getWidth()*zoom, Current_Animation.getHeight()*zoom); // width and height to draw
         }
     }
     // Play a different animation for the object

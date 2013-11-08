@@ -30,7 +30,7 @@ import org.newdawn.slick.SlickException;
  */
 public class Zed extends BasicGameState {
 	Level_Manager test;
-	Music music;
+
 	public Zed(int state){}
             
             
@@ -39,9 +39,6 @@ public class Zed extends BasicGameState {
             public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
                
                 test = new Level_Manager();
-                music = new Music("soundtrack/kawfy/braintwoquart.wav");
-                
-                music.loop();
             }
 
             // Game Updates
