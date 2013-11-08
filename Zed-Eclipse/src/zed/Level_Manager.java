@@ -56,54 +56,6 @@ public class Level_Manager {
     public Level_Manager() throws SlickException {
     	
     	Init(0, 10, 5);
-/*
-        tileset = new SpriteSheet("images/tileset.png", 16, 16);
-        character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
-        Files = new File_Manager();
-
-        Initialize_Player_Information();
-        
-        Init_NPC();
-        
-        //start of initializing heart images and life bar for HUD display
-        Full_Heart = new Image("images/fullheart.png", false, Image.FILTER_NEAREST);
-        Empty_Heart = new Image("images/emptyheart.png", false, Image.FILTER_NEAREST);
-        Full_Heart.setAlpha(0.5f);
-        Empty_Heart.setAlpha(0.5f);
-        maxHealth = player.Get_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
-        lifeBar = new boolean[maxHealth];
-        for (int i = 0; i < maxHealth; i++){
-        	lifeBar[i] = true;
-        }
-        
-        //initialize level
-        width = 20;
-        height = 15;
-        xpos = 0;
-        ypos = 0;
-        scale = 2;
-        bot_tile_x = new int[height][width];
-        bot_tile_y = new int[height][width];
-        File Default_Level = new File("levels/test.lvl");
-        short Tile_List[][] = null;
-        short Field_Types = 4;
-        try {
-			Tile_List = Files.Scan_LVL(Default_Level, Field_Types);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        int k = 0;
-        for (int i = 0; i < height; i++ ){
-        	for(int j = 0; j < width; j++){
-				bot_tile_x[i][j] = Tile_List[0][k];
-				bot_tile_y[i][j] = Tile_List[0][++k];
-				k++;
-        	}
-        }
-        //end initialize level
-*/
     }
     
     public void Init(int level_index, int player_x, int player_y) throws SlickException{
