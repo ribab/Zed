@@ -53,7 +53,8 @@ public class Zombie extends GCharacter {
 	{
 		int x_distance = player.Get_X_Position() - X_Position;
 		int y_distance = player.Get_Y_Position() - Y_Position;
-		if (x_distance*x_distance + y_distance*y_distance > 16*5*16*5)
+		if (x_distance*x_distance + y_distance*y_distance > 16*5*16*5
+				|| !player.Visible)
 		{
 			super.Artificial_Intelligence(collision, player);
 		}

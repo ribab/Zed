@@ -222,8 +222,12 @@ public class GCharacter extends GObject {
 	        GObject[] cplayer = {player};
 	        collided |= (Collision(collision_objects) != null); // tell whether character has collided with an object
 	        collided |= (Collision(npcs) != null); // tell whether character has collided with another collidable npc
-	        collided |= (Collision(cplayer) != null);
 	        
+	        if (Collision(cplayer) != null)
+	        {
+	        	collided = true;
+	        	player.Decriment_Health();
+	        }
 	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME
 	        		&& !Out_Of_Bounds())
 	        {

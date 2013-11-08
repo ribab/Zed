@@ -107,6 +107,11 @@ public class Player_Character extends GCharacter {
 	        	Decriment_Health();
 	        }
     	}
+    	else
+    	{
+    		Visible = false;
+    		Solid = false;
+    	}
     }
     
     // change the current movement values (-1, 0, 1)
