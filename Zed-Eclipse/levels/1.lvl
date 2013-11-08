@@ -33,3 +33,6 @@
  - portal 5
  xp  yp  xd  yd  map
   9  14   9   0    0
+ - npc 3
+zombie xp yp
+  0     5  5

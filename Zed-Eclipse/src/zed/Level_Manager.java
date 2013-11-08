@@ -28,6 +28,7 @@ import org.newdawn.slick.SpriteSheet;
 public class Level_Manager {   
 
     private static final int TILE_SIZE = 16;
+    private static final int ZOMBIE = 0;
     
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
@@ -152,6 +153,28 @@ public class Level_Manager {
 	        			Tile_List[2][5*i+1], 16, Tile_List[2][5*i+4],
 	        			Tile_List[2][5*i+2], Tile_List[2][5*i+3]);
         	}
+        }
+        if (Tile_List[3] != null)
+        {
+        	npclist = new GCharacter[Tile_List[3].length/3];
+        	
+        	for (int i = 0; i < Tile_List[3].length/3; i++)
+        	{
+        		if (Tile_List[3][i*3] == ZOMBIE)
+        			npclist[i] = new Zombie(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2], character_sprites);
+        	}
+        	/*
+        	npclist = new GCharacter[10];
+        	
+        	for (int i = 0; i < 5; i++)
+        	{
+        		for (int j = 0; j < 2; j++)
+        		{
+        			npclist[i + 5*j] = new Zombie(8+i, 5+j, character_sprites);//make sure to add new files to the repository.
+        		}
+        	}
+        	*/
         }
     }
     
@@ -297,36 +320,34 @@ public class Level_Manager {
     			lifebar[i] = false;
     		}
     	}
-    		//I'm *guessing* here (for the sake of performance) that drawing the objects
-    		//to the screen is more costly than having more for-loops
-    		for (int i = 0; i < maxhealth; i++){
-    			if (lifebar[i] == true)
-    			{
-    				g.drawImage(
-    						full, 				// image
-    						i*full.getWidth()*scale, 	// x pos
-    						0, 					// y pos
-    						(i + 1)*full.getWidth()*scale, 	// x2 pos
-    						full.getHeight()*scale, 	// y2 pos
-    						0, 0,			 	// ???
-    						full.getWidth(), 	// width
-    						full.getHeight()); 	// height
-    			}
-    			else
-    			{
-    				g.drawImage(
-    						empty,
-    						i*empty.getWidth()*scale,
-    						0,
-    						(i + 1)*empty.getWidth()*scale, 
-    						empty.getHeight()*scale,
-    						0, 0,
-    						empty.getWidth(),
-    						empty.getHeight());
-    			}
+    	//I'm *guessing* here (for the sake of performance) that drawing the objects
+    	//to the screen is more costly than having more for-loops
+    	for (int i = 0; i < maxhealth; i++){
+    		if (lifebar[i] == true)
+    		{
+    			g.drawImage(
+    					full, 				// image
+    					i*full.getWidth()*scale, 	// x pos
+    					0, 					// y pos
+    					(i + 1)*full.getWidth()*scale, 	// x2 pos
+    					full.getHeight()*scale, 	// y2 pos
+    					0, 0,			 	// ???
+    					full.getWidth(), 	// width
+    					full.getHeight()); 	// height
     		}
-    	
-    	return;
+    		else
+    		{
+    			g.drawImage(
+    					empty,
+    					i*empty.getWidth()*scale,
+    					0,
+    					(i + 1)*empty.getWidth()*scale, 
+    					empty.getHeight()*scale,
+    					0, 0,
+    					empty.getWidth(),
+    					empty.getHeight());
+    		}
+    	}
     }
     
     // the display function for the Level_Manager that is called every frame
