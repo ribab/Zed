@@ -144,20 +144,14 @@ public class Level_Manager {
         }
         if (Tile_List[2] != null)
         {
-        	portallist = new GPortal[1];
+        	portallist = new GPortal[Tile_List[2].length/5];
         	
-        	portallist[0] = new GPortal(Tile_List[2][0],
-        			Tile_List[2][1], 16, Tile_List[2][4],
-        			Tile_List[2][2], Tile_List[2][3]);
-/*        	
- 			for (int i = 0; i < Tile_List[2].length/5; i++)
+        	for (int i = 0; i < Tile_List[2].length/5; i++)
         	{
-        		portallist[i] = new GPortal(
-        				Tile_List[2][i*5], Tile_List[2][i*5+1],
-        				16, Tile_List[2][i*5+4], Tile_List[2][i*5+2],
-        				Tile_List[2][i*5+3]);
+	        	portallist[0] = new GPortal(Tile_List[2][5*i],
+	        			Tile_List[2][5*i+1], 16, Tile_List[2][5*i+4],
+	        			Tile_List[2][5*i+2], Tile_List[2][5*i+3]);
         	}
-*/
         }
     }
     
@@ -381,13 +375,20 @@ public class Level_Manager {
         {
         	npclist[i].Update(objectlist, npclist, player);
         }
-        if (player.Collision(portallist))
+    	GObject activeportal;
+        if ((activeportal = player.Collision(portallist)) != null)
         {
         	if (!has_ported)
         	{
-	        	Init(portallist[0].Get_Dest_Level(),
-	        			portallist[0].Get_Dest_X_Tile(),
-	        			portallist[0].Get_Dest_Y_Tile());
+        		for (int i = 0; i < portallist.length; i++)
+        		{
+        			if (portallist[i] == activeportal)
+        			{
+        				Init(portallist[i].Get_Dest_Level(),
+        						portallist[i].Get_Dest_X_Tile(),
+        						portallist[i].Get_Dest_Y_Tile());
+        			}
+        		}
 	        	has_ported = true;
         	}
         }

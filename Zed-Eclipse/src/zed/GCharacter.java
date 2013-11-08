@@ -220,8 +220,8 @@ public class GCharacter extends GObject {
 	        
 	        Update_Frame_State();
 	        
-	        collided |= Collision(collision_objects); // tell whether character has collided with an object
-	        collided |= Collision(npcs); // tell whether character has collided with another collidable npc
+	        collided |= (Collision(collision_objects) != null); // tell whether character has collided with an object
+	        collided |= (Collision(npcs) != null); // tell whether character has collided with another collidable npc
 	        
 	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME
 	        		&& !Out_Of_Bounds())
@@ -238,7 +238,8 @@ public class GCharacter extends GObject {
     }
     
     // can tell if GCharacter will collide with another object or not
-    boolean Collision(GObject collision_objects[]){
+    // and returns the object GCharacter collides with
+    GObject Collision(GObject collision_objects[]){
         
     	if (collision_objects != null)
     	{
@@ -248,20 +249,20 @@ public class GCharacter extends GObject {
 		        {
 		        	if (Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
-		        		return true;
+		        		return collision_objects[i];
 		        	if (Collision(collision_objects[i].Get_X_Position() + 15,
 		        			collision_objects[i].Get_Y_Position()))
-		        		return true;
+		        		return collision_objects[i];
 		        	if (Collision(collision_objects[i].Get_X_Position() + 15,
 		        			collision_objects[i].Get_Y_Position() + 15))
-		        		return true;
+		        		return collision_objects[i];
 		        	if (Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position() + 15))
-		        		return true;
+		        		return collision_objects[i];
 		        }
 	        }
     	}
-        return false; // didn't collide
+        return null; // didn't collide
     }
     
     // can tell if pixel is within GCharacter or not

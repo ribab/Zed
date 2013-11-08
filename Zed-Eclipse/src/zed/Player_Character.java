@@ -88,7 +88,7 @@ public class Player_Character extends GCharacter {
 	                              // based on movement and attacking
 		    
 	        // check for collision based on movement values
-	        if (!Collision(objects) && !Collision(npcs)
+	        if (Collision(objects) == null && Collision(npcs) == null
 	        		&& !Out_Of_Bounds()) // TODO: maybe make Collision_Up, Collision_Left,
 	        	                         //       Collision_Down, Collision_Right functions
 	        	                         //       to allow character to slide against walls
@@ -101,7 +101,7 @@ public class Player_Character extends GCharacter {
 		    }
 		    
 	        // check for collision with npc based on movement values
-	        if (Collision(npcs))
+	        if (Collision(npcs) != null)
 	        {
 	        	// damage the character if hits an npc
 	        	Decriment_Health();
