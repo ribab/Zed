@@ -80,11 +80,18 @@ public class Zed extends BasicGameState {
                  {
                 	 test.player.Start_Sword_Attack();
                  }
+                 
                  else
                  {
                 	 test.player.End_Sword_Attack();
                  }
-                 // change the player's movement value
+                 
+                 //new code: going back to the menu from in-game
+                 if (input.isKeyDown(Input.KEY_ESCAPE))
+                 {
+                	 sbg.enterState(0);
+                 }
+                 
                  test.move_player((right? 1:0) - (left? 1:0),
                          (down? 1:0) - (up? 1:0));
                  
