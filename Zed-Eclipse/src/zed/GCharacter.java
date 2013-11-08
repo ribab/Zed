@@ -219,9 +219,10 @@ public class GCharacter extends GObject {
 	        boolean collided = false;
 	        
 	        Update_Frame_State();
-	        
+	        GObject[] cplayer = {player};
 	        collided |= (Collision(collision_objects) != null); // tell whether character has collided with an object
 	        collided |= (Collision(npcs) != null); // tell whether character has collided with another collidable npc
+	        collided |= (Collision(cplayer) != null);
 	        
 	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME
 	        		&& !Out_Of_Bounds())
@@ -235,6 +236,11 @@ public class GCharacter extends GObject {
 	        
 	        Artificial_Intelligence(collided, player); // Proceed with AI code to update the character's movement values
     	}
+    	else
+    	{
+    		Solid = false;
+    		Visible = false;
+    	}
     }
     
     // can tell if GCharacter will collide with another object or not
@@ -245,7 +251,7 @@ public class GCharacter extends GObject {
     	{
 	        for (int i = 0; i < collision_objects.length; i++)
 	        {
-		        if (collision_objects[i] != this)
+		        if (collision_objects[i] != this && collision_objects[i].Solid)
 		        {
 		        	if (Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
@@ -484,9 +490,6 @@ public class GCharacter extends GObject {
             int current_tile_x, int current_tile_y, // position of tiles
             GameContainer gc, Graphics g){
     	
-    	if (Health > 0)
-    	{
-    		super.Render(zoom, current_tile_x, current_tile_y, gc, g);
-    	}
+    	super.Render(zoom, current_tile_x, current_tile_y, gc, g);
     }
 }

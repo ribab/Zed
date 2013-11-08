@@ -28,6 +28,9 @@ public class GPortal extends GObject {
 		Dest_Level = 0;
 		Dest_X = 0;
 		Dest_Y = 0;
+		
+		Visible = false;
+		Solid = true;
 	}
 	
 	/**
@@ -41,7 +44,7 @@ public class GPortal extends GObject {
 		
 		// Construct the GObject part
 		super();
-		super.Init(tile_x, tile_y, false, false, null, null, tilesize, null, 0);
+		super.Init(tile_x, tile_y, false, true, null, null, tilesize, null, 0);
 		
 		Dest_Level = dest_level;
 		Dest_X = dest_x;

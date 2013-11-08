@@ -42,7 +42,7 @@ public class Zombie extends GCharacter {
         FRAME_STATE_LEFT_WALK = 1; FRAME_STATE_RIGHT_WALK = 2;
 		
         // Initialize zombie based on constructor
-		super.Init(tile_x, tile_y, true, false,
+		super.Init(tile_x, tile_y, true, true,
 				sprite_shift_x, sprite_shift_y, 16, zombie_animations,
 				0, 3, 1.0f, 0, 0);
 		
