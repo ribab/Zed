@@ -34,10 +34,12 @@ public class Menu extends BasicGameState {
 		//XXX put int he logic for when a button is pressed
 		// I have the code written down on paper, just need to
 		// figure out coords and type it in
-		int posX = Mouse.getX();
-		int posY = Mouse.getY();
-		if (((posX > 100) && (posX <100)) && ((posY > 100) && (posY < 100))){
-			if (Mouse.isButtonDown(0)){
+		
+		int posX = gc.getInput().getMouseX();
+		int posY = gc.getInput().getMouseY();
+		if (((posX > 100) && (posX < 100 + 100))
+				&& ((posY > 100) && (posY < 100 + 100))){
+			if (gc.getInput().isMousePressed(0)){
 				sbg.enterState(1);
 			}
 		}
