@@ -54,7 +54,7 @@ public class Level_Manager {
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException {
     	
-    	Init(0, 10, 5);
+    	Init(1, 10, 5);
 /*
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
@@ -154,34 +154,38 @@ public class Level_Manager {
         }
         
         // load GObjects
-        int number_of_1s = 0;
-        for (int i = 0; i < Tile_List[1].length; i++)
+        if (Tile_List[1] != null)
         {
-        	if (Tile_List[1][i] == 1)
-        	{
-        		number_of_1s++;
-        	}
+            int number_of_1s = 0;
+	        for (int i = 0; i < Tile_List[1].length; i++)
+	        {
+	        	if (Tile_List[1][i] == 1)
+	        	{
+	        		number_of_1s++;
+	        	}
+	        }
+	        objectlist = new GObject[number_of_1s];
+	        int current_object = 0;
+	        for (int i = 0; i < height; i++)
+	        {
+	        	for (int j = 0; j < width; j++)
+	        	{ 
+	        		if (Tile_List[1][j + width*i] == 1)
+	        		{
+			        	objectlist[current_object++] = new GObject(
+			            		j, i, // tell which tile to start in
+			            		false, // tell whether the object is visible
+			            		true, // tell whether the object is solid for collision
+			            		null, null,  // number of pixels each animation is shifted by
+			            		16, // give size of a tile in pixels
+			            		null, // give preinitialized animations
+			            		0 // tell which animation to start with
+			            		);
+	        		}
+	        	}
+	        }
         }
-        objectlist = new GObject[number_of_1s];
-        int current_object = 0;
-        for (int i = 0; i < height; i++)
-        {
-        	for (int j = 0; j < width; j++)
-        	{ 
-        		if (Tile_List[1][j + width*i] == 1)
-        		{
-		        	objectlist[current_object++] = new GObject(
-		            		j, i, // tell which tile to start in
-		            		false, // tell whether the object is visible
-		            		true, // tell whether the object is solid for collision
-		            		null, null,  // number of pixels each animation is shifted by
-		            		16, // give size of a tile in pixels
-		            		null, // give preinitialized animations
-		            		0 // tell which animation to start with
-		            		);
-        		}
-        	}
-        }
+        
     }
     
     // default initialization for the player's animations, position, attack speed, animation speed

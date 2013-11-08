@@ -223,7 +223,8 @@ public class GCharacter extends GObject {
 	        collided |= Collision(collision_objects); // tell whether character has collided with an object
 	        collided |= Collision(npcs); // tell whether character has collided with another collidable npc
 	        
-	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME)
+	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME
+	        		&& !Out_Of_Bounds())
 	        {
 	            Update_Position(); // can move if there is something to collide with
 	        }
@@ -260,11 +261,6 @@ public class GCharacter extends GObject {
 		        }
 	        }
     	}
-        if (  X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
-    			|| Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
-        {
-        	return true; // can't go out of bounds
-        }
         return false; // didn't collide
     }
     
@@ -277,6 +273,17 @@ public class GCharacter extends GObject {
     		return true;
     	}
     	return false;
+    }
+    
+    // check to see if GCharacter goes out of screen
+    boolean Out_Of_Bounds(){
+
+        if (  X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
+    			|| Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
+        {
+        	return true; // can't go out of bounds
+        }
+        return false;
     }
     
     // updates the current animation being played based on current movement
