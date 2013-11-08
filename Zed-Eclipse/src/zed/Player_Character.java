@@ -88,7 +88,12 @@ public class Player_Character extends GCharacter {
 	                              // based on movement and attacking
 		    
 	        // check for collision based on movement values
-	        if (!Collision(objects))
+	        if (!Collision(objects) && !Collision(npcs)) // TODO: maybe make Collision_Up, Collision_Left,
+	        	                                         //       Collision_Down, Collision_Right functions
+	        	                                         //       to allow character to slide against walls
+	        	                                         //       or we can just return what object the
+	        	                                         //       character collided with and tell which
+	        	                                         //       direction the character collided based on that.
 		    {
 		    	// update the character's position based on movement values
 		        Update_Position();

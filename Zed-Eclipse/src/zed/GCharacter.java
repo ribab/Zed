@@ -248,46 +248,14 @@ public class GCharacter extends GObject {
 		        	if (Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
 		        		return true;
-		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
+		        	if (Collision(collision_objects[i].Get_X_Position() + 15,
 		        			collision_objects[i].Get_Y_Position()))
 		        		return true;
-		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
-		        			collision_objects[i].Get_Y_Position() + 16))
+		        	if (Collision(collision_objects[i].Get_X_Position() + 15,
+		        			collision_objects[i].Get_Y_Position() + 15))
 		        		return true;
 		        	if (Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position() + 16))
-		        		return true;
-		        }
-	        }
-    	}
-        if (  X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
-    			|| Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
-        {
-        	return true; // can't go out of bounds
-        }
-        return false; // didn't collide
-    }
- // can tell if GCharacter will collide with another GCharacter or not
-    boolean Collision(GCharacter collision_objects[]){
-        
-    	if (collision_objects != null)
-    	{
-	        for (int i = 0; i < collision_objects.length; i++)
-	        {
-	        	// check if collision is accurate
-		        if (collision_objects[i] != this && collision_objects[i].Get_Health() > 0)
-		        {
-		        	if (Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position()))
-		        		return true;
-		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
-		        			collision_objects[i].Get_Y_Position()))
-		        		return true;
-		        	if (Collision(collision_objects[i].Get_X_Position() + 16,
-		        			collision_objects[i].Get_Y_Position() + 16))
-		        		return true;
-		        	if (Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position() + 16))
+		        			collision_objects[i].Get_Y_Position() + 15))
 		        		return true;
 		        }
 	        }

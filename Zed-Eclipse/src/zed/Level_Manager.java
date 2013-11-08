@@ -36,7 +36,7 @@ public class Level_Manager {
     
     Image Full_Heart; //full heart image
     Image Empty_Heart; //empty heart image
-    final int maxHealth; //players maximum hp
+    int maxHealth; //players maximum hp
     boolean[] lifeBar; //array representing which HUD images are full hearts or empty hearts
     
     int width; // Number of tile columns
@@ -53,6 +53,9 @@ public class Level_Manager {
     
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException {
+    	
+    	Init(0, 10, 5);
+/*
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
         Files = new File_Manager();
@@ -99,11 +102,91 @@ public class Level_Manager {
         	}
         }
         //end initialize level
+*/
+    }
+    
+    public void Init(int level_index, int player_x, int player_y) throws SlickException{
+    	
+        tileset = new SpriteSheet("images/tileset.png", 16, 16);
+        character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
+        Files = new File_Manager();
+        
+        Initialize_Player_Information(player_x, player_y);
+        Init_NPC(null);
+        
+        //start of initializing heart images and life bar for HUD display
+        Full_Heart = new Image("images/fullheart.png", false, Image.FILTER_NEAREST);
+        Empty_Heart = new Image("images/emptyheart.png", false, Image.FILTER_NEAREST);
+        Full_Heart.setAlpha(0.5f);
+        Empty_Heart.setAlpha(0.5f);
+        maxHealth = player.Get_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
+        lifeBar = new boolean[maxHealth];
+        for (int i = 0; i < maxHealth; i++){
+        	lifeBar[i] = true;
+        }
+        
+        //initialize level
+        width = 20;
+        height = 15;
+        xpos = 0;
+        ypos = 0;
+        scale = 2;
+        bot_tile_x = new int[height][width];
+        bot_tile_y = new int[height][width];
+        File level = new File("levels/" + String.valueOf(level_index) + ".lvl");
+        short Tile_List[][] = null;
+        short Field_Types = 4;
+        try {
+			Tile_List = Files.Scan_LVL(level, Field_Types);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        // load tiles
+        int k = 0;
+        for (int i = 0; i < height; i++ ){
+        	for(int j = 0; j < width; j++){
+				bot_tile_x[i][j] = Tile_List[0][k];
+				bot_tile_y[i][j] = Tile_List[0][++k];
+				k++;
+        	}
+        }
+        
+        // load GObjects
+        int number_of_1s = 0;
+        for (int i = 0; i < Tile_List[1].length; i++)
+        {
+        	if (Tile_List[1][i] == 1)
+        	{
+        		number_of_1s++;
+        	}
+        }
+        objectlist = new GObject[number_of_1s];
+        int current_object = 0;
+        for (int i = 0; i < height; i++)
+        {
+        	for (int j = 0; j < width; j++)
+        	{ 
+        		if (Tile_List[1][j + width*i] == 1)
+        		{
+		        	objectlist[current_object++] = new GObject(
+		            		j, i, // tell which tile to start in
+		            		false, // tell whether the object is visible
+		            		true, // tell whether the object is solid for collision
+		            		null, null,  // number of pixels each animation is shifted by
+		            		16, // give size of a tile in pixels
+		            		null, // give preinitialized animations
+		            		0 // tell which animation to start with
+		            		);
+        		}
+        	}
+        }
     }
     
     // default initialization for the player's animations, position, attack speed, animation speed
     // within the level
-    public void Initialize_Player_Information()
+    public void Initialize_Player_Information(int player_x, int player_y)
     {
         // spritesheet information for standing and walking animations
         int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3}; // row in spritesheet for each animation
@@ -147,8 +230,8 @@ public class Level_Manager {
         }
         
         player = new Player_Character(
-        		0, // intialize character's x position w.r.t. tiles
-        		0, // initialize character's y position w.r.t. tiles
+        		player_x, // intialize character's x position w.r.t. tiles
+        		player_y, // initialize character's y position w.r.t. tiles
         		true, // character is visible
         		true, // character is solid
         		player_sprite_shift_x, // give character sprite shift value in the x axis
@@ -164,8 +247,11 @@ public class Level_Manager {
     }
     
     // made this for testing initialization for NPCs
-    public void Init_NPC() throws SlickException{
+    public void Init_NPC(int[] npc_data) throws SlickException{
     	
+    	npclist = new GCharacter[0];
+    	
+    	/*
     	npclist = new GCharacter[10];
     	
     	SpriteSheet enemysheet = new SpriteSheet("images/enemies.png", 16, 24);
@@ -177,6 +263,7 @@ public class Level_Manager {
     			npclist[i + 5*j] = new Zombie(8+i, 5+j, character_sprites);//make sure to add new files to the repository.
     		}
     	}
+    	*/
     }
     
     public void Init_GObject(){

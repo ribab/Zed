@@ -141,7 +141,10 @@ public class GObject {
     	
     	Animation_List = animation_list;
     	
-    	Current_Animation = Animation_List[current_animation];
+    	if (Animation_List != null)
+    	{
+    		Current_Animation = Animation_List[current_animation];
+    	}
     }
     
     // Change the position of Object
