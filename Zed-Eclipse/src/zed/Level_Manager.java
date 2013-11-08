@@ -420,6 +420,7 @@ public class Level_Manager {
     
     // the update funciton that is called each time Slick updates to update the information
     // in the level
+    boolean has_ported = false;
     public void update() throws SlickException
     {
         player.Update(objectlist, npclist);
@@ -430,9 +431,17 @@ public class Level_Manager {
         }
         if (player.Collision(portallist))
         {
-        	Init(portallist[0].Get_Dest_Level(),
-        			portallist[0].Get_Dest_X_Tile(),
-        			portallist[0].Get_Dest_Y_Tile());
+        	if (!has_ported)
+        	{
+	        	Init(portallist[0].Get_Dest_Level(),
+	        			portallist[0].Get_Dest_X_Tile(),
+	        			portallist[0].Get_Dest_Y_Tile());
+	        	has_ported = true;
+        	}
+        }
+        else
+        {
+        	has_ported = false;
         }
     }
     

@@ -90,7 +90,7 @@ public class GPortal extends GObject {
 		Dest_X = new_dest_x;
 	}
 	
-	// CHange sthe y destination of where player ports to
+	// Changes the y destination of where player ports to
 	public void Set_Dest_Y_Tile(int new_dest_y){
 		
 		Dest_Y = new_dest_y;
