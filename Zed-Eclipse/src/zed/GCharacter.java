@@ -27,7 +27,7 @@ public class GCharacter extends GObject {
     int FRAME_STATE_RIGHT_WALK = 7;
     
     final int INVINCIBILITY_TIME = 1000;
-    final int STUN_TIME = 200;
+    int STUN_TIME = 200;
     
     int Health; // current health for Character
     int Max_Health; // maximum health for Character
