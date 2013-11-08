@@ -37,11 +37,11 @@ public class GPortal extends GObject {
 			int dest_level, int dest_x, int dest_y) {
 		
 		// Initialize animation to default
-		Animation[] no_animation = new Animation[1];
-		no_animation[1] = new Animation();
+		//Animation[] no_animation = new Animation[0];
 		
 		// Construct the GObject part
-		super.Init(tile_x, tile_y, false, false, null, null, tilesize, no_animation, 0);
+		super();
+		super.Init(tile_x, tile_y, false, false, null, null, tilesize, null, 0);
 		
 		Dest_Level = dest_level;
 		Dest_X = dest_x;

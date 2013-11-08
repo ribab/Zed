@@ -33,6 +33,7 @@ public class Level_Manager {
     private SpriteSheet character_sprites; // data for character sprites
     GObject[] objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
     GCharacter[] npclist; // array to hold NPCs in particular TODO:make into list
+    GPortal[] portallist; // array to hold portals of the level
     
     Image Full_Heart; //full heart image
     Image Empty_Heart; //empty heart image
@@ -54,7 +55,7 @@ public class Level_Manager {
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException {
     	
-    	Init(1, 10, 5);
+    	Init(0, 10, 5);
 /*
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
@@ -106,6 +107,10 @@ public class Level_Manager {
     }
     
     public void Init(int level_index, int player_x, int player_y) throws SlickException{
+
+        objectlist = null;
+        npclist = null;
+        portallist = null;
     	
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
@@ -185,7 +190,23 @@ public class Level_Manager {
 	        	}
 	        }
         }
-        
+        if (Tile_List[2] != null)
+        {
+        	portallist = new GPortal[1];
+        	
+        	portallist[0] = new GPortal(Tile_List[2][0],
+        			Tile_List[2][1], 16, Tile_List[2][4],
+        			Tile_List[2][2], Tile_List[2][3]);
+/*        	
+ 			for (int i = 0; i < Tile_List[2].length/5; i++)
+        	{
+        		portallist[i] = new GPortal(
+        				Tile_List[2][i*5], Tile_List[2][i*5+1],
+        				16, Tile_List[2][i*5+4], Tile_List[2][i*5+2],
+        				Tile_List[2][i*5+3]);
+        	}
+*/
+        }
     }
     
     // default initialization for the player's animations, position, attack speed, animation speed
@@ -399,13 +420,19 @@ public class Level_Manager {
     
     // the update funciton that is called each time Slick updates to update the information
     // in the level
-    public void update()
+    public void update() throws SlickException
     {
         player.Update(objectlist, npclist);
         
         for (int i = 0; i < npclist.length; i++)
         {
         	npclist[i].Update(objectlist, npclist, player);
+        }
+        if (player.Collision(portallist))
+        {
+        	Init(portallist[0].Get_Dest_Level(),
+        			portallist[0].Get_Dest_X_Tile(),
+        			portallist[0].Get_Dest_Y_Tile());
         }
     }
     
