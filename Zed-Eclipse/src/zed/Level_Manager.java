@@ -55,6 +55,8 @@ public class Level_Manager {
     File_Manager Files;
     Player_Character player; // data for player character
     
+    int current_level_index;
+    
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException {
     	
@@ -63,6 +65,8 @@ public class Level_Manager {
     
     public void Init(int level_index, int player_x, int player_y) throws SlickException{
 
+    	current_level_index = level_index;
+    	
         objectlist = null;
         npclist = null;
         portallist = null;
