@@ -14,22 +14,8 @@ public class Player_Character extends GCharacter {
 	private boolean Sword_Drawn; // holds whether the sword is currently drawn
 	                             // character is currently swinging the sword
 	
-	// default initialization for Player_Character
-	// that initializes everything to 0 and null
+	// default initialization for Player_Character does nothing
     public Player_Character() throws SlickException{
-
-        Init(0, 0, false, false,
-            null, null, 0, // how far sprite is shifted and size in pixels
-            null, null, null, null,
-            0);
-        
-        Health = 0;
-        Max_Health = 0;
-        Speed = 0;
-        X_Movement = 0;
-        last_move = System.nanoTime();
-        
-        Sword_Drawn = false;
     }
     
     // Initialize with animations defined
@@ -44,6 +30,8 @@ public class Player_Character extends GCharacter {
     			health, speed, x_movement, y_movement);
     	
     	Sword_Drawn = false;
+
+		Hurt_Sound = new Sound("soundtrack/effects/punch.wav");
     }
 
     // The character's update function that is called every time slick updates

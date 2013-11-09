@@ -2,6 +2,7 @@ package zed;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 public class Zombie extends GCharacter {
@@ -65,6 +66,8 @@ public class Zombie extends GCharacter {
 				0, 0); // Initial movement values
 		
 		AI_State_Change_Time = 500; // Time to change state for AI
+		
+		Hurt_Sound = new Sound("soundtrack/effects/sword_hit_flesh.wav");
 	}
 	
 	// Override GCharacter's Artificial Intelligence function

@@ -45,7 +45,7 @@ public class GCharacter extends GObject {
     long AI_State_Change_Time;
     Random rnd = new Random();
     
-    Sound Hurt_Sound;
+    Sound Hurt_Sound = null;
     
     // Constructor for character that makes use of SpriteSheet to construct its
     // Animation array
@@ -91,8 +91,6 @@ public class GCharacter extends GObject {
         AI_State = 0;
         Last_AI_State_Change = System.currentTimeMillis();
         AI_State_Change_Time = 200;
-
-        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     // Constructor for Character that takes an already defined Animation array
@@ -132,16 +130,12 @@ public class GCharacter extends GObject {
         // Initialize Artificial Intelligence
         AI_State = 0;
         Last_AI_State_Change = System.currentTimeMillis();
-        
-        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
 
     // Default Constructor sets everything to equal either 0 or null
     public GCharacter() throws SlickException {
         last_move = System.nanoTime();
         last_damage = System.currentTimeMillis();
-        
-        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     // frames cannot have array size less than 4x5 because these
@@ -181,8 +175,6 @@ public class GCharacter extends GObject {
         Y_Movement = y_movement;
         
         last_move = System.nanoTime();
-        
-        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     public void Init(
@@ -221,8 +213,6 @@ public class GCharacter extends GObject {
 	    // Initialize Artificial Intelligence
 	    AI_State = 0;
 	    Last_AI_State_Change = System.currentTimeMillis();
-        
-        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     // Updates the Character's position based on artificial intelligence and collision
@@ -396,7 +386,7 @@ public class GCharacter extends GObject {
 	    	if (Health > 0) // no decrimenting past 0
 	    	{
 	    		Health--; // decriment health
-	    		Hurt_Sound.play();
+	    		if (Hurt_Sound != null) {Hurt_Sound.play();}
 	    	}
 	    	else
 	    	{
@@ -419,7 +409,7 @@ public class GCharacter extends GObject {
 	    	else
 	    	{
 	    		Health -= health_dec; // decrease health
-	    		Hurt_Sound.play();
+	    		if (Hurt_Sound != null) {Hurt_Sound.play();}
 	    	}
 	    	last_damage = System.currentTimeMillis();
     	}
