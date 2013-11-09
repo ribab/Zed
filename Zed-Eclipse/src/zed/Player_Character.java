@@ -1,8 +1,7 @@
 
 package zed;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
 
 /**
  *
@@ -17,7 +16,7 @@ public class Player_Character extends GCharacter {
 	
 	// default initialization for Player_Character
 	// that initializes everything to 0 and null
-    public Player_Character() {
+    public Player_Character() throws SlickException{
 
         Init(0, 0, false, false,
             null, null, 0, // how far sprite is shifted and size in pixels
@@ -33,40 +32,12 @@ public class Player_Character extends GCharacter {
         Sword_Drawn = false;
     }
     
-    
-    // Initialize with SpriteSheet and animation locations defined
-   /* public Player_Character(
-    		int tile_x, int tile_y, // tile to start in 
-    		boolean visible, // whether the character is visible
-    		boolean solid,
-            int[] sprite_shift_x, int[] sprite_shift_y, // sprite shift for each animation
-            int tilesize, // how far sprite is shifted and size in pixels
-            SpriteSheet sprites, // give the spritesheet to fetch animations from
-            int[] spritesheet_index, // give rows to fetch each animation from
-            int[] animation_length, // give number of frames in each animation
-            boolean[] looping, // set whether each animation loops
-            int current_animation, // set the animation to start with
-            int health, // set the player's health 
-            float speed, // set speed in tiles per second
-            int x_movement, int y_movement // set starting movement values (-1, 0, 1)
-            ){
-        
-        super(tile_x, tile_y, visible, solid,
-            sprite_shift_x, sprite_shift_y, tilesize,
-            sprites, spritesheet_index, animation_length, looping,
-            current_animation,
-            health, speed,
-            x_movement, y_movement);
-        
-        Sword_Drawn = false;
-    }*/
-    
     // Initialize with animations defined
     public Player_Character(int tile_x, int tile_y, boolean visible, boolean solid,
     		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
     		Animation[] animation_list, int current_animation,
     		int health, float speed,
-    		int x_movement, int y_movement){
+    		int x_movement, int y_movement) throws SlickException{
     	
     	super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation,

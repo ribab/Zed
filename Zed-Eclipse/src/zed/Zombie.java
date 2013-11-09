@@ -1,16 +1,17 @@
 package zed;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public class Zombie extends GCharacter {
 
 	// Zombie default constructor does nothing
-	public Zombie(){
+	public Zombie() throws SlickException{
 	}
 	
 	// Zombie constructor
-	public Zombie(int tile_x, int tile_y, SpriteSheet sprites) {
+	public Zombie(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
 
 		Animation[] zombie_animations = new Animation[4];
 		

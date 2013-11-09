@@ -56,28 +56,23 @@ public class Zed extends BasicGameState {
                  if (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
                  {
                      up = true;
-                     //y_pos-=.05;
                  }
                  if (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
                  {
                      left = true;
-                     //x_pos-=.05;
                  }
                  if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
                  {
                      down = true;
-                     //y_pos+=.05;
                  }
                  if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
                  {
                      right = true;
-                     //x_pos+=.05;
                  }
                  if (input.isKeyDown(Input.KEY_SPACE))
                  {
                 	 test.player.Start_Sword_Attack();
                  }
-                 
                  else
                  {
                 	 test.player.End_Sword_Attack();

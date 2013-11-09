@@ -4,6 +4,8 @@ package zed;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 import java.util.Random;
@@ -43,6 +45,8 @@ public class GCharacter extends GObject {
     long AI_State_Change_Time;
     Random rnd = new Random();
     
+    Sound Hurt_Sound;
+    
     // Constructor for character that makes use of SpriteSheet to construct its
     // Animation array
     public GCharacter(
@@ -63,7 +67,7 @@ public class GCharacter extends GObject {
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
-            ) {
+            ) throws SlickException {
         
         // Constructs the "Object" part of Character
         super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
@@ -87,6 +91,8 @@ public class GCharacter extends GObject {
         AI_State = 0;
         Last_AI_State_Change = System.currentTimeMillis();
         AI_State_Change_Time = 200;
+
+        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     // Constructor for Character that takes an already defined Animation array
@@ -104,7 +110,7 @@ public class GCharacter extends GObject {
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
-    		){
+    		) throws SlickException{
     	
     	super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation);
@@ -126,12 +132,16 @@ public class GCharacter extends GObject {
         // Initialize Artificial Intelligence
         AI_State = 0;
         Last_AI_State_Change = System.currentTimeMillis();
+        
+        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
 
     // Default Constructor sets everything to equal either 0 or null
-    public GCharacter() {
+    public GCharacter() throws SlickException {
         last_move = System.nanoTime();
         last_damage = System.currentTimeMillis();
+        
+        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     // frames cannot have array size less than 4x5 because these
@@ -157,7 +167,7 @@ public class GCharacter extends GObject {
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
-            ){
+            ) throws SlickException{
         
     	// Initialize object part of character
         Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
@@ -171,6 +181,8 @@ public class GCharacter extends GObject {
         Y_Movement = y_movement;
         
         last_move = System.nanoTime();
+        
+        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     public void Init(
@@ -187,7 +199,7 @@ public class GCharacter extends GObject {
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
-            ){
+            ) throws SlickException{
     
 	    super.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
 				tilesize, animation_list, current_animation);
@@ -209,6 +221,8 @@ public class GCharacter extends GObject {
 	    // Initialize Artificial Intelligence
 	    AI_State = 0;
 	    Last_AI_State_Change = System.currentTimeMillis();
+        
+        Hurt_Sound = new Sound("soundtrack/Hit_Hurt32.wav");
     }
     
     // Updates the Character's position based on artificial intelligence and collision
@@ -382,6 +396,7 @@ public class GCharacter extends GObject {
 	    	if (Health > 0) // no decrimenting past 0
 	    	{
 	    		Health--; // decriment health
+	    		Hurt_Sound.play();
 	    	}
 	    	else
 	    	{
@@ -397,13 +412,14 @@ public class GCharacter extends GObject {
     	
     	if (System.currentTimeMillis() > last_damage + INVINCIBILITY_TIME)
     	{
-	    	if (Health - health_dec <= 0) // don't decrease below 0
+	    	if (Health - health_dec < 0) // don't decrease below 0
 	    	{
 	    		Health = 0; // safeguard in case decreased below 0
 	    	}
 	    	else
 	    	{
 	    		Health -= health_dec; // decrease health
+	    		Hurt_Sound.play();
 	    	}
 	    	last_damage = System.currentTimeMillis();
     	}

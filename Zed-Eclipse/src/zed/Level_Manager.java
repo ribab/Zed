@@ -8,12 +8,14 @@ package zed;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 /**
@@ -180,7 +182,7 @@ public class Level_Manager {
     
     // default initialization for the player's animations, position, attack speed, animation speed
     // within the level
-    public void Initialize_Player_Information(int player_x, int player_y)
+    public void Initialize_Player_Information(int player_x, int player_y) throws SlickException
     {
         // spritesheet information for standing and walking animations
         int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3}; // row in spritesheet for each animation
