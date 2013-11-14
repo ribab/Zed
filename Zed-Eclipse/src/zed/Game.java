@@ -11,6 +11,12 @@ public class Game extends StateBasedGame {
 	public static final int menu = 0;
 	public static final int Zed = 1;
 	
+	public Game() {
+		super("Zed");
+		this.addState(new Menu(menu));
+		this.addState(new Zed(Zed));
+	}
+	
 	public Game(String gamename) {
 		super(gamename);
 		this.addState(new Menu(menu));

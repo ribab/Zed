@@ -9,6 +9,8 @@ public class Menu extends BasicGameState {
 	Image menu_background;
 	Music music;
 	
+	public Menu(){}
+	
 	public Menu(int state){}
 
 	@Override
