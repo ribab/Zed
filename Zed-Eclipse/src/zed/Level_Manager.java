@@ -155,7 +155,7 @@ public class Level_Manager {
         	
         	for (int i = 0; i < Tile_List[2].length/5; i++)
         	{
-	        	portallist[0] = new GPortal(Tile_List[2][5*i],
+	        	portallist[i] = new GPortal(Tile_List[2][5*i],
 	        			Tile_List[2][5*i+1], 16, Tile_List[2][5*i+4],
 	        			Tile_List[2][5*i+2], Tile_List[2][5*i+3]);
         	}
