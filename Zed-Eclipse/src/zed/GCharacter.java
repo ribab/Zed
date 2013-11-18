@@ -52,6 +52,8 @@ public class GCharacter extends GObject {
     public GCharacter(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
+    		int width, // initial width in pixels
+    		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid,
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
@@ -70,7 +72,7 @@ public class GCharacter extends GObject {
             ) throws SlickException {
         
         // Constructs the "Object" part of Character
-        super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        super(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
         // Initialze health
@@ -97,6 +99,8 @@ public class GCharacter extends GObject {
     public GCharacter(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
+    		int width, // initial width in pixels
+    		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
@@ -110,7 +114,7 @@ public class GCharacter extends GObject {
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
     		) throws SlickException{
     	
-    	super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation);
     	
         // Initialze health
@@ -145,7 +149,9 @@ public class GCharacter extends GObject {
     public void Init(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
-    		boolean visible, // initialize wheter the character is visible
+    		int width, // initial width in pixels
+    		int height, // initial height in pixels
+    		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
@@ -164,7 +170,7 @@ public class GCharacter extends GObject {
             ) throws SlickException{
         
     	// Initialize object part of character
-        Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
         // initialize character part of character
@@ -180,6 +186,8 @@ public class GCharacter extends GObject {
     public void Init(
     		int tile_x, // initial x position of the character w.r.t. the game tiles
     		int tile_y, // initial y position of the character w.r.t. the game tiles
+    		int width, // initial width in pixels
+    		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
@@ -193,7 +201,7 @@ public class GCharacter extends GObject {
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
             ) throws SlickException{
     
-	    super.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
+	    super.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y,
 				tilesize, animation_list, current_animation);
 		
 	    // Initialze health
@@ -264,14 +272,14 @@ public class GCharacter extends GObject {
 		        	if (Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
 		        		return collision_objects[i];
-		        	if (Collision(collision_objects[i].Get_X_Position() + 15,
+		        	if (Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
 		        			collision_objects[i].Get_Y_Position()))
 		        		return collision_objects[i];
-		        	if (Collision(collision_objects[i].Get_X_Position() + 15,
-		        			collision_objects[i].Get_Y_Position() + 15))
+		        	if (Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
+		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
 		        		return collision_objects[i];
 		        	if (Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position() + 15))
+		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
 		        		return collision_objects[i];
 		        }
 	        }
@@ -282,8 +290,8 @@ public class GCharacter extends GObject {
     // can tell if pixel is within GCharacter or not
     boolean Collision(int x, int y){
     	
-    	if (x >= X_Position + X_Movement && x < X_Position + X_Movement + 16
-    	 && y >= Y_Position + Y_Movement && y < Y_Position + Y_Movement + 16)
+    	if (x >= X_Position + X_Movement && x < X_Position + X_Movement + Width - 1
+    	 && y >= Y_Position + Y_Movement && y < Y_Position + Y_Movement + Height - 1)
     	{
     		return true;
     	}

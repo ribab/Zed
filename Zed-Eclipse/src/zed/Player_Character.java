@@ -25,7 +25,7 @@ public class Player_Character extends GCharacter {
     		int health, float speed,
     		int x_movement, int y_movement) throws SlickException{
     	
-    	super(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, 16, 16, visible, solid, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation,
     			health, speed, x_movement, y_movement);
     	
@@ -157,19 +157,19 @@ public class Player_Character extends GCharacter {
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
-    			return X_Position + 16/2;
+    			return X_Position + 7;
     		}
     		else if (Current_Animation == Animation_List[9]) // attack left
     		{
-    			return X_Position - 16;
+    			return X_Position - 15;
     		}
     		else if (Current_Animation == Animation_List[10]) // attack down
     		{
-    			return X_Position + 16/2;
+    			return X_Position + 7;
     		}
     		else if (Current_Animation == Animation_List[11]) // attack right
     		{
-    			return X_Position + 16 + 16;
+    			return X_Position + 15 + 15;
     		}
     	}
     	return -1;
@@ -183,19 +183,19 @@ public class Player_Character extends GCharacter {
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
-    			return Y_Position - 16;
+    			return Y_Position - 15;
     		}
     		else if (Current_Animation == Animation_List[9]) // attack left
     		{
-    			return Y_Position + 16/2;
+    			return Y_Position + 7;
     		}
     		else if (Current_Animation == Animation_List[10]) // attack down
     		{
-    			return Y_Position + 16 + 16;
+    			return Y_Position + 15 + 15;
     		}
     		else if (Current_Animation == Animation_List[11]) // attack right
     		{
-    			return Y_Position + 16/2;
+    			return Y_Position + 7;
     		}
     	}
     	return -1;

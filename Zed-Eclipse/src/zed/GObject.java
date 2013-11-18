@@ -28,6 +28,9 @@ public class GObject {
     int X_Position;
     int Y_Position;
     
+    int Width;
+    int Height;
+    
     // Holds the animations for the object.
     Animation[] Animation_List;
     Animation Current_Animation;
@@ -51,6 +54,7 @@ public class GObject {
     // Constructor given SpriteSheet
     public GObject(
     		int tile_x, int tile_y, // tell which tile to start in
+    		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid,
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
@@ -62,13 +66,14 @@ public class GObject {
             int current_animation // tell which animation to start with
             ){
         
-        this.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        this.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
     }
     
     // Constructor given Animation[]
     public GObject(
     		int tile_x, int tile_y, // tell which tile to start in
+    		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is solid for collision
     		int[] sprite_shift_x, int[] sprite_shift_y,  // number of pixels each animation is shifted by
@@ -78,12 +83,26 @@ public class GObject {
     		){
     	
     	// initialize
-    	this.Init(tile_x, tile_y, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
+    	this.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
+    }
+    
+    // simple constructor for an invisible object that can be placed anywhere
+    // and is not constricted by tiles
+    public GObject(
+    		int xpos, int ypos, int width, int height, Animation animation){
+    	
+    	Animation[] animation_list = {animation};
+    	int[] ssx = {0}; // sprite shift x
+    	int[] ssy = {0}; // sprite shift y
+    	// initialize
+    	this.Init(0, 0, width, height, false, false, ssx, ssy, 16, animation_list, 0);
+    	
     }
     
     // Initialization function that generates animations based on SpriteSheet
     public void Init(
     		int tile_x, int tile_y, // tell which tile to start in
+    		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is a solid for collision
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
@@ -98,6 +117,9 @@ public class GObject {
     	// set position based on location and tilesize
         X_Position = tile_x*tilesize;
         Y_Position = tile_y*tilesize;
+        
+        Height = height;
+        Width = width;
         
         Visible = visible; // set visibility
         
@@ -125,12 +147,16 @@ public class GObject {
     }
 
     // Initialization given Animation[]
-    public void Init(int tile_x, int tile_y, boolean visible, boolean solid,
+    public void Init(int tile_x, int tile_y, 
+    		int width, int height, boolean visible, boolean solid,
     		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
     		Animation[] animation_list, int current_animation)
     {
     	X_Position = tile_x*tilesize;
     	Y_Position = tile_y*tilesize;
+    	
+    	Width = width;
+    	Height = height;
     	
     	Visible = visible;
     	
@@ -164,6 +190,16 @@ public class GObject {
     public int Get_Y_Position(){
         
         return Y_Position;
+    }
+    
+    public int Get_Width(){
+    	
+    	return Width;
+    }
+    
+    public int Get_Height(){
+    	
+    	return Height;
     }
     
     // Can tell if the object is alligned with the tiles displayed

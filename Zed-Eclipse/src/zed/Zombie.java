@@ -57,6 +57,7 @@ public class Zombie extends GCharacter {
         // Initialize zombie based on constructor
 		super.Init(
 				tile_x, tile_y, // Tile to put in
+				16, 16,
 				true, true, // Visible? Solid?
 				sprite_shift_x, sprite_shift_y, // shift for each animation
 				16, // Size of a tile

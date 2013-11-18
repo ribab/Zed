@@ -138,6 +138,7 @@ public class Level_Manager {
 	        		{
 			        	objectlist[current_object++] = new GObject(
 			            		j, i, // tell which tile to start in
+			            		16, 16,
 			            		false, // tell whether the object is visible
 			            		true, // tell whether the object is solid for collision
 			            		null, null,  // number of pixels each animation is shifted by
