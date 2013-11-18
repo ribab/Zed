@@ -62,7 +62,7 @@ public class Rat extends GCharacter {
 				sprite_shift_x, sprite_shift_y, // shift for each animation
 				16, // Size of a tile
 				zombie_animations, 0, // Initialize animations and current animation
-				3, // Health value
+				1, // Health value
 				10.0f, // Speed value in tiles per second
 				0, 0); // Initial movement values
 		
