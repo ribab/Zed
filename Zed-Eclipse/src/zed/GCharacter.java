@@ -234,6 +234,7 @@ public class GCharacter extends GObject {
 	        GObject[] cplayer = {player};
 	        collided |= (Collision(collision_objects) != null); // tell whether character has collided with an object
 	        collided |= (Collision(npcs) != null); // tell whether character has collided with another collidable npc
+	        collided |= (Out_Of_Bounds());
 	        
 	        if (Collision(cplayer) != null)
 	        {
@@ -290,8 +291,8 @@ public class GCharacter extends GObject {
     // can tell if pixel is within GCharacter or not
     boolean Collision(int x, int y){
     	
-    	if (x >= X_Position + X_Movement && x < X_Position + X_Movement + Width - 1
-    	 && y >= Y_Position + Y_Movement && y < Y_Position + Y_Movement + Height - 1)
+    	if (x >= X_Position + X_Movement && x < X_Position + X_Movement + Width
+    	 && y >= Y_Position + Y_Movement && y < Y_Position + Y_Movement + Height)
     	{
     		return true;
     	}
