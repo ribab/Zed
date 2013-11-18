@@ -37,6 +37,8 @@ public class GObject {
     int Current_Animation_Index; // Holds index of current playing animation
                                  // so that we don't have to find it every time
     
+    int Tilesize;
+    
     int[] Sprite_Shift_X;
     int[] Sprite_Shift_Y;
     
@@ -65,7 +67,8 @@ public class GObject {
             boolean[] looping, // tell which animations auto-loop
             int current_animation // tell which animation to start with
             ){
-        
+
+    	Tilesize = (tilesize==0?1:tilesize);
         this.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
     }
@@ -82,6 +85,7 @@ public class GObject {
     		int current_animation // tell which animation to start with
     		){
     	
+    	Tilesize = (tilesize==0?1:tilesize);
     	// initialize
     	this.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
     }
@@ -90,7 +94,8 @@ public class GObject {
     // and is not constricted by tiles
     public GObject(
     		int xpos, int ypos, int width, int height, Animation animation){
-    	
+
+    	Tilesize = 16;
     	Animation[] animation_list = {animation};
     	int[] ssx = {0}; // sprite shift x
     	int[] ssy = {0}; // sprite shift y
@@ -204,10 +209,10 @@ public class GObject {
     
     // Can tell if the object is alligned with the tiles displayed
     // on the screen
-    public boolean Alligned_With_Tiles(int zoom)
+    public boolean Alligned_With_Tiles()
     {
-        return (X_Position % zoom == 0 &&
-                Y_Position % zoom == 0);
+        return ((X_Position % Tilesize == 0) &
+                (Y_Position % Tilesize == 0));
     }
     
     // renders the current animation

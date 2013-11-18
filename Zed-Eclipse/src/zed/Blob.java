@@ -5,21 +5,25 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
-public class Rat extends GCharacter {
+public class Blob extends GCharacter {
 
+	private boolean moving = false;
+	private long started_moving;
+	
 	// Rat default constructor does nothing
-	public Rat() throws SlickException{
+	public Blob() throws SlickException{
 	}
 	
 	// Rat constructor
-	public Rat(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
+	public Blob(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
 
 		Tilesize = 16;
+		
 		
 		Animation[] zombie_animations = new Animation[4];
 		
 		// Define index of first animation on spritesheet
-		int i0 = 14;
+		int i0 = 18;
 		// Define relative indexes of animations on spritesheet
 		int[] spritesheet_index = {i0, i0 + 1, i0 + 2, i0 + 3};
 		// Define the length of each animation
@@ -43,7 +47,7 @@ public class Rat extends GCharacter {
 	                // location of last sprite in spritesheet
 	                animation_length[i] - 1, spritesheet_index[i],
 	                false, // horizontalScan value
-	                80, // speed value for animation
+	                200, // speed value for animation
 	                true // autoupdate value
 	                );
 	        zombie_animations[i].setLooping(true); // intialize whether animation loops
@@ -65,12 +69,12 @@ public class Rat extends GCharacter {
 				16, // Size of a tile
 				zombie_animations, 0, // Initialize animations and current animation
 				1, // Health value
-				10.0f, // Speed value in tiles per second
+				2.0f, // Speed value in tiles per second
 				0, 0); // Initial movement values
 		
-		AI_State_Change_Time = 500; // Time to change state for AI
-		
 		Hurt_Sound = new Sound("soundtrack/effects/sword_hit_flesh.wav");
+		
+		started_moving = System.currentTimeMillis();
 		
 		Artificial_Intelligence(true, null);
 	}
@@ -79,19 +83,28 @@ public class Rat extends GCharacter {
 	// Knows if this character has collided and knows player's position
 	public void Artificial_Intelligence(boolean collision, Player_Character player)
 	{
-		if (collision)
+		if (moving && this.Alligned_With_Tiles())
 		{
-			if (rnd.nextBoolean())
+			X_Movement = 0;
+			Y_Movement = 0;
+			moving = false;
+		}
+		else
+		{
+			if (!moving && System.currentTimeMillis() > started_moving + rnd.nextInt(2000))
 			{
-				if (rnd.nextBoolean()) {X_Movement = 1;}
-				else                   {X_Movement = -1;}
-				Y_Movement = 0;
-			}
-			else
-			{
-				if (rnd.nextBoolean()) {Y_Movement = 1;}
-				else                   {Y_Movement = -1;}
-				X_Movement = 0;
+				if (rnd.nextBoolean())
+				{
+					X_Movement = (rnd.nextBoolean() ? 1:-1);
+					Y_Movement = 0;
+				}
+				else
+				{
+					X_Movement = 0;
+					Y_Movement = (rnd.nextBoolean() ? 1:-1);
+				}
+				moving = true;
+				started_moving = System.currentTimeMillis();
 			}
 		}
 	}
