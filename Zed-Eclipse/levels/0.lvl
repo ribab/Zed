@@ -34,4 +34,7 @@
  xp  yp  xd  yd  map
   9  -1   9  14    1
   8  -1   8  14    1
-  
+ 
+ - npc 3
+tp xp yp
+1  3  4

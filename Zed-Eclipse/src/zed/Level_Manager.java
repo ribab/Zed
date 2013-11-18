@@ -31,6 +31,7 @@ public class Level_Manager {
 
     private static final int TILE_SIZE = 16;
     private static final int ZOMBIE = 0;
+    private static final int RAT = 1;
     
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
@@ -169,6 +170,9 @@ public class Level_Manager {
         	{
         		if (Tile_List[3][i*3] == ZOMBIE)
         			npclist[i] = new Zombie(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2], character_sprites);
+        		else if (Tile_List[3][i*3] == RAT)
+        			npclist[i] = new Rat(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
         	}
         	/*
