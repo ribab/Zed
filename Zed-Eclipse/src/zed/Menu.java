@@ -55,25 +55,20 @@ public class Menu extends BasicGameState {
 		if (((posX > 289) && (posX < 289 + 47)) //detects user starting a new game
 				&& ((posY > 260) && (posY < 260 + 39))){
 			if (gc.getInput().isMousePressed(0)){
+				sbg.getState(1).init(gc, sbg);
 				sbg.enterState(1);
 			}
 		}
 		
 		if (((posX > 360) && (posX < 360 + 47)) && ((posY > 260) && (posY < 260 + 39))){ //detects user exiting the game
 			if (Mouse.isButtonDown(0)){
-				System.exit(0);
+				gc.exit();
 			}
 		}
-		
-		
-		
 	}
 
 	@Override
 	public int getID() {
 		return 0;
 	}
-	
-
-	
 }
