@@ -49,6 +49,9 @@ public class GObject {
     // If false, then it still collides with other Solid objects.
     boolean Solid;
     
+    // If true, then player gets damaged when colliding with it
+    boolean Damage;
+    
     // Default constructor
     public GObject(){
     }
@@ -59,6 +62,7 @@ public class GObject {
     		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid,
+    		boolean damage, // tell whether the object damages player
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
             int tilesize, // give size of a tile in pixels
             SpriteSheet sprites, // give the spritesheet used
@@ -69,7 +73,8 @@ public class GObject {
             ){
 
     	Tilesize = (tilesize==0?1:tilesize);
-        this.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        this.Init(tile_x, tile_y, width, height, visible, solid,
+        		damage, sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
     }
     
@@ -79,6 +84,7 @@ public class GObject {
     		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is solid for collision
+    		boolean damage, // tell whether the object damages the player
     		int[] sprite_shift_x, int[] sprite_shift_y,  // number of pixels each animation is shifted by
     		int tilesize, // give size of a tile in pixels
     		Animation[] animation_list, // give preinitialized animations
@@ -87,7 +93,7 @@ public class GObject {
     	
     	Tilesize = (tilesize==0?1:tilesize);
     	// initialize
-    	this.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
+    	this.Init(tile_x, tile_y, width, height, visible, solid, damage, sprite_shift_x, sprite_shift_y, tilesize, animation_list, current_animation);
     }
     
     // simple constructor for an invisible object that can be placed anywhere
@@ -100,7 +106,7 @@ public class GObject {
     	int[] ssx = {0}; // sprite shift x
     	int[] ssy = {0}; // sprite shift y
     	// initialize
-    	this.Init(0, 0, width, height, false, false, ssx, ssy, 16, animation_list, 0);
+    	this.Init(0, 0, width, height, false, false, false, ssx, ssy, 16, animation_list, 0);
     	
     }
     
@@ -110,6 +116,7 @@ public class GObject {
     		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is a solid for collision
+    		boolean damage, // tell whether the object damages player
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
             int tilesize, // give size of a tile in pixels
             SpriteSheet sprites, // give the spritesheet used
@@ -129,6 +136,8 @@ public class GObject {
         Visible = visible; // set visibility
         
         Solid = solid; // set solidity for collision
+        
+        Damage = damage; // set damage value
         
         Sprite_Shift_X = sprite_shift_x; // set the shift of each animation's display
         Sprite_Shift_Y = sprite_shift_y;
@@ -153,7 +162,7 @@ public class GObject {
 
     // Initialization given Animation[]
     public void Init(int tile_x, int tile_y, 
-    		int width, int height, boolean visible, boolean solid,
+    		int width, int height, boolean visible, boolean solid, boolean damage,
     		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
     		Animation[] animation_list, int current_animation)
     {
@@ -166,6 +175,8 @@ public class GObject {
     	Visible = visible;
     	
     	Solid = solid;
+    	
+    	Damage = damage;
     	
     	Sprite_Shift_X = sprite_shift_x;
     	Sprite_Shift_Y = sprite_shift_y;
@@ -251,5 +262,11 @@ public class GObject {
             }
         }
         return -1;
+    }
+    
+    // Returns whether the object damages the player
+    public boolean Is_Damage(){
+    	
+    	return Damage;
     }
 }

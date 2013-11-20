@@ -25,7 +25,7 @@ public class Player_Character extends GCharacter {
     		int health, float speed,
     		int x_movement, int y_movement) throws SlickException{
     	
-    	super(tile_x, tile_y, 16, 16, visible, solid, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, 16, 16, visible, solid, false, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation,
     			health, speed, x_movement, y_movement);
     	
@@ -39,6 +39,9 @@ public class Player_Character extends GCharacter {
     	
     	if (Health > 0)
     	{
+    		GObject col_object = null;
+    		GObject col_npc = null;
+    		
 	        boolean collided = false; // holds whether character will collide with
 	                                  // a collision_object
 	        boolean hit_npc = false;
@@ -47,7 +50,8 @@ public class Player_Character extends GCharacter {
 	                              // based on movement and attacking
 		    
 	        // check for collision based on movement values
-	        if (Collision(objects) == null && Collision(npcs) == null
+	        if ((col_object = Collision(objects)) == null
+	        		&& (col_npc = Collision(npcs)) == null
 	        		&& !Out_Of_Bounds()) // TODO: maybe make Collision_Up, Collision_Left,
 	        	                         //       Collision_Down, Collision_Right functions
 	        	                         //       to allow character to slide against walls
@@ -58,9 +62,9 @@ public class Player_Character extends GCharacter {
 		    	// update the character's position based on movement values
 		        Update_Position();
 		    }
-		    
 	        // check for collision with npc based on movement values
-	        if (Collision(npcs) != null)
+	        if ((col_object != null && col_object.Is_Damage())
+	        		|| (col_npc != null && col_npc.Is_Damage()))
 	        {
 	        	// damage the character if hits an npc
 	        	Decriment_Health();

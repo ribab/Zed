@@ -55,7 +55,8 @@ public class GCharacter extends GObject {
     		int width, // initial width in pixels
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
-    		boolean solid,
+    		boolean solid, // initializes whether its solid
+    		boolean damage, // initialize whether it damages the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -72,7 +73,8 @@ public class GCharacter extends GObject {
             ) throws SlickException {
         
         // Constructs the "Object" part of Character
-        super(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        super(tile_x, tile_y, width, height, visible, solid, damage,
+        		sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
         // Initialze health
@@ -103,6 +105,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
+    		boolean damage, // initialize whether it damages the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -114,7 +117,7 @@ public class GCharacter extends GObject {
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
     		) throws SlickException{
     	
-    	super(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, width, height, visible, solid, damage, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation);
     	
         // Initialze health
@@ -153,6 +156,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
+    		boolean damage, // initialize whether it damages player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -170,7 +174,8 @@ public class GCharacter extends GObject {
             ) throws SlickException{
         
     	// Initialize object part of character
-        Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y, tilesize, sprites,
+        Init(tile_x, tile_y, width, height, visible, solid, damage,
+        		sprite_shift_x, sprite_shift_y, tilesize, sprites,
                 spritesheet_index, animation_length, looping, current_animation);
         
         // initialize character part of character
@@ -190,6 +195,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
+    		boolean damage, // initialize whether it damages the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -201,7 +207,8 @@ public class GCharacter extends GObject {
             int y_movement // Give the character its initial y_movement value (-1, 0, 1)
             ) throws SlickException{
     
-	    super.Init(tile_x, tile_y, width, height, visible, solid, sprite_shift_x, sprite_shift_y,
+	    super.Init(tile_x, tile_y, width, height, visible, solid, damage, 
+	    		sprite_shift_x, sprite_shift_y,
 				tilesize, animation_list, current_animation);
 		
 	    // Initialze health
@@ -228,20 +235,18 @@ public class GCharacter extends GObject {
     	
     	if (Health > 0)
     	{
-	        boolean collided = false;
-	        
 	        Update_Frame_State();
 	        GObject[] cplayer = {player};
-	        collided |= (Collision(collision_objects) != null); // tell whether character has collided with an object
-	        collided |= (Collision(npcs) != null); // tell whether character has collided with another collidable npc
-	        collided |= (Out_Of_Bounds());
-	        
-	        if (Collision(cplayer) != null)
+	        boolean col_obj = (Collision(collision_objects) != null); // tell whether character has collided with an object
+	        boolean col_npc = (Collision(npcs) != null); // tell whether character has collided with another collidable npc
+	        boolean col_bnd = (Out_Of_Bounds());
+	        boolean col_plr = (Collision(cplayer) != null);
+	        boolean col = col_obj | col_npc | col_bnd | col_plr;
+	        if (col_plr && !col_obj && Damage)
 	        {
-	        	collided = true;
 	        	player.Decriment_Health();
 	        }
-	        if (!collided && System.currentTimeMillis() > last_damage + STUN_TIME
+	        if (!col && System.currentTimeMillis() > last_damage + STUN_TIME
 	        		&& !Out_Of_Bounds())
 	        {
 	            Update_Position(); // can move if there is something to collide with
@@ -251,12 +256,13 @@ public class GCharacter extends GObject {
 	        	Decriment_Health(); // kills this character with a sword
 	        }
 	        
-	        Artificial_Intelligence(collided, player); // Proceed with AI code to update the character's movement values
+	        Artificial_Intelligence(col, player); // Proceed with AI code to update the character's movement values
     	}
     	else
     	{
     		Solid = false;
     		Visible = false;
+    		Damage = false;
     	}
     }
     

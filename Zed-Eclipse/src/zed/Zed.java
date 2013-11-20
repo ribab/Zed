@@ -110,4 +110,9 @@ public class Zed extends BasicGameState {
     	   return 1;
        }
        
+       public Level_Manager getLevel(){
+    	   
+    	   return test;
+       }
+       
 }
