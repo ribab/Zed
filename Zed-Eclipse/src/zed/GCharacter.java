@@ -475,6 +475,12 @@ public class GCharacter extends GObject {
         return Y_Movement;
     }
     
+    public void Set_Movement(int x_movement, int y_movement){
+    	
+    	X_Movement = x_movement;
+    	Y_Movement = y_movement;
+    }
+    
     // The default artificial intelligence code for the character
     // that updates the character's movement values
     public void Artificial_Intelligence(
