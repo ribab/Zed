@@ -2,9 +2,11 @@ package zed;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.io.PrintStream;
 
 public class File_Manager {
 	Scanner Current_Level;
+	PrintStream Save;
 	/*
 	 Takes a File item and number of types expected to be returned in the 2d array
 	 */
@@ -28,7 +30,25 @@ public class File_Manager {
 		Current_Level.close();//close file
 		return tile;//return 2d array
 	}
+	
 	public File_Manager(){//default constructor
 		Current_Level = null;
+		Save = null;
+	}
+	
+	//takes destination file, 2d array and row count
+	public void Save_Info(File dest, int info[][], short rows) throws FileNotFoundException{
+		Save = new PrintStream(dest);//open file
+		int length;
+		for(int i = 0; i < rows; i++){
+			length = info[i].length;
+			Save.print("- ");
+			Save.println(length);
+			for(int j = 0; j < length; j++){
+				Save.print(info[i][j]);
+			}
+			Save.println();
+		}
+		Save.close();
 	}
 }
