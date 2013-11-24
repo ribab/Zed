@@ -30,10 +30,6 @@ import org.newdawn.slick.SpriteSheet;
 public class Level_Manager {   
 
     private static final int TILE_SIZE = 16;
-    private static final int ZOMBIE = 0;
-    private static final int RAT = 1;
-    private static final int BLOB = 2;
-    private static final int ARROW = 3;
     
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
@@ -179,16 +175,16 @@ public class Level_Manager {
         	
         	for (int i = 0; i < Tile_List[3].length/3; i++)
         	{
-        		if (Tile_List[3][i*3] == ZOMBIE)
+        		if (Tile_List[3][i*3] == Zombie.Get_Type())
         			npclist[i] = new Zombie(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == RAT)
+        		else if (Tile_List[3][i*3] == Rat.Get_Type())
         			npclist[i] = new Rat(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == BLOB)
+        		else if (Tile_List[3][i*3] == Blob.Get_Type())
         			npclist[i] = new Blob(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == ARROW)
+        		else if (Tile_List[3][i*3] == Arrow.Get_Type())
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
         	}
@@ -404,7 +400,7 @@ public class Level_Manager {
         
         for (int i = 0; i < objlist.length; i++)
         {
-            objlist[i].Render(scale, xpos, ypos, gc, g); // render in order
+            if (objlist[i] != null) objlist[i].Render(scale, xpos, ypos, gc, g); // render in order
         }
         
         update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
@@ -419,7 +415,7 @@ public class Level_Manager {
         
         for (int i = 0; npclist != null && i < npclist.length; i++)
         {
-        	npclist[i].Update(objectlist, npclist, player);
+        	if (npclist[i] != null) npclist[i].Update(objectlist, npclist, player);
         }
     	GObject activeportal = player.X_Collision(portallist);
     	activeportal = (activeportal == null)?player.Y_Collision(portallist):activeportal;
@@ -460,7 +456,7 @@ public class Level_Manager {
     		flag = false;
     		for (int i = 0; i < list.length - 1; i++)
         	{
-        		if (list[i].Get_Y_Position() > list[i + 1].Get_Y_Position())
+        		if (list[i] != null && list[i + 1] != null && list[i].Get_Y_Position() > list[i + 1].Get_Y_Position())
         		{
             		temp = list[i];
             		list[i] = list[i + 1];

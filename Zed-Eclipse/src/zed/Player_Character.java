@@ -27,7 +27,7 @@ public class Player_Character extends GCharacter {
     	
     	super(tile_x, tile_y, 16, 16, visible, solid, false, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation,
-    			health, speed, x_movement, y_movement);
+    			health, speed, x_movement, y_movement, -1);
     	
     	Sword_Drawn = false;
 
@@ -44,10 +44,6 @@ public class Player_Character extends GCharacter {
     		GObject y_col_object = null;
     		GObject y_col_npc = null;
     		
-	        boolean collided = false; // holds whether character will collide with
-	                                  // a collision_object
-	        boolean hit_npc = false;
-	        
 	        Update_Frame_State(); // update the current animation being played
 	                              // based on movement and attacking
 		    
@@ -212,6 +208,11 @@ public class Player_Character extends GCharacter {
     			return Y_Position + 7;
     		}
     	}
+    	return -1;
+    }
+    
+    public static int Get_Type(){
+    	
     	return -1;
     }
 }

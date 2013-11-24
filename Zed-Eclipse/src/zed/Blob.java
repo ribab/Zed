@@ -18,8 +18,6 @@ public class Blob extends GCharacter {
 	public Blob(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
 
 		Tilesize = 16;
-		
-		
 		Animation[] zombie_animations = new Animation[4];
 		
 		// Define index of first animation on spritesheet
@@ -107,5 +105,10 @@ public class Blob extends GCharacter {
 				started_moving = System.currentTimeMillis();
 			}
 		}
+	}
+	
+	public static int Get_Type(){
+		
+		return 2;
 	}
 }

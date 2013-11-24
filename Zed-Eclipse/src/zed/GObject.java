@@ -269,4 +269,9 @@ public class GObject {
     	
     	return Damage;
     }
+    
+    public static int Get_Type(){
+    	
+    	return -1;
+    }
 }

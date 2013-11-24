@@ -70,7 +70,8 @@ public class GCharacter extends GObject {
             int health, // intialize the character's max_health and health
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
-            int y_movement // Give the character its initial y_movement value (-1, 0, 1)
+            int y_movement, // Give the character its initial y_movement value (-1, 0, 1)
+            int type
             ) throws SlickException {
         
         // Constructs the "Object" part of Character
@@ -116,7 +117,8 @@ public class GCharacter extends GObject {
             int health, // initialize the character's max_health and health
             float speed, // Give the character its speed in tiles per second 
             int x_movement, // Give the character its initial x_movement value (-1, 0, 1)
-            int y_movement // Give the character its initial y_movement value (-1, 0, 1)
+            int y_movement, // Give the character its initial y_movement value (-1, 0, 1)
+            int type
     		) throws SlickException{
     	
     	super(tile_x, tile_y, width, height, visible, solid, damage, sprite_shift_x, sprite_shift_y,
@@ -291,7 +293,7 @@ public class GCharacter extends GObject {
     	{
 	        for (int i = 0; i < collision_objects.length; i++)
 	        {
-		        if (collision_objects[i] != this && collision_objects[i].Solid)
+		        if (collision_objects[i] != null && collision_objects[i] != this && collision_objects[i].Solid)
 		        {
 		        	if (X_Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
@@ -318,7 +320,7 @@ public class GCharacter extends GObject {
     	{
 	        for (int i = 0; i < collision_objects.length; i++)
 	        {
-		        if (collision_objects[i] != this && collision_objects[i].Solid)
+		        if (collision_objects[i] != null && collision_objects[i] != this && collision_objects[i].Solid)
 		        {
 		        	if (Y_Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
@@ -589,5 +591,10 @@ public class GCharacter extends GObject {
             GameContainer gc, Graphics g){
     	
     	super.Render(zoom, current_tile_x, current_tile_y, gc, g);
+    }
+    
+    public static int Get_Type(){
+    	
+    	return -1;
     }
 }

@@ -6,7 +6,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 public class Rat extends GCharacter {
-
+	
 	// Rat default constructor does nothing
 	public Rat() throws SlickException{
 	}
@@ -94,5 +94,10 @@ public class Rat extends GCharacter {
 				X_Movement = 0;
 			}
 		}
+	}
+	
+	public static int Get_Type(){
+		
+		return 1;
 	}
 }

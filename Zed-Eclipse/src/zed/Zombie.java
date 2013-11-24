@@ -6,7 +6,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 public class Zombie extends GCharacter {
-
+	
 	// Zombie default constructor does nothing
 	public Zombie() throws SlickException{
 	}
@@ -14,6 +14,7 @@ public class Zombie extends GCharacter {
 	// Zombie constructor
 	public Zombie(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
 
+	    Tilesize = 16;
 		Animation[] zombie_animations = new Animation[4];
 		
 		// Define index of first animation on spritesheet
@@ -98,5 +99,9 @@ public class Zombie extends GCharacter {
 				X_Movement = 0;
 			}
 		}
+	}
+	public static int Get_Type(){
+		
+		return 0;
 	}
 }

@@ -7,7 +7,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 public class Arrow extends GCharacter {
-
+	
 	// Rat default constructor does nothing
 	public Arrow() throws SlickException{
 	}
@@ -16,7 +16,6 @@ public class Arrow extends GCharacter {
 	public Arrow(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
 
 		Tilesize = 16;
-		
 		Animation[] animations = new Animation[4];
 		
 		// Define index of first animation on spritesheet
@@ -90,5 +89,10 @@ public class Arrow extends GCharacter {
 		{
 			this.Decriment_Health();
 		}
+	}
+	
+	public static int Get_Type(){
+		
+		return 3;
 	}
 }
