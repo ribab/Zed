@@ -364,8 +364,7 @@ public class GCharacter extends GObject {
     // check to see if GCharacter goes out of screen in x direction
     boolean X_Out_Of_Bounds(){
 
-        if (X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
-         || Y_Position + 16 > 16*15 || Y_Position < 0)
+        if (X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0)
         {
         	return true; // can't go out of bounds
         }
@@ -374,8 +373,7 @@ public class GCharacter extends GObject {
     // check to see if GCharacter goes out of screen in y direction
     boolean Y_Out_Of_Bounds(){
 
-        if (X_Position + 16 > 16*20 || X_Position < 0
-         || Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
+        if (Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
         {
         	return true; // can't go out of bounds
         }
@@ -427,7 +425,7 @@ public class GCharacter extends GObject {
     void Update_X_Position(){
         
         // Move Horizontally
-        if (X_Position != 0)
+        if (X_Movement != 0)
         {
             if (System.nanoTime() >= x_last_move
                 + (long)(1000000000.0/(Speed*0.70710678118*16.0))) // wait until right time
@@ -444,7 +442,7 @@ public class GCharacter extends GObject {
     void Update_Y_Position(){
         
         // Move Horizontally
-        if (Y_Position != 0)
+        if (Y_Movement != 0)
         {
             if (System.nanoTime() >= y_last_move
                 + (long)(1000000000.0/(Speed*0.70710678118*16.0))) // wait until right time
