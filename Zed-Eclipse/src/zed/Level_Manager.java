@@ -121,7 +121,7 @@ public class Level_Manager {
         }
         
         // load GObjects
-        if (Tile_List[1] != null)
+        if (Tile_List[1] != null && Tile_List[1].length > 0)
         {
             int number_of_1s = 0;
 	        for (int i = 0; i < Tile_List[1].length; i++)
@@ -137,7 +137,7 @@ public class Level_Manager {
 	        {
 	        	for (int j = 0; j < width; j++)
 	        	{ 
-	        		if (Tile_List[1][j + width*i] == 1)
+	        		if (Tile_List[1] != null && Tile_List[1].length > 0 && Tile_List[1][j + width*i] == 1)
 	        		{
 			        	objectlist[current_object++] = new GObject(
 			            		j, i, // tell which tile to start in
@@ -154,7 +154,11 @@ public class Level_Manager {
 	        	}
 	        }
         }
-        if (Tile_List[2] != null)
+        else
+        {
+        	objectlist = null;
+        }
+        if (Tile_List[2] != null && Tile_List[2].length > 0)
         {
         	portallist = new GPortal[Tile_List[2].length/5];
         	
@@ -164,6 +168,10 @@ public class Level_Manager {
 	        			Tile_List[2][5*i+1], 16, Tile_List[2][5*i+4],
 	        			Tile_List[2][5*i+2], Tile_List[2][5*i+3]);
         	}
+        }
+        else
+        {
+        	portallist = null;
         }
         if (Tile_List[3] != null)
         {
@@ -184,17 +192,10 @@ public class Level_Manager {
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
         	}
-        	/*
-        	npclist = new GCharacter[10];
-        	
-        	for (int i = 0; i < 5; i++)
-        	{
-        		for (int j = 0; j < 2; j++)
-        		{
-        			npclist[i + 5*j] = new Zombie(8+i, 5+j, character_sprites);//make sure to add new files to the repository.
-        		}
-        	}
-        	*/
+        }
+        else
+        {
+        	npclist = null;
         }
     }
     
@@ -388,9 +389,13 @@ public class Level_Manager {
             }
         }
         
+        GObject[] objlist = null;
         sort_render_order(npclist); // sort main list for efficiency
-        GObject[] objlist = new GObject[npclist.length + 1]; // create temp list
-        for (int i = 0; i < npclist.length; i++)
+        if (npclist != null)
+        	objlist = new GObject[npclist.length + 1]; // create temp list
+        else
+        	objlist = new GObject[1];
+        for (int i = 0; npclist != null && i < npclist.length; i++)
         {
         	objlist[i + 1] = npclist[i]; // put npcs in temp list
         }
@@ -412,25 +417,25 @@ public class Level_Manager {
     {
         player.Update(objectlist, npclist);
         
-        for (int i = 0; i < npclist.length; i++)
+        for (int i = 0; npclist != null && i < npclist.length; i++)
         {
         	npclist[i].Update(objectlist, npclist, player);
         }
     	GObject activeportal;
-        if ((activeportal = player.Collision(portallist)) != null)
+        if ((activeportal = player.Collision(portallist)) != null && portallist != null)
         {
         	if (!has_ported)
         	{
-        		for (int i = 0; i < portallist.length; i++)
+        		for (int i = 0; !has_ported && i < portallist.length; i++)
         		{
         			if (portallist[i] == activeportal)
         			{
         				Init(portallist[i].Get_Dest_Level(),
         						portallist[i].Get_Dest_X_Tile(),
         						portallist[i].Get_Dest_Y_Tile());
+        				has_ported = true;
         			}
         		}
-	        	has_ported = true;
         	}
         }
         else
@@ -448,7 +453,7 @@ public class Level_Manager {
     private void sort_render_order(GObject[] list)
     {
     	GObject temp;
-    	boolean flag = true;
+    	boolean flag = (list != null);
     	while (flag)
     	{
     		flag = false;
