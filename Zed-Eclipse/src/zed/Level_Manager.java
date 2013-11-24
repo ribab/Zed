@@ -61,7 +61,8 @@ public class Level_Manager {
     
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException {
-    	
+
+        objectives = new Objective_Manager();
     	Init(0, 10, 5);
     }
     
@@ -76,7 +77,6 @@ public class Level_Manager {
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
         Files = new File_Manager();
-        objectives = new Objective_Manager();
         curobjective = null;
         messagetimer = 0;
         
