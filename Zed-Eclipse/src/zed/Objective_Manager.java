@@ -9,28 +9,48 @@ public class Objective_Manager {
 		objectives = new Objective[1];
 		
 		objectives[0] = new Objective(0);
-		messages[0] = "hi";
 	}
 	
-	public void Update(int level, GObject[] npclist){
+	public Objective Update(int level, GObject[] npclist){
 		
 		for (int i = 0; i < objectives.length; i++)
 		{
-			int type = objectives[i].getType();
-			if (type >= 0)
+			if (!objectives[i].isCompleted())
 			{
-				int count = 0;
-				for (int j = 0; j < npclist.length; j++)
+				int type = objectives[i].getType();
+				if (type >= 0)
 				{
-					if (GObject.Get_Type() == objectives[i].getType())
-						count++;
+					int count = 0;
+					for (int j = 0; j < npclist.length; j++)
+					{
+						if (GObject.Get_Type() == objectives[i].getType())
+							count++;
+					}
+					objectives[i].Update(level, count);
 				}
-				objectives[i].Update(level, count);
-			}
-			else
-			{
-				objectives[i].Update(level, 0);
+				else
+				{
+					objectives[i].Update(level, 0);
+				}
+				if (objectives[i].isCompleted())
+				{
+					return objectives[i];
+				}
 			}
 		}
+		return null;
+	}
+	
+	public float percentageCompleted(){
+		
+		int count = 0;
+		for (int i = 0; i < objectives.length; i++)
+		{
+			if (objectives[i].isCompleted())
+			{
+				count++;
+			}
+		}
+		return (count*1.0f)/(objectives.length*1.0f);
 	}
 }
