@@ -421,8 +421,9 @@ public class Level_Manager {
         {
         	npclist[i].Update(objectlist, npclist, player);
         }
-    	GObject activeportal;
-        if ((activeportal = player.Collision(portallist)) != null && portallist != null)
+    	GObject activeportal = player.X_Collision(portallist);
+    	activeportal = (activeportal == null)?player.Y_Collision(portallist):activeportal;
+        if (activeportal != null && portallist != null)
         {
         	if (!has_ported)
         	{

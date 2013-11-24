@@ -37,7 +37,8 @@ public class GCharacter extends GObject {
     int X_Movement; // {-1, 0, 1} tells movement direction in x-axis
     int Y_Movement; // {-1, 0, 1} tells movement direction in y-axis
     
-    long last_move; // time in nanoseconds of last movement
+    long x_last_move; // time in nanoseconds of last movement
+    long y_last_move;
     long last_damage; // time in milliseconds of last time was damaged
     
     int AI_State; // For use in Artificial_Intelligence function
@@ -87,7 +88,8 @@ public class GCharacter extends GObject {
         Y_Movement = y_movement;
         
         // Initialize movement
-        last_move = System.nanoTime();
+        x_last_move = System.nanoTime();
+        y_last_move = System.nanoTime();
         // Initialize damage timer
         last_damage = System.currentTimeMillis();
         
@@ -130,7 +132,8 @@ public class GCharacter extends GObject {
         Y_Movement = y_movement;
         
         // Initialize movement
-        last_move = System.nanoTime();
+        x_last_move = System.nanoTime();
+        y_last_move = System.nanoTime();
         // Initialize damage timer
         last_damage = System.currentTimeMillis();
         
@@ -141,7 +144,8 @@ public class GCharacter extends GObject {
 
     // Default Constructor sets everything to equal either 0 or null
     public GCharacter() throws SlickException {
-        last_move = System.nanoTime();
+        x_last_move = System.nanoTime();
+        y_last_move = System.nanoTime();
         last_damage = System.currentTimeMillis();
     }
     
@@ -184,8 +188,9 @@ public class GCharacter extends GObject {
         Speed = speed;
         X_Movement = x_movement;
         Y_Movement = y_movement;
-        
-        last_move = System.nanoTime();
+
+        x_last_move = System.nanoTime();
+        y_last_move = System.nanoTime();
     }
     
     public void Init(
@@ -221,7 +226,8 @@ public class GCharacter extends GObject {
 	    Y_Movement = y_movement;
 	    
 	    // Initialize movement
-	    last_move = System.nanoTime();
+        x_last_move = System.nanoTime();
+        y_last_move = System.nanoTime();
 	    // Initialize damage timer
 	    last_damage = System.currentTimeMillis();
 	    
@@ -237,21 +243,32 @@ public class GCharacter extends GObject {
     	{
 	        Update_Frame_State();
 	        GObject[] cplayer = {player};
-	        boolean col_obj = (Collision(collision_objects) != null); // tell whether character has collided with an object
-	        boolean col_npc = (Collision(npcs) != null); // tell whether character has collided with another collidable npc
-	        boolean col_bnd = (Out_Of_Bounds());
-	        boolean col_plr = (Collision(cplayer) != null);
-	        boolean col = col_obj | col_npc | col_bnd | col_plr;
-	        if (col_plr && !col_obj && Damage)
+	        boolean x_col_obj = (X_Collision(collision_objects) != null); // tell whether character has collided with an object
+	        boolean x_col_npc = (X_Collision(npcs) != null); // tell whether character has collided with another collidable npc
+	        boolean x_col_bnd = (X_Out_Of_Bounds());
+	        boolean x_col_plr = (X_Collision(cplayer) != null);
+	        boolean x_col = x_col_obj | x_col_npc | x_col_bnd | x_col_plr;
+	        boolean y_col_obj = (Y_Collision(collision_objects) != null); // tell whether character has collided with an object
+	        boolean y_col_npc = (Y_Collision(npcs) != null); // tell whether character has collided with another collidable npc
+	        boolean y_col_bnd = (Y_Out_Of_Bounds());
+	        boolean y_col_plr = (Y_Collision(cplayer) != null);
+	        boolean y_col = y_col_obj | y_col_npc | y_col_bnd | y_col_plr;
+	        boolean col = x_col | y_col;
+	        
+	        if ((x_col_plr | y_col_plr) && !(x_col_obj | y_col_obj) && Damage)
 	        {
 	        	player.Decriment_Health();
 	        }
-	        if (!col && System.currentTimeMillis() > last_damage + STUN_TIME
-	        		&& !Out_Of_Bounds())
+	        if (System.currentTimeMillis() > last_damage + STUN_TIME
+	        		&& (!X_Out_Of_Bounds() || !Y_Out_Of_Bounds()))
 	        {
-	            Update_Position(); // can move if there is something to collide with
+	        	if (!x_col)
+	        		Update_X_Position(); // can move if there is something to collide with
+	        	if (!y_col)
+	        		Update_Y_Position();
 	        }
-	        if (Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
+	        if (X_Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y())
+	           |Y_Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
 	        {
 	        	Decriment_Health(); // kills this character with a sword
 	        }
@@ -268,7 +285,7 @@ public class GCharacter extends GObject {
     
     // can tell if GCharacter will collide with another object or not
     // and returns the object GCharacter collides with
-    GObject Collision(GObject collision_objects[]){
+    GObject X_Collision(GObject collision_objects[]){
         
     	if (collision_objects != null)
     	{
@@ -276,16 +293,43 @@ public class GCharacter extends GObject {
 	        {
 		        if (collision_objects[i] != this && collision_objects[i].Solid)
 		        {
-		        	if (Collision(collision_objects[i].Get_X_Position(),
+		        	if (X_Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position()))
 		        		return collision_objects[i];
-		        	if (Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
+		        	if (X_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
 		        			collision_objects[i].Get_Y_Position()))
 		        		return collision_objects[i];
-		        	if (Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
+		        	if (X_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
 		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
 		        		return collision_objects[i];
-		        	if (Collision(collision_objects[i].Get_X_Position(),
+		        	if (X_Collision(collision_objects[i].Get_X_Position(),
+		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
+		        		return collision_objects[i];
+		        }
+	        }
+    	}
+        return null; // didn't collide
+    }
+    // can tell if GCharacter will collide with another object or not
+    // and returns the object GCharacter collides with
+    GObject Y_Collision(GObject collision_objects[]){
+        
+    	if (collision_objects != null)
+    	{
+	        for (int i = 0; i < collision_objects.length; i++)
+	        {
+		        if (collision_objects[i] != this && collision_objects[i].Solid)
+		        {
+		        	if (Y_Collision(collision_objects[i].Get_X_Position(),
+		        			collision_objects[i].Get_Y_Position()))
+		        		return collision_objects[i];
+		        	if (Y_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
+		        			collision_objects[i].Get_Y_Position()))
+		        		return collision_objects[i];
+		        	if (Y_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
+		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
+		        		return collision_objects[i];
+		        	if (Y_Collision(collision_objects[i].Get_X_Position(),
 		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
 		        		return collision_objects[i];
 		        }
@@ -294,27 +338,49 @@ public class GCharacter extends GObject {
         return null; // didn't collide
     }
     
-    // can tell if pixel is within GCharacter or not
-    boolean Collision(int x, int y){
+    // can tell if pixel is within GCharacter or not in x direction of movement
+    boolean X_Collision(int x, int y){
     	
-    	if (x >= X_Position + X_Movement && x < X_Position + X_Movement + Width
-    	 && y >= Y_Position + Y_Movement && y < Y_Position + Y_Movement + Height)
+    	if (x >= X_Position + X_Movement
+    			&& x < X_Position + X_Movement + Width
+    			&& y >= Y_Position && y < Y_Position + Height)
+    	{
+    		return true;
+    	}
+    	return false;
+    }
+    // can tell if pixel is within GCharacter or not in y direction of movement
+    boolean Y_Collision(int x, int y){
+    	
+    	if (x >= X_Position && x < X_Position + Width
+    			&& y >= Y_Position + Y_Movement
+    			&& y < Y_Position + Y_Movement + Height)
     	{
     		return true;
     	}
     	return false;
     }
     
-    // check to see if GCharacter goes out of screen
-    boolean Out_Of_Bounds(){
+    // check to see if GCharacter goes out of screen in x direction
+    boolean X_Out_Of_Bounds(){
 
-        if (  X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
-    			|| Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
+        if (X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0
+         || Y_Position + 16 > 16*15 || Y_Position < 0)
         {
         	return true; // can't go out of bounds
         }
         return false;
     }
+    // check to see if GCharacter goes out of screen in y direction
+    boolean Y_Out_Of_Bounds(){
+
+        if (X_Position + 16 > 16*20 || X_Position < 0
+         || Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
+        {
+        	return true; // can't go out of bounds
+        }
+        return false;
+    }    
     
     // updates the current animation being played based on current movement
     void Update_Frame_State(){
@@ -356,33 +422,36 @@ public class GCharacter extends GObject {
         }
     }
     
-    // Updates current position based on movement
+    // Updates current x position based on movement
     // (do not call this function without checking for collision first)
-    void Update_Position(){
+    void Update_X_Position(){
         
-        // Move Diagonally
-        if (X_Position != 0 && Y_Position != 0)
+        // Move Horizontally
+        if (X_Position != 0)
         {
-            if (System.nanoTime() >= last_move
+            if (System.nanoTime() >= x_last_move
                 + (long)(1000000000.0/(Speed*0.70710678118*16.0))) // wait until right time
             {
                 X_Position += X_Movement; // update X_Position
-                Y_Position += Y_Movement; // update Y_Position
             
-                last_move = System.nanoTime(); // record the time of last movement
+                x_last_move = System.nanoTime(); // record the time of last movement
             }
         }
+    }
+    
+    // Updates current y position based on movement
+    // (do not call this function without checking for collision first)
+    void Update_Y_Position(){
         
-        // Move vertically or horizontally
-        else 
+        // Move Horizontally
+        if (Y_Position != 0)
         {
-            if (System.nanoTime() >= last_move
-                    + (long)(1000000000.0/(Speed*16.0))) // wait until right time
+            if (System.nanoTime() >= y_last_move
+                + (long)(1000000000.0/(Speed*0.70710678118*16.0))) // wait until right time
             {
-                X_Position += X_Movement; // update X_Position
-                Y_Position += Y_Movement; // update Y_Position
-
-                last_move = System.nanoTime(); // record the time of last movement
+                Y_Position += Y_Movement; // update X_Position
+            
+                y_last_move = System.nanoTime(); // record the time of last movement
             }
         }
     }

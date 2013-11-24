@@ -39,8 +39,10 @@ public class Player_Character extends GCharacter {
     	
     	if (Health > 0)
     	{
-    		GObject col_object = null;
-    		GObject col_npc = null;
+    		GObject x_col_object = null;
+    		GObject x_col_npc = null;
+    		GObject y_col_object = null;
+    		GObject y_col_npc = null;
     		
 	        boolean collided = false; // holds whether character will collide with
 	                                  // a collision_object
@@ -50,9 +52,9 @@ public class Player_Character extends GCharacter {
 	                              // based on movement and attacking
 		    
 	        // check for collision based on movement values
-	        if ((col_object = Collision(objects)) == null
-	        		&& (col_npc = Collision(npcs)) == null
-	        		&& !Out_Of_Bounds()) // TODO: maybe make Collision_Up, Collision_Left,
+	        if ((x_col_object = X_Collision(objects)) == null
+	        		&& (x_col_npc = X_Collision(npcs)) == null
+	        		&& !X_Out_Of_Bounds()) // TODO: maybe make Collision_Up, Collision_Left,
 	        	                         //       Collision_Down, Collision_Right functions
 	        	                         //       to allow character to slide against walls
 	        	                         //       or we can just return what object the
@@ -60,11 +62,19 @@ public class Player_Character extends GCharacter {
 	        	                         //       direction the character collided based on that.
 		    {
 		    	// update the character's position based on movement values
-		        Update_Position();
+		        Update_X_Position();
 		    }
+	        if ((y_col_object = Y_Collision(objects)) == null
+	        		&& ((y_col_npc = Y_Collision(npcs)) == null)
+	        		&& !Y_Out_Of_Bounds())
+	        {
+	        	Update_Y_Position();
+	        }
 	        // check for collision with npc based on movement values
-	        if ((col_object != null && col_object.Is_Damage())
-	        		|| (col_npc != null && col_npc.Is_Damage()))
+	        if ((x_col_object != null && x_col_object.Is_Damage())
+	        		|| (x_col_npc != null && x_col_npc.Is_Damage())
+	        		|| (y_col_object != null && y_col_object.Is_Damage())
+	        		|| (y_col_npc != null && y_col_npc.Is_Damage()))
 	        {
 	        	// damage the character if hits an npc
 	        	Decriment_Health();
