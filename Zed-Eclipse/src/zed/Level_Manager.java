@@ -52,6 +52,9 @@ public class Level_Manager {
     //int[][] top_tile_x; // tileset x index of top_tile[x][y]
     //int[][] top_tile_y; // tileset y index of top_tile[x][y]
     File_Manager Files;
+    Objective_Manager objectives;
+    Objective curobjective;
+    long messagetimer;
     Player_Character player; // data for player character
     
     int current_level_index;
@@ -73,6 +76,9 @@ public class Level_Manager {
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
         Files = new File_Manager();
+        objectives = new Objective_Manager();
+        curobjective = null;
+        messagetimer = 0;
         
         Initialize_Player_Information(player_x, player_y);
         Init_NPC(null);
@@ -404,6 +410,19 @@ public class Level_Manager {
         }
         
         update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
+
+    	if (curobjective == null)
+    	{
+    		curobjective = objectives.Update(current_level_index, npclist);
+    		if (curobjective != null)
+    			messagetimer = System.currentTimeMillis();
+    	}
+    	else
+    	{
+    		g.drawString(curobjective.getMessage(), curobjective.getMessageX(), curobjective.getMessageY());
+    		if (curobjective.getMessageTimeMilli() >= 0 && System.currentTimeMillis() > messagetimer + curobjective.getMessageTimeMilli())
+    			curobjective = null;
+    	}
     }
     
     // the update funciton that is called each time Slick updates to update the information

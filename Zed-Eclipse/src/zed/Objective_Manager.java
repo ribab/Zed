@@ -8,7 +8,7 @@ public class Objective_Manager {
 	public Objective_Manager() {
 		objectives = new Objective[1];
 		
-		objectives[0] = new Objective(0);
+		objectives[0] = new Objective(0, "You have landed on an island inhabited by an evil dragon.\nYour task is to kill this dragon.", 50, 430, -1);
 	}
 	
 	public Objective Update(int level, GObject[] npclist){
@@ -26,10 +26,12 @@ public class Objective_Manager {
 						if (GObject.Get_Type() == objectives[i].getType())
 							count++;
 					}
+					objectives[i].Give_Object_Count(count);
 					objectives[i].Update(level, count);
 				}
 				else
 				{
+					objectives[i].Give_Object_Count(0);
 					objectives[i].Update(level, 0);
 				}
 				if (objectives[i].isCompleted())
