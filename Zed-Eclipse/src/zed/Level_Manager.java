@@ -423,9 +423,11 @@ public class Level_Manager {
     		if (curobjective.getMessageTimeMilli() >= 0 && System.currentTimeMillis() > messagetimer + curobjective.getMessageTimeMilli())
     			curobjective = null;
     	}
+    	
+    	g.drawString(String.valueOf(objectives.percentageCompleted()*100) + "% Completed", 480, 10);
     }
     
-    // the update funciton that is called each time Slick updates to update the information
+    // the update function that is called each time Slick updates to update the information
     // in the level
     boolean has_ported = false;
     public void update() throws SlickException
