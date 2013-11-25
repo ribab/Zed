@@ -51,10 +51,15 @@ public class Level_Manager {
     int[][] bot_tile_y; // tileset y index of bot_tile[x][y]
     //int[][] top_tile_x; // tileset x index of top_tile[x][y]
     //int[][] top_tile_y; // tileset y index of top_tile[x][y]
+    
     File_Manager Files;
+    
     Objective_Manager objectives;
     Objective curobjective;
     long messagetimer;
+    Sound MegaKill = new Sound("soundtrack/effects/MegaKill.wav");
+    boolean MegaKillPlayed = false;
+    
     Player_Character player; // data for player character
     
     int current_level_index;
@@ -396,7 +401,7 @@ public class Level_Manager {
     
     // the display function for the Level_Manager that is called every frame
     // to render the level
-    public void display(GameContainer gc, Graphics g){
+    public void display(GameContainer gc, Graphics g) throws SlickException{
     	
         for (int i = 0; i < height; i++) // display each row
         {
@@ -442,10 +447,16 @@ public class Level_Manager {
     	if (curobjective != null)
     	{
     		g.drawString(curobjective.getMessage(), curobjective.getMessageX(), curobjective.getMessageY());
+    		if (!MegaKillPlayed && curobjective.getMessage() == "MEGAKILL")
+    		{
+    			MegaKill.play();
+    			MegaKillPlayed = true;
+    		}
     		if (curobjective.getMessageTimeMilli() >= 0
     				&& System.currentTimeMillis() > messagetimer + curobjective.getMessageTimeMilli())
     		{
     			curobjective = null;
+    			MegaKillPlayed = false;
     		}
     	}
     	
