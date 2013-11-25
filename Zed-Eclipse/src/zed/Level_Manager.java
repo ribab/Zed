@@ -179,20 +179,41 @@ public class Level_Manager {
         {
         	npclist = new GCharacter[Tile_List[3].length/3];
         	
-        	for (int i = 0; i < Tile_List[3].length/3; i++)
+        	for (int i = Tile_List[3].length/3 - 1; i >= 0; i--)
         	{
-        		if (Tile_List[3][i*3] == Zombie.Type)
+        		if (Tile_List[3][i*3] == Zombie.Type) // zombie spawn
         			npclist[i] = new Zombie(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == Rat.Type)
+        		else if (Tile_List[3][i*3] == Rat.Type) // rat spawn
         			npclist[i] = new Rat(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == Blob.Type)
+        		else if (Tile_List[3][i*3] == Blob.Type) // blob spawn
         			npclist[i] = new Blob(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == Arrow.Type)
+        		else if (Tile_List[3][i*3] == Arrow.Type) // arrow up
+        		{
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
+        			npclist[i].Set_Movement(0, -1);
+        		}
+        		else if (Tile_List[3][i*3] == Arrow.Type+1) // arrow left
+        		{
+        			npclist[i] = new Arrow(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2], character_sprites);
+        			npclist[i].Set_Movement(-1, 0);
+        		}
+        		else if (Tile_List[3][i*3] == Arrow.Type+2) // arrow down
+        		{
+        			npclist[i] = new Arrow(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2], character_sprites);
+        			npclist[i].Set_Movement(0, 1);
+        		}
+        		else if (Tile_List[3][i*3] == Arrow.Type+3) // arrow right
+        		{
+        			npclist[i] = new Arrow(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2], character_sprites);
+        			npclist[i].Set_Movement(1, 0);
+        		}
         	}
         }
         else

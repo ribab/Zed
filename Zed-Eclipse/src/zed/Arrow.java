@@ -8,7 +8,10 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Arrow extends GCharacter {
 	
-	static int Type = 3;
+	static int Type = 10;
+	
+	private int spawnx;
+	private int spawny;
 	
 	// Rat default constructor does nothing
 	public Arrow() throws SlickException{
@@ -18,6 +21,9 @@ public class Arrow extends GCharacter {
 	public Arrow(int tile_x, int tile_y, SpriteSheet sprites) throws SlickException {
 
 		Tilesize = 16;
+		spawnx = tile_x*Tilesize;
+		spawny = tile_y*Tilesize;
+		
 		Animation[] animations = new Animation[4];
 		
 		// Define index of first animation on spritesheet
@@ -81,6 +87,17 @@ public class Arrow extends GCharacter {
 			X_Movement = 0;
 			Y_Movement = (rnd.nextBoolean()?1:-1);
 		}
+	}
+	
+	// override update to respawn arrow
+	public void Update(GObject[] collision_objects, GCharacter[] npcs, Player_Character player)
+	{
+		if (Get_Health() <= 0)
+		{
+			Increase_Health(1);
+			Move(spawnx, spawny);
+		}
+		super.Update(collision_objects, npcs, player);
 	}
 	
 	// Override GCharacter's Artificial Intelligence function
