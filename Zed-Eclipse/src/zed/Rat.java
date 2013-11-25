@@ -7,6 +7,8 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Rat extends GCharacter {
 	
+	static int Type = 1;
+	
 	// Rat default constructor does nothing
 	public Rat() throws SlickException{
 	}
@@ -96,8 +98,8 @@ public class Rat extends GCharacter {
 		}
 	}
 	
-	public static int Get_Type(){
+	public int Get_Type(){
 		
-		return 1;
+		return Type;
 	}
 }

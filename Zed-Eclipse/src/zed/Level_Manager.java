@@ -181,16 +181,16 @@ public class Level_Manager {
         	
         	for (int i = 0; i < Tile_List[3].length/3; i++)
         	{
-        		if (Tile_List[3][i*3] == Zombie.Get_Type())
+        		if (Tile_List[3][i*3] == Zombie.Type)
         			npclist[i] = new Zombie(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == Rat.Get_Type())
+        		else if (Tile_List[3][i*3] == Rat.Type)
         			npclist[i] = new Rat(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == Blob.Get_Type())
+        		else if (Tile_List[3][i*3] == Blob.Type)
         			npclist[i] = new Blob(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        		else if (Tile_List[3][i*3] == Arrow.Get_Type())
+        		else if (Tile_List[3][i*3] == Arrow.Type)
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
         	}
@@ -411,17 +411,21 @@ public class Level_Manager {
         
         update_HUD(lifeBar, maxHealth, player, Full_Heart, Empty_Heart, g);
 
-    	if (curobjective == null)
-    	{
-    		curobjective = objectives.Update(current_level_index, npclist);
-    		if (curobjective != null)
-    			messagetimer = System.currentTimeMillis();
-    	}
-    	else
+        Objective newobjective = null;
+        if ((newobjective = objectives.Update(current_level_index, npclist)) != curobjective
+        		&& newobjective != null)
+        {
+        	curobjective = newobjective;
+        	messagetimer = System.currentTimeMillis();
+        }
+    	if (curobjective != null)
     	{
     		g.drawString(curobjective.getMessage(), curobjective.getMessageX(), curobjective.getMessageY());
-    		if (curobjective.getMessageTimeMilli() >= 0 && System.currentTimeMillis() > messagetimer + curobjective.getMessageTimeMilli())
+    		if (curobjective.getMessageTimeMilli() >= 0
+    				&& System.currentTimeMillis() > messagetimer + curobjective.getMessageTimeMilli())
+    		{
     			curobjective = null;
+    		}
     	}
     	
     	g.drawString(String.valueOf(objectives.percentageCompleted()*100) + "% Completed", 480, 10);

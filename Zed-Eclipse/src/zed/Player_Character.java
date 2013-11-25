@@ -211,7 +211,7 @@ public class Player_Character extends GCharacter {
     	return -1;
     }
     
-    public static int Get_Type(){
+    public int Get_Type(){
     	
     	return -1;
     }

@@ -7,6 +7,8 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Zombie extends GCharacter {
 	
+	static int Type = 0;
+	
 	// Zombie default constructor does nothing
 	public Zombie() throws SlickException{
 	}
@@ -100,8 +102,8 @@ public class Zombie extends GCharacter {
 			}
 		}
 	}
-	public static int Get_Type(){
+	public int Get_Type(){
 		
-		return 0;
+		return Type;
 	}
 }

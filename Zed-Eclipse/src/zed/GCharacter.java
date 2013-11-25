@@ -593,7 +593,7 @@ public class GCharacter extends GObject {
     	super.Render(zoom, current_tile_x, current_tile_y, gc, g);
     }
     
-    public static int Get_Type(){
+    public int Get_Type(){
     	
     	return -1;
     }

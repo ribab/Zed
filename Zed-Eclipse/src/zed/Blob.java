@@ -7,6 +7,7 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Blob extends GCharacter {
 
+	static int Type = 2;
 	private boolean moving = false;
 	private long started_moving;
 	
@@ -107,8 +108,8 @@ public class Blob extends GCharacter {
 		}
 	}
 	
-	public static int Get_Type(){
+	public int Get_Type(){
 		
-		return 2;
+		return Type;
 	}
 }

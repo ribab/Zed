@@ -8,6 +8,8 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Arrow extends GCharacter {
 	
+	static int Type = 3;
+	
 	// Rat default constructor does nothing
 	public Arrow() throws SlickException{
 	}
@@ -91,8 +93,8 @@ public class Arrow extends GCharacter {
 		}
 	}
 	
-	public static int Get_Type(){
+	public int Get_Type(){
 		
-		return 3;
+		return Type;
 	}
 }

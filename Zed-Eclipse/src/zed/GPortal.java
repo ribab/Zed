@@ -99,7 +99,7 @@ public class GPortal extends GObject {
 		Dest_Y = new_dest_y;
 	}
 	
-	public static int Get_Type(){
+	public int Get_Type(){
 		
 		return -1;
 	}

@@ -23,13 +23,14 @@ public class Objective {
 	private int MessageX;
 	private int MessageY;
 	
+	// constructor for destroying GObjects objective
 	public Objective(int type, int max, int level, String message, int messagex, int messagey, int messagetimemilli) {
 		
 		Message = message;
 		MessageX = messagex;
 		MessageY = messagey;
 		MessageTimeMilli = messagetimemilli;
-		PrevCount = 0;
+		PrevCount = -1;
 		
 		Completed = false;
 		Cur = 0;
@@ -38,13 +39,14 @@ public class Objective {
 		Level = level;
 	}
 	
+	// constructor for visiting level objective
 	public Objective(int level, String message, int messagex, int messagey, long messagetimemilli){
 		
 		Message = message;
 		MessageX = messagex;
 		MessageY = messagey;
 		MessageTimeMilli = messagetimemilli;
-		PrevCount = 0;
+		PrevCount = -1;
 		
 		Completed = false;
 		Cur = 0;
@@ -53,6 +55,7 @@ public class Objective {
 		Level = level;
 	}
 	
+	// Specific Constructor
 	public Objective(int type, int max, int level, int cur, boolean completed, String message, int messagex, int messagey, long messagetimemilli) {
 		
 		Message = message;
@@ -93,7 +96,12 @@ public class Objective {
 	{
 		if (level == Level)
 		{
+			if (PrevCount < 0)
+			{
+				PrevCount = count;
+			}
 			Cur += (PrevCount - count);
+			PrevCount = count;
 			if (Cur >= Max)
 			{
 				Completed = true;
@@ -119,5 +127,10 @@ public class Objective {
 	int getMessageY(){
 		
 		return MessageY;
+	}
+	
+	int getLevel(){
+		
+		return Level;
 	}
 }
