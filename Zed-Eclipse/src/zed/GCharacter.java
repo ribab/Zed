@@ -502,7 +502,7 @@ public class GCharacter extends GObject {
     	{
 	    	if (Health > 0) // no decrimenting past 0
 	    	{
-	//    		Health--; // decriment health
+	    		Health--; // decriment health
 	    		if (Hurt_Sound != null) {Hurt_Sound.play();}
 	    	}
 	    	else
