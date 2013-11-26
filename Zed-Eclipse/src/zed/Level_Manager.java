@@ -33,6 +33,7 @@ public class Level_Manager {
     
     private SpriteSheet tileset; // data for tiles
     private SpriteSheet character_sprites; // data for character sprites
+    private SpriteSheet dragon_sprites; // data for dragon sprites
     GObject[] objectlist; //this is going to be the array that the Level_Manager instance uses to hold all the objects
     GCharacter[] npclist; // array to hold NPCs in particular TODO:make into list
     GPortal[] portallist; // array to hold portals of the level
@@ -81,6 +82,8 @@ public class Level_Manager {
     	
         tileset = new SpriteSheet("images/tileset.png", 16, 16);
         character_sprites = new SpriteSheet("images/spritesheet.png", 16, 32);
+        dragon_sprites = new SpriteSheet("images/dragon.png", 32, 32);
+        
         Files = new File_Manager();
         curobjective = null;
         messagetimer = 0;
@@ -219,6 +222,9 @@ public class Level_Manager {
         					Tile_List[3][i*3+2], character_sprites);
         			npclist[i].Set_Movement(1, 0);
         		}
+        		else if (Tile_List[3][i*3] == Dragon.Type) // dragon spawn
+        			npclist[i] = new Dragon(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2], dragon_sprites);
         	}
         }
         else

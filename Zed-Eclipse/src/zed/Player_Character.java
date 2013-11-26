@@ -61,7 +61,7 @@ public class Player_Character extends GCharacter {
 		        Update_X_Position();
 		    }
 	        if ((y_col_object = Y_Collision(objects)) == null
-	        		&& ((y_col_npc = Y_Collision(npcs)) == null)
+	        		&& (y_col_npc = Y_Collision(npcs)) == null
 	        		&& !Y_Out_Of_Bounds())
 	        {
 	        	Update_Y_Position();

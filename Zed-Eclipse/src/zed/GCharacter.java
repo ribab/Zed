@@ -295,17 +295,7 @@ public class GCharacter extends GObject {
 	        {
 		        if (collision_objects[i] != null && collision_objects[i] != this && collision_objects[i].Solid)
 		        {
-		        	if (X_Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position()))
-		        		return collision_objects[i];
-		        	if (X_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
-		        			collision_objects[i].Get_Y_Position()))
-		        		return collision_objects[i];
-		        	if (X_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
-		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
-		        		return collision_objects[i];
-		        	if (X_Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
+		        	if (X_Collision(collision_objects[i]))
 		        		return collision_objects[i];
 		        }
 	        }
@@ -322,17 +312,7 @@ public class GCharacter extends GObject {
 	        {
 		        if (collision_objects[i] != null && collision_objects[i] != this && collision_objects[i].Solid)
 		        {
-		        	if (Y_Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position()))
-		        		return collision_objects[i];
-		        	if (Y_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
-		        			collision_objects[i].Get_Y_Position()))
-		        		return collision_objects[i];
-		        	if (Y_Collision(collision_objects[i].Get_X_Position() + collision_objects[i].Get_Width() - 1,
-		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
-		        		return collision_objects[i];
-		        	if (Y_Collision(collision_objects[i].Get_X_Position(),
-		        			collision_objects[i].Get_Y_Position() + collision_objects[i].Get_Height() - 1))
+		        	if (Y_Collision(collision_objects[i]))
 		        		return collision_objects[i];
 		        }
 	        }
@@ -363,10 +343,63 @@ public class GCharacter extends GObject {
     	return false;
     }
     
+    boolean X_Collision(GObject col){
+    	
+    	if (X_Movement > 0)
+    	{
+    		if (X_Collision(col.Get_X_Position(), col.Get_Y_Position()))
+    			return true;
+    		if (X_Collision(col.Get_X_Position(), col.Get_Y_Position() + col.Width - 1))
+    			return true;
+    		if (col.Pixel_Contained(X_Position + Width, Y_Position))
+    			return true;
+    		if (col.Pixel_Contained(X_Position + Width, Y_Position + Height - 1))
+    			return true;
+    	}
+    	if (X_Movement < 0)
+    	{
+    		if (X_Collision(col.Get_X_Position() + col.Width - 1, col.Get_Y_Position()))
+    			return true;
+    		if (X_Collision(col.Get_X_Position() + col.Width - 1, col.Get_Y_Position() + col.Height - 1))
+    			return true;
+    		if (col.Pixel_Contained(X_Position - 1, Y_Position))
+    			return true;
+    		if (col.Pixel_Contained(X_Position - 1, Y_Position + Height - 1))
+    			return true;
+    	}
+    	return false;
+    }
+    boolean Y_Collision(GObject col){
+    	
+    	if (Y_Movement > 0)
+    	{
+    		if (Y_Collision(col.Get_X_Position(), col.Get_Y_Position()))
+    			return true;
+    		if (Y_Collision(col.Get_X_Position() + col.Width - 1, col.Get_Y_Position()))
+    			return true;
+    		if (col.Pixel_Contained(X_Position, Y_Position + Height))
+    			return true;
+    		if (col.Pixel_Contained(X_Position + Width - 1, Y_Position + Height))
+    			return true;
+    	}
+    	if (Y_Movement < 0)
+    	{
+    		if (Y_Collision(col.Get_X_Position(), col.Get_Y_Position() + col.Height - 1))
+    			return true;
+    		if (Y_Collision(col.Get_X_Position() + col.Width - 1, col.Get_Y_Position() + col.Height - 1))
+    			return true;
+    		if (col.Pixel_Contained(X_Position, Y_Position - 1))
+    			return true;
+    		if (col.Pixel_Contained(X_Position + Width - 1, Y_Position - 1))
+    			return true;
+    	}
+    	return false;
+    }
+    
     // check to see if GCharacter goes out of screen in x direction
     boolean X_Out_Of_Bounds(){
 
-        if (X_Position + 16 + X_Movement > 16*20 || X_Position + X_Movement < 0)
+        if (X_Position + Width + X_Movement > Tilesize*20 || X_Position + X_Movement < 0)
         {
         	return true; // can't go out of bounds
         }
@@ -375,7 +408,7 @@ public class GCharacter extends GObject {
     // check to see if GCharacter goes out of screen in y direction
     boolean Y_Out_Of_Bounds(){
 
-        if (Y_Position + 16 + Y_Movement > 16*15 || Y_Position + Y_Movement < 0)
+        if (Y_Position + Width + Y_Movement > Tilesize*15 || Y_Position + Y_Movement < 0)
         {
         	return true; // can't go out of bounds
         }
@@ -430,7 +463,7 @@ public class GCharacter extends GObject {
         if (X_Movement != 0)
         {
             if (System.nanoTime() >= x_last_move
-                + (long)(1000000000.0/(Speed*0.70710678118*16.0))) // wait until right time
+                + (long)(1000000000.0/(Speed*0.70710678118*Tilesize))) // wait until right time
             {
                 X_Position += X_Movement; // update X_Position
             
@@ -447,7 +480,7 @@ public class GCharacter extends GObject {
         if (Y_Movement != 0)
         {
             if (System.nanoTime() >= y_last_move
-                + (long)(1000000000.0/(Speed*0.70710678118*16.0))) // wait until right time
+                + (long)(1000000000.0/(Speed*0.70710678118*Tilesize))) // wait until right time
             {
                 Y_Position += Y_Movement; // update X_Position
             
@@ -469,7 +502,7 @@ public class GCharacter extends GObject {
     	{
 	    	if (Health > 0) // no decrimenting past 0
 	    	{
-	    		Health--; // decriment health
+	//    		Health--; // decriment health
 	    		if (Hurt_Sound != null) {Hurt_Sound.play();}
 	    	}
 	    	else

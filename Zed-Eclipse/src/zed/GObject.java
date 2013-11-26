@@ -218,6 +218,18 @@ public class GObject {
     	return Height;
     }
     
+    // can tell if pixel is within GObject or not in x direction of movement
+    boolean Pixel_Contained(int x, int y){
+    	
+    	if (x >= X_Position
+    			&& x < X_Position + Width
+    			&& y >= Y_Position && y < Y_Position + Height)
+    	{
+    		return true;
+    	}
+    	return false;
+    }
+    
     // Can tell if the object is alligned with the tiles displayed
     // on the screen
     public boolean Alligned_With_Tiles()
