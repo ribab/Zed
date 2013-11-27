@@ -36,7 +36,7 @@ public class File_Manager {
 		Save = null;
 	}
 	
-	//takes destination file, 2d array and row count
+	//takes destination file, 2d array and row count (not being used currently)
 	public void Save_Info(File dest, int info[][], short rows) throws FileNotFoundException{
 		Save = new PrintStream(dest);//open file
 		int length;
@@ -50,5 +50,18 @@ public class File_Manager {
 			Save.println();
 		}
 		Save.close();
+	}
+	
+	public void main() throws FileNotFoundException{//test for File_Manager
+		File level = new File("levels/0.lvl");
+		short Tile_List[][] = null;
+		Tile_List = this.Scan_LVL(level, 4);
+        for (int i = 0; i < 4; i++ ){
+        	for(int j = 0; j < Tile_List[i].length; j++){
+        		System.out.println(Tile_List[i][j]+ " ");
+        	}
+        	System.out.println("\n");
+        }
+
 	}
 }
