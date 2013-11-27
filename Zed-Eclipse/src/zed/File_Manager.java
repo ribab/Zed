@@ -52,10 +52,15 @@ public class File_Manager {
 		Save.close();
 	}
 	
-	public void main() throws FileNotFoundException{//test for File_Manager
+
+}
+class FMtest{
+	
+	public static void main() throws FileNotFoundException{//test for File_Manager
 		File level = new File("levels/0.lvl");
 		short Tile_List[][] = null;
-		Tile_List = this.Scan_LVL(level, 4);
+		File_Manager Files = new File_Manager();
+		Tile_List = Files.Scan_LVL(level, 4);
         for (int i = 0; i < 4; i++ ){
         	for(int j = 0; j < Tile_List[i].length; j++){
         		System.out.println(Tile_List[i][j]+ " ");
