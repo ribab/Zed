@@ -2,6 +2,7 @@
 package zed;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -9,6 +10,8 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * @author Richard Barella Jr.
@@ -630,4 +633,88 @@ public class GCharacter extends GObject {
     	
     	return -1;
     }
+    
+	public static void main(){
+
+		// Conduct Initialization test
+		
+		// Conduct X_Collision test with input=null
+		
+		// Conduct Y_Collision test with input=null
+		
+		// Conduct X_Collision test with input=obj where obj is far away
+		
+		// Conduct Y_Collision test with input=obj where obj is far away
+		
+		// Conduct X_Collision test with input=obj where obj is one tile away
+		
+		// Conduct Y_Collision test with input=obj where obj is one tile away
+		
+		// Conduct X_Collision test where input is pixel within GCharacter
+		
+		// Conduct Y_Collision test where input is pixel within GCharacter
+		
+		// Conduct X_Collision test where input is pixel outside of GCharacter
+		
+		// Conduct Y_Collision test where input is pixel outside of GCharacter
+		
+		// Conduct X_Collision test with input={obj1,obj2} where both are far away
+		
+		// Conduct Y_Collision test with input={obj1,obj2} where both are far away
+		
+		// Conduct X_Collision test with input={obj1,obj2} where one is one tile away
+		
+		// Conduct Y_Collision test with input={obj1,obj2} where one is one tile away
+		
+		// Conduct X_Collision test with input={obj1,obj2} where both are one tile away
+
+		// Conduct Y_Collision test with input={obj1,obj2} where both are one tile away
+		
+		// Conduct out of bounds test if out of bounds
+		
+		// Conduct out of bounds test if not out of bounds
+		
+		// Conduct Update_X_Position test and Update_Y_Position test for all movement values
+		
+		// Conduct Get_Health test
+		
+		// Conduct Decriment_Health test
+		
+		// Conduct Decrease_Health test
+		
+		// Conduct Reset_Health test
+		
+		// Conduct Increase_Health test
+		
+		// Conduct Get_Max_Health test
+		
+		// Conduct Get_Speed test
+		
+		// Conduct Get_X_Movement test for X_Movement=-1,0,1
+		
+		// Conduct Get_Y_Movement test for Y_Movement=-1,0,1
+		
+		// Conduct Set_Movement test for combinations of movement values
+		
+		// Conduct Move test
+		
+		// Conduct Get_X_Position test
+		
+		// Conduct Get_Y_Position test
+		
+		// Conduct Get_Width test
+		
+		// Conduct Get_Height test
+		
+		// Conduct Pixel_Contained test
+		
+		// Conduct Alligned_With_Tiles test for when alligned with tiles and when not
+		
+		// Conduct Change_Animation test
+		
+		// Conduct Get_Frame_State test
+		
+		// Conduct Is_Damage test
+		
+	}
 }
