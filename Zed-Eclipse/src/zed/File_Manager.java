@@ -52,10 +52,6 @@ public class File_Manager {
 		Save.close();
 	}
 	
-
-}
-
-class FMtest{
 	public static void main(String[] args) throws FileNotFoundException{//test for File_Manager
 		File level = new File("levels/0.lvl");
 		short Tile_List[][] = null;
