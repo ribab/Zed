@@ -634,7 +634,7 @@ public class GCharacter extends GObject {
     	return -1;
     }
     
-	public static void main(String[] args) throws SlickException{
+    public static void main(String[] args) throws SlickException{
 
 		// Initialize values for GCharacter test
 		GCharacter t = new GCharacter();
