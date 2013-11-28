@@ -634,87 +634,443 @@ public class GCharacter extends GObject {
     	return -1;
     }
     
-	public static void main(){
+	public static void main(String[] args) throws SlickException{
 
-		// Conduct Initialization test
+		// Initialize values for GCharacter test
+		GCharacter t = new GCharacter();
+		t.X_Position = 32; t.Y_Position = 32; t.Width = 16; t.Height = 16;
+		t.Visible = true; t.Solid = true; t.Damage = true;
+		t.Sprite_Shift_X = null; t.Sprite_Shift_Y = null;
+		t.Current_Animation = null; t.Animation_List = null;
+		t.Tilesize = 16; t.Current_Animation_Index = 0;
+		t.Health = 4; t.Max_Health = 5; t.Speed = 3.0f;
+		t.X_Movement = 0; t.Y_Movement = 0;
 		
+		// ====================================================================
 		// Conduct X_Collision test with input=null
+		// ====================================================================
+		GObject obj = null;
+		if (t.X_Collision(obj) == false)
+			System.out.print("X_Collision(null) success\n");
+		else
+			System.out.print("X_Collision(null fail\n");
 		
+		// ====================================================================
 		// Conduct Y_Collision test with input=null
+		// ====================================================================
+		if (t.Y_Collision(obj) == false)
+			System.out.print("Y_Collision(null) success\n");
+		else
+			System.out.print("Y_Collision(null) fail\n");
 		
+		// ====================================================================
 		// Conduct X_Collision test with input=obj where obj is far away
+		// ====================================================================
+		obj = new GObject();
+		obj.X_Position = 100; obj.Y_Position = 100;
+		obj.Width = 16; obj.Height = 16;
+		obj.Tilesize = 16;
 		
+		if (t.X_Collision(obj) == false)
+			System.out.print("X_Collision(far away obj) success\n");
+		else
+			System.out.print("X_Collision(far away obj) fail\n");
+		
+		// ====================================================================
 		// Conduct Y_Collision test with input=obj where obj is far away
+		// ====================================================================
+		if (t.Y_Collision(obj) == false)
+			System.out.print("Y_Collision(far away obj) success\n");
+		else
+			System.out.print("Y_Collision(far away obj) fail\n");
 		
+		// ====================================================================
 		// Conduct X_Collision test with input=obj where obj is one tile away
-		
-		// Conduct Y_Collision test with input=obj where obj is one tile away
-		
-		// Conduct X_Collision test where input is pixel within GCharacter
-		
-		// Conduct Y_Collision test where input is pixel within GCharacter
-		
-		// Conduct X_Collision test where input is pixel outside of GCharacter
-		
-		// Conduct Y_Collision test where input is pixel outside of GCharacter
-		
-		// Conduct X_Collision test with input={obj1,obj2} where both are far away
-		
-		// Conduct Y_Collision test with input={obj1,obj2} where both are far away
-		
-		// Conduct X_Collision test with input={obj1,obj2} where one is one tile away
-		
-		// Conduct Y_Collision test with input={obj1,obj2} where one is one tile away
-		
-		// Conduct X_Collision test with input={obj1,obj2} where both are one tile away
+		// ====================================================================
+		obj.X_Position = t.X_Position + 16;
+		obj.Y_Position = t.Y_Position;
+		obj.Solid = true;
+		t.X_Movement = 1; t.Y_Movement = 0;
+		if (t.X_Collision(obj) == true)
+			System.out.print("X_Collision(close obj) success 1\n");
+		else
+			System.out.print("X_Collision(close obj) fail 1\n");
+		t.X_Movement = 0;
+		if (t.X_Collision(obj) == false)
+			System.out.print("X_Collision(close obj) success 2\n");
+		else
+			System.out.print("X_Collision(close obj) fail 2\n");
 
-		// Conduct Y_Collision test with input={obj1,obj2} where both are one tile away
+		// ====================================================================
+		// Conduct Y_Collision test with input=obj where obj is one tile away
+		// ====================================================================
+		obj.X_Position = t.X_Position;
+		obj.Y_Position = t.Y_Position + 16;
+		obj.Solid = true;
+		t.X_Movement = 0; t.Y_Movement = 1;
+		if (t.Y_Collision(obj) == true)
+			System.out.print("Y_Collision(close obj) success 1\n");
+		else
+			System.out.print("Y_Collision(close obj) fail 1\n");
+		t.Y_Movement = 0;
+		if (t.Y_Collision(obj) == false)
+			System.out.print("Y_Collision(close obj) success 2\n");
+		else
+			System.out.print("Y_Collision(close obj) fail 2\n");
 		
+		// ====================================================================
+		// Conduct X_Collision test where input is pixel within GCharacter
+		// ====================================================================
+		t.X_Movement = 0; t.Y_Movement = 0;
+		if (t.X_Collision(t.X_Position + 8, t.Y_Position + 8) == true)
+			System.out.print("X_Collision(pixel inside) not moving success 1\n");
+		else
+			System.out.print("X_Collision(pixel inside) not moving fail 1\n");
+		t.X_Movement = 1;
+		if (t.X_Collision(t.X_Position + 8, t.Y_Position + 8) == true)
+			System.out.print("X_Collision(pixel inside) moving success 2\n");
+		else
+			System.out.print("X_Collision(pixel inside) moving fail 2\n");
+		
+		// ====================================================================
+		// Conduct Y_Collision test where input is pixel within GCharacter
+		// ====================================================================
+		t.X_Movement = 0; t.Y_Movement = 0;
+		if (t.Y_Collision(t.X_Position + 8, t.Y_Position + 8) == true)
+			System.out.print("Y_Collision(pixel inside) not moving success 1\n");
+		else
+			System.out.print("Y_Collision(pixel inside) not moving fail 1\n");
+		t.X_Movement = 1;
+		if (t.Y_Collision(t.X_Position + 8, t.Y_Position + 8) == true)
+			System.out.print("Y_Collision(pixel inside) moving success 2\n");
+		else
+			System.out.print("Y_Collision(pixel inside) moving fail 2\n");
+
+		// ====================================================================
+		// Conduct X_Collision test where input is pixel outside of GCharacter
+		// ====================================================================
+		t.X_Movement = 0; t.Y_Movement = 0;
+		if (t.X_Collision(t.X_Position + 100, t.Y_Position + 100) == false)
+			System.out.print("X_Collision(pixel outside) success 1\n");
+		else
+			System.out.print("X_Collision(pixel outside) fail 1\n");
+		t.X_Movement = 1;
+		if (t.X_Collision(t.X_Position + 100, t.Y_Position + 100) == false)
+			System.out.print("X_Collision(pixel outside) success 2\n");
+		else
+			System.out.print("X_Collision(pixel outside) fail 2\n");
+
+		// ====================================================================
+		// Conduct Y_Collision test where input is pixel outside of GCharacter
+		// ====================================================================
+		t.X_Movement = 0; t.Y_Movement = 0;
+		if (t.Y_Collision(t.X_Position + 100, t.Y_Position + 100) == false)
+			System.out.print("Y_Collision(pixel outside) success 1\n");
+		else
+			System.out.print("Y_Collision(pixel outside) fail 1\n");
+		t.X_Movement = 1;
+		if (t.Y_Collision(t.X_Position + 100, t.Y_Position + 100) == false)
+			System.out.print("Y_Collision(pixel outside) success 2\n");
+		else
+			System.out.print("Y_Collision(pixel outside) fail 2\n");
+
+		// ====================================================================
+		// Conduct X_Collision test with input={obj1,obj2} where both are far away
+		// ====================================================================
+		GObject obj1 = new GObject();
+		GObject obj2 = new GObject();
+		obj1.Width = 16; obj1.Height = 16;
+		obj2.Width = 16; obj2.Height = 16;
+		obj1.Solid = true; obj2.Solid = true;
+		obj1.X_Position = 100; obj2.X_Position = 100;
+		GObject[] objs = {obj1, obj2};
+		if (t.X_Collision(objs) == null)
+			System.out.print("X_Collision(objs faraway) success\n");
+		else
+			System.out.print("X_Collision(objs faraway) fail\n");
+		
+		// ====================================================================
+		// Conduct Y_Collision test with input={obj1,obj2} where both are far away
+		// ====================================================================
+		if (t.Y_Collision(objs) == null)
+			System.out.print("Y_Collision(objs faraway) success\n");
+		else
+			System.out.print("Y_Collision(objs faraway) fail\n");
+
+		// ====================================================================
+		// Conduct X_Collision test with input={obj1,obj2} where one is one tile away
+		// ====================================================================
+		obj1.X_Position = t.X_Position + 16;
+		obj1.Y_Position = t.Y_Position;
+		t.X_Movement = 1;
+		t.Y_Movement = 0;
+		if (t.X_Collision(objs) == null)
+			System.out.print("X_Collision(objs 1 close) fail\n");
+		else
+			System.out.print("X_Collision(objs 1 close) success\n"); 
+		
+		// ====================================================================
+		// Conduct Y_Collision test with input={obj1,obj2} where one is one tile away
+		// ====================================================================
+		obj1.X_Position = t.X_Position;
+		obj1.Y_Position = t.Y_Position + 16;
+		t.X_Movement = 0;
+		t.Y_Movement = 1;
+		if (t.Y_Collision(objs) == null)
+			System.out.print("Y_Collision(objs 1 close) fail\n");
+		else
+			System.out.print("Y_Collision(objs 1 close) success\n");
+
+		// ====================================================================
 		// Conduct out of bounds test if out of bounds
+		// ====================================================================
+		t.X_Position = -100;
+		t.Y_Position = -100;
+		if (t.X_Out_Of_Bounds() && t.Y_Out_Of_Bounds())
+			System.out.print("Out of bounds success\n");
+		else
+			System.out.print("Out of bounds fail\n");
 		
+		// ====================================================================
 		// Conduct out of bounds test if not out of bounds
+		// ====================================================================
+		t.X_Position = 100;
+		t.Y_Position = 100;
+		if (t.X_Out_Of_Bounds() || t.Y_Out_Of_Bounds())
+			System.out.print("In bounds fail\n");
+		else
+			System.out.print("In bounds success\n");
 		
+		// ====================================================================
 		// Conduct Update_X_Position test and Update_Y_Position test for all movement values
+		// ====================================================================
+		t.X_Position = 0; t.Y_Position = 0;
+		t.X_Movement = 0; t.Y_Movement = 0;
+		t.x_last_move = -99999;
+		t.y_last_move = -99999;
+		t.Update_X_Position();
+		if (t.X_Position == 0 && t.Y_Position == 0)
+			System.out.print("Update_X_Position neutral success\n");
+		else
+			System.out.print("Update_X_Position neutral fail\n");
+		t.X_Position = 0; t.Y_Position = 0;
+		t.X_Movement = -1;
+		t.x_last_move = -99999;
+		t.y_last_move = -99999;
+		t.Update_X_Position();
+		if (t.X_Position == -1 && t.Y_Position == 0)
+			System.out.print("Update_X_Position left success\n");
+		else
+			System.out.print("Update_X_Position left fail\n");
+		t.X_Position = 0; t.Y_Position = 0;
+		t.X_Movement = 1;
+		t.x_last_move = -99999;
+		t.y_last_move = -99999;
+		t.Update_X_Position();
+		if (t.X_Position == 1 && t.Y_Position == 0)
+			System.out.print("Update_X_Position right success\n");
+		else
+			System.out.print("Update_X_Position right fail\n");
+		t.X_Position = 0; t.Y_Position = 0;
+		t.X_Movement = 0; t.Y_Movement = -1;
+		t.x_last_move = -99999;
+		t.y_last_move = -99999;
+		t.Update_Y_Position();
+		if (t.X_Position == 0 && t.Y_Position == -1)
+			System.out.print("Update_Y_Position up success\n");
+		else
+			System.out.print("Update_Y_Position up fail\n");
+		t.X_Position = 0; t.Y_Position = 0;
+		t.X_Movement = 0; t.Y_Movement = 1;
+		t.x_last_move = -99999;
+		t.y_last_move = -99999;
+		t.Update_Y_Position();
+		if (t.X_Position == 0 && t.Y_Position == 1)
+			System.out.print("Update_Y_Position down success\n");
+		else
+			System.out.print("Update_Y_Position down fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Health test
+		// ====================================================================
+		t.Health = 4;
+		if (t.Get_Health() == 4)
+			System.out.print("Get_Health success\n");
+		else
+			System.out.print("Get_Health fail\n");
 		
+		// ====================================================================
 		// Conduct Decriment_Health test
+		// ====================================================================
+		t.Health = 4;
+		t.last_damage = -999999999;
+		t.Decriment_Health();
+		if (t.Health == 3)
+			System.out.print("Decriment_Health success\n");
+		else
+			System.out.print("Decriment_Health fail\n");
 		
+		// ====================================================================
 		// Conduct Decrease_Health test
+		// ====================================================================
+		t.Health = 4;
+		t.last_damage = -999999;
+		t.Decrease_Health(3);
+		if (t.Health == 1)
+			System.out.print("Decrease_Health success\n");
+		else
+			System.out.print("Decrease_Health fail\n");
 		
+		// ====================================================================
 		// Conduct Reset_Health test
+		// ====================================================================
+		t.Max_Health = 5;
+		t.Health = 1;
+		t.Reset_Health();
+		if (t.Health == 5)
+			System.out.print("Reset_Health success\n");
+		else
+			System.out.print("Reset_Health fail\n");
 		
+		// ====================================================================
 		// Conduct Increase_Health test
+		// ====================================================================
+		t.Health = 5;
+		t.Max_Health = 5;
+		t.Increase_Health(1);
+		if (t.Health == 5)
+			System.out.print("Increase_Health when maxed already success\n");
+		else
+			System.out.print("Increase_Health when maxed already fail\n");
+		t.Health = 2;
+		t.Max_Health = 5;
+		t.Increase_Health(1);
+		if (t.Health == 3)
+			System.out.print("Increase_Health when not maxed success\n");
+		else
+			System.out.print("Increase_Health when not maxed fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Max_Health test
+		// ====================================================================
+		t.Max_Health = 5;
+		if (t.Get_Max_Health() == 5)
+			System.out.print("Get_Max_Health success\n");
+		else
+			System.out.print("Get_Max_Health fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Speed test
+		// ====================================================================
+		t.Speed = 3.0f;
+		if (t.Get_Speed() == 3.0f)
+			System.out.print("Get_Speed success\n");
+		else
+			System.out.print("Get_Speed fail\n");
 		
-		// Conduct Get_X_Movement test for X_Movement=-1,0,1
+		// ====================================================================
+		// Conduct Get_X_Movement test
+		// ====================================================================
+		t.X_Movement = -1;
+		if (t.Get_X_Movement() == -1)
+			System.out.print("Get_X_Movement success\n");
+		else
+			System.out.print("Get_X_Movement fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Y_Movement test for Y_Movement=-1,0,1
+		// ====================================================================
+		t.Y_Movement = 1;
+		if (t.Get_Y_Movement() == 1)
+			System.out.print("Get_Y_Movement success\n");
+		else
+			System.out.print("Get_Y_Movement fail\n");
 		
+		// ====================================================================
 		// Conduct Set_Movement test for combinations of movement values
+		// ====================================================================
+		t.Set_Movement(1, -1);
+		if (t.X_Movement == 1 && t.Y_Movement == -1)
+			System.out.print("Set_Movement sucess\n");
+		else
+			System.out.print("Set_Movement fail\n");
 		
+		// ====================================================================
 		// Conduct Move test
+		// ====================================================================
+		t.Move(30, 40);
+		if (t.X_Position == 30 && t.Y_Position == 40)
+			System.out.print("Move sucess\n");
+		else
+			System.out.print("Move fail\n");
 		
+		// ====================================================================
 		// Conduct Get_X_Position test
+		// ====================================================================
+		t.X_Position = 50;
+		if (t.Get_X_Position() == 50)
+			System.out.print("Get_X_Position success\n");
+		else
+			System.out.print("Get_X_Position fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Y_Position test
+		// ====================================================================
+		t.Y_Position = 80;
+		if (t.Get_Y_Position() == 80)
+			System.out.print("Get_Y_Position success\n");
+		else
+			System.out.print("Get_Y_Position fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Width test
+		// ====================================================================
+		if (t.Get_Width() == 16)
+			System.out.print("Get_Width success\n");
+		else
+			System.out.print("Get_Width fail\n");
 		
+		// ====================================================================
 		// Conduct Get_Height test
+		// ====================================================================
+		if (t.Get_Height() == 16)
+			System.out.print("Get_Height success\n");
+		else
+			System.out.print("Get_Height fail\n");
 		
+		// ====================================================================
 		// Conduct Pixel_Contained test
+		// ====================================================================
+		if (t.Pixel_Contained(t.X_Position + 8, t.Y_Position + 8))
+			System.out.print("Pixel_Contained(pixel inside) success\n");
+		else
+			System.out.print("Pixel_Contained(pixel inside) fail\n");
+		if (t.Pixel_Contained(t.X_Position + 100, t.Y_Position + 100))
+			System.out.print("Pixel_Contained(pixel outside) fail\n");
+		else
+			System.out.print("Pixel_Cointained(pixel inside) success\n");
 		
+		// ====================================================================
 		// Conduct Alligned_With_Tiles test for when alligned with tiles and when not
+		// ====================================================================
+		t.X_Position = 16; t.Y_Position = 16;
+		if (t.Alligned_With_Tiles())
+			System.out.print("Alligned_With_Tiles when alligned success\n");
+		else
+			System.out.print("Alligned_With_Tiles when alligned fail\n");
+		t.X_Position = 17;
+		if (t.Alligned_With_Tiles())
+			System.out.print("Alligned_With_Tiles when not alligned fail\n");
+		else
+			System.out.print("Alligned_With_Tiles when not alligned success\n");
 		
-		// Conduct Change_Animation test
-		
-		// Conduct Get_Frame_State test
-		
+		// ====================================================================
 		// Conduct Is_Damage test
-		
+		// ====================================================================
+		t.Damage = true;
+		if (t.Is_Damage())
+			System.out.print("Is_Damage success\n");
+		else
+			System.out.print("Is_Damage fail\n");
 	}
 }
