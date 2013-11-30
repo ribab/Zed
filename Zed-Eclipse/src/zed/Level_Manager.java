@@ -76,13 +76,13 @@ public class Level_Manager {
     	if (scores.isFile())
     	{
     		prev_high_scores = Files.Scan_LVL(scores, 1); // current_high_scores = Files.Scan_LVL(scores, 1)[0]; does the same thing.
-    		current_high_scores = prev_high_scores[0];
+    		current_high_scores = prev_high_scores[0];//Save_Info takes a 1D array now since it is only used for high scores.
     	}
     	else
     	{
     		scores.createNewFile();
     		prev_high_scores = new int[0][];
-    		current_high_scores = new int[0];//why new an array with no space?
+    		current_high_scores = new int[0];
     	}
     	*/
         objectives = new Objective_Manager();

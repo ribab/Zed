@@ -36,18 +36,15 @@ public class File_Manager {
 		Save = null;
 	}
 	
-	//takes destination file, 2d array and row count and stores the 2d array in a file.
-	public void Save_Info(File dest, int info[][], int rows) throws FileNotFoundException{
+	//takes destination file, and array and stores the array in a file.
+	public void Save_Info(File dest, int info[]) throws FileNotFoundException{
 		Save = new PrintStream(dest);//open file (creates file if it doesn't exist)
 		int length;
-		for(int i = 0; i < rows; i++){
-			length = info[i].length;//gets the length of a row
-			Save.print("- ");// stores a dash to indicate the start of data from a particular row
-			Save.println(length);//stores the number of items in the row
-			for(int j = 0; j < length; j++){//stores the current row
-				Save.print(info[i][j]);
-				Save.print(" ");
-			}
+		length = info.length;//gets the length of a row
+		Save.print("- ");// stores a dash to indicate the start of data from a particular row
+		Save.println(length);//stores the number of items in the row
+		for(int i = 0; i < length; i++){
+			Save.print(info[i]);
 			Save.println();
 		}
 		Save.close();
@@ -67,8 +64,7 @@ public class File_Manager {
         	System.out.println();
         }
         level = new File("score");
-        Tile_List = new int[2][2];
-        Tile_List[0][0] = 1; Tile_List[0][1] = 2; Tile_List[1][0] = 3; Tile_List[1][1] = 4;
-        Files.Save_Info(level, Tile_List, 2);
+        int List[] = new int[2];
+        Files.Save_Info(level, List);
 	}
 }
