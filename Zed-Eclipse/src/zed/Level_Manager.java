@@ -70,6 +70,7 @@ public class Level_Manager {
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException, IOException {
 
+    	/*
     	int[][] prev_high_scores;
     	File scores = new File("scoreboard.score");
     	if (scores.isFile())
@@ -83,6 +84,7 @@ public class Level_Manager {
     		prev_high_scores = new int[0][];
     		current_high_scores = new int[0];
     	}
+    	*/
         objectives = new Objective_Manager();
     	Init(0, 10, 5, 5);
     }
