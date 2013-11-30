@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 
+import java.text.DecimalFormat;
+
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -67,10 +69,10 @@ public class Level_Manager {
     public Level_Manager() throws SlickException {
 
         objectives = new Objective_Manager();
-    	Init(0, 10, 5);
+    	Init(0, 10, 5, 5);
     }
     
-    public void Init(int level_index, int player_x, int player_y) throws SlickException{
+    public void Init(int level_index, int player_x, int player_y, int player_health) throws SlickException{
 
     	current_level_index = level_index;
     	
@@ -86,7 +88,7 @@ public class Level_Manager {
         curobjective = null;
         messagetimer = 0;
         
-        Initialize_Player_Information(player_x, player_y);
+        Initialize_Player_Information(player_x, player_y, player_health);
         Init_NPC(null);
         
         //start of initializing heart images and life bar for HUD display
@@ -236,7 +238,7 @@ public class Level_Manager {
     
     // default initialization for the player's animations, position, attack speed, animation speed
     // within the level
-    public void Initialize_Player_Information(int player_x, int player_y) throws SlickException
+    public void Initialize_Player_Information(int player_x, int player_y, int player_health) throws SlickException
     {
         // spritesheet information for standing and walking animations
         int[] player_spritesheet_index_y = {0,  1,  2,  3,  0,  1,  2,  3}; // row in spritesheet for each animation
@@ -279,21 +281,24 @@ public class Level_Manager {
         	player_animation_list[i + 8].setPingPong(true); // set whether the animation ping-pongs between first and last frame 
         }
         
-        player = new Player_Character(
-        		player_x, // intialize character's x position w.r.t. tiles
-        		player_y, // initialize character's y position w.r.t. tiles
-        		true, // character is visible
-        		true, // character is solid
-        		player_sprite_shift_x, // give character sprite shift value in the x axis
-        		player_sprite_shift_y, // give character sprite shift value in the y axis
-        		16, // give player_character the size of a tile
-        		player_animation_list, // give the created list of animations
-        		0, // give which animation to start with
-        		5, // give health of character
-        		8.0f, // give speed in tiles per second of character
-        		0, // set initial x_movement value to 0
-        		0 // set initial y_movement value to 0
-        		);
+        if (player == null)
+        	player = new Player_Character(
+        			player_x, // intialize character's x position w.r.t. tiles
+        			player_y, // initialize character's y position w.r.t. tiles
+        			true, // character is visible
+        			true, // character is solid
+        			player_sprite_shift_x, // give character sprite shift value in the x axis
+        			player_sprite_shift_y, // give character sprite shift value in the y axis
+        			16, // give player_character the size of a tile
+        			player_animation_list, // give the created list of animations
+        			0, // give which animation to start with
+        			player_health, // give health of character
+        			7.0f, // give speed in tiles per second of character
+        			0, // set initial x_movement value to 0
+        			0 // set initial y_movement value to 0
+        			);
+        else
+        	player.Move(player_x*player.Tilesize, player_y*player.Tilesize);
     }
     
     // made this for testing initialization for NPCs
@@ -466,8 +471,9 @@ public class Level_Manager {
     			MegaKillPlayed = false;
     		}
     	}
-    	
-    	g.drawString(String.valueOf(objectives.percentageCompleted()*100) + "% Completed", 480, 10);
+    	DecimalFormat df = new DecimalFormat();
+    	df.setMaximumFractionDigits(2);
+    	g.drawString(String.valueOf(df.format(objectives.percentageCompleted()*100)) + "% Completed", 480, 10);
     	g.drawString(String.valueOf("Score: " + objectives.getScore()), 300, 10);
     }
     
@@ -494,7 +500,7 @@ public class Level_Manager {
         			{
         				Init(portallist[i].Get_Dest_Level(),
         						portallist[i].Get_Dest_X_Tile(),
-        						portallist[i].Get_Dest_Y_Tile());
+        						portallist[i].Get_Dest_Y_Tile(), 0);
         				has_ported = true;
         			}
         		}

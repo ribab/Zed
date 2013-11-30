@@ -7,7 +7,8 @@ public class Objective_Manager {
 	private static int TIME_FUDGE = 10;
 	
 	Objective[] objectives; // Holds the objectives to complete
-	String[] messages; // Holds the messages displayed
+	
+	Objective complete_the_game;
 	
 	int Point_Count; // Counts the points the player earned by completing objectives
 	
@@ -18,10 +19,14 @@ public class Objective_Manager {
 		objectives = new Objective[2];
 		Point_Count = 0;
 		
+		complete_the_game = new Objective(
+				-1, "CONGRATULATIONS\nYou have completed the game\nFeel free to explore the world more",
+				200, 200, -1, 0, true);
+		
 		objectives[0] = new Objective(0, "You have landed on an island inhabited by an evil dragon.\nYour task is to kill this dragon.",
 				50, 430, -1, 1000, true);
 		objectives[1] = new Objective(Zombie.Type, 1, 0, "MEGAKILL",
-				300, 430, 10000, 100, false);
+				300, 430, 10000, 10000, true);
 		
 		Time_Start = System.currentTimeMillis();
 	}
@@ -29,6 +34,11 @@ public class Objective_Manager {
 	// Updates the objectives
 	public Objective Update(int level, GObject[] npclist){
 		
+		if (percentageCompleted() == 1.0f)
+		{
+			complete_the_game.Complete();
+			return complete_the_game;
+		}
 		// For all objectives
 		for (int i = 0; i < objectives.length; i++)
 		{

@@ -82,6 +82,11 @@ public class Objective {
 		Level = level;
 	}
 	
+	void Complete()
+	{
+		Completed = true;
+	}
+	
 	void Give_Object_Count(int number_of_objects)
 	{
 		PrevCount = number_of_objects;
