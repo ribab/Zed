@@ -65,7 +65,7 @@ public class Arrow extends GCharacter {
 		super.Init(
 				tile_x, tile_y, // Tile to put in
 				16, 16,
-				true, false, true, // Visible? Solid? Damage?
+				true, false, 1, // Visible? Solid? Damage?
 				sprite_shift_x, sprite_shift_y, // shift for each animation
 				16, // Size of a tile
 				animations, 0, // Initialize animations and current animation

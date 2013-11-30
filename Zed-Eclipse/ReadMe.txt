@@ -21,3 +21,10 @@ Installation (for Linux):
 	java -jar -Djava.library.path=lib/natives/linux Zed.jar
 4. Java Code is located in Zed-Eclipse/src/zed
 
+Run GCharacter unit tests
+1. Run this command inside of the terminal:
+	java -jar -Djava.library.path=lib/natives/linux Zed_GCharacter.jar
+
+Run File_Manager unit tests
+1. Run this command inside of the terminal:
+	java -jar -Djava.library.path=lib/natives/linux Zed_File_Manager.jar

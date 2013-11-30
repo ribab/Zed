@@ -25,7 +25,7 @@ public class Player_Character extends GCharacter {
     		int health, float speed,
     		int x_movement, int y_movement) throws SlickException{
     	
-    	super(tile_x, tile_y, 16, 16, visible, solid, false, sprite_shift_x, sprite_shift_y,
+    	super(tile_x, tile_y, 16, 16, visible, solid, 0, sprite_shift_x, sprite_shift_y,
     			tilesize, animation_list, current_animation,
     			health, speed, x_movement, y_movement, -1);
     	
@@ -67,13 +67,26 @@ public class Player_Character extends GCharacter {
 	        	Update_Y_Position();
 	        }
 	        // check for collision with npc based on movement values
-	        if ((x_col_object != null && x_col_object.Is_Damage())
-	        		|| (x_col_npc != null && x_col_npc.Is_Damage())
-	        		|| (y_col_object != null && y_col_object.Is_Damage())
-	        		|| (y_col_npc != null && y_col_npc.Is_Damage()))
+	        if ((x_col_object != null && x_col_object.Get_Damage() != 0)
+	        		|| (x_col_npc != null && x_col_npc.Get_Damage() != 0)
+	        		|| (y_col_object != null && y_col_object.Get_Damage() != 0)
+	        		|| (y_col_npc != null && y_col_npc.Get_Damage() != 0))
 	        {
 	        	// damage the character if hits an npc
-	        	Decriment_Health();
+	        	if (x_col_object != null
+	        			&& (x_col_npc == null || x_col_object.Get_Damage() < x_col_npc.Get_Damage())
+	        			&& (y_col_object == null || x_col_object.Get_Damage() < y_col_object.Get_Damage())
+	        			&& (y_col_npc == null || x_col_object.Get_Damage() < y_col_npc.Get_Damage()))
+	        		Decrease_Health(x_col_object.Get_Damage());
+	        	else if (x_col_npc != null
+	        			&& (y_col_object == null || x_col_npc.Get_Damage() < y_col_object.Get_Damage())
+	        			&& (y_col_npc == null || x_col_npc.Get_Damage() < y_col_npc.Get_Damage()))
+	        		Decrease_Health(x_col_npc.Get_Damage());
+	        	else if (y_col_object != null
+	        			&& (y_col_npc == null || y_col_object.Get_Damage() < y_col_npc.Get_Damage()))
+	        		Decrease_Health(y_col_object.Get_Damage());
+	        	else
+	        		Decrease_Health(y_col_npc.Get_Damage());
 	        }
     	}
     	else

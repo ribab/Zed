@@ -49,8 +49,8 @@ public class GObject {
     // If false, then it still collides with other Solid objects.
     boolean Solid;
     
-    // If true, then player gets damaged when colliding with it
-    boolean Damage;
+    // Amount of damage to deal if player collides with it
+    int Damage;
     
     // Default constructor
     public GObject(){
@@ -62,7 +62,7 @@ public class GObject {
     		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid,
-    		boolean damage, // tell whether the object damages player
+    		int damage, // tell whether the object damages player
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
             int tilesize, // give size of a tile in pixels
             SpriteSheet sprites, // give the spritesheet used
@@ -84,7 +84,7 @@ public class GObject {
     		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is solid for collision
-    		boolean damage, // tell whether the object damages the player
+    		int damage, // tell whether the object damages the player
     		int[] sprite_shift_x, int[] sprite_shift_y,  // number of pixels each animation is shifted by
     		int tilesize, // give size of a tile in pixels
     		Animation[] animation_list, // give preinitialized animations
@@ -106,7 +106,7 @@ public class GObject {
     	int[] ssx = {0}; // sprite shift x
     	int[] ssy = {0}; // sprite shift y
     	// initialize
-    	this.Init(0, 0, width, height, false, false, false, ssx, ssy, 16, animation_list, 0);
+    	this.Init(0, 0, width, height, false, false, 0, ssx, ssy, 16, animation_list, 0);
     	
     }
     
@@ -116,7 +116,7 @@ public class GObject {
     		int width, int height,
     		boolean visible, // tell whether the object is visible
     		boolean solid, // tell whether the object is a solid for collision
-    		boolean damage, // tell whether the object damages player
+    		int damage, // tell whether the object damages player
             int[] sprite_shift_x, int[] sprite_shift_y, // number of pixels each animation is shifted by when displaying
             int tilesize, // give size of a tile in pixels
             SpriteSheet sprites, // give the spritesheet used
@@ -162,7 +162,7 @@ public class GObject {
 
     // Initialization given Animation[]
     public void Init(int tile_x, int tile_y, 
-    		int width, int height, boolean visible, boolean solid, boolean damage,
+    		int width, int height, boolean visible, boolean solid, int damage,
     		int[] sprite_shift_x, int[] sprite_shift_y, int tilesize,
     		Animation[] animation_list, int current_animation)
     {
@@ -277,7 +277,7 @@ public class GObject {
     }
     
     // Returns whether the object damages the player
-    public boolean Is_Damage(){
+    public int Get_Damage(){
     	
     	return Damage;
     }

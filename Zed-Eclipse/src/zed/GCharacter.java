@@ -60,7 +60,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initializes whether its solid
-    		boolean damage, // initialize whether it damages the player
+    		int damage, // initialize whether it damages the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -111,7 +111,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
-    		boolean damage, // initialize whether it damages the player
+    		int damage, // initialize whether it damages the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -165,7 +165,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
-    		boolean damage, // initialize whether it damages player
+    		int damage, // initialize whether it damages player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -205,7 +205,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initialize solidity for collision
-    		boolean damage, // initialize whether it damages the player
+    		int damage, // initialize whether it damages the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
@@ -260,9 +260,9 @@ public class GCharacter extends GObject {
 	        boolean y_col = y_col_obj | y_col_npc | y_col_bnd | y_col_plr;
 	        boolean col = x_col | y_col;
 	        
-	        if ((x_col_plr | y_col_plr) && !(x_col_obj | y_col_obj) && Damage)
+	        if ((x_col_plr | y_col_plr) && !(x_col_obj | y_col_obj) && Damage != 0)
 	        {
-	        	player.Decriment_Health();
+	        	player.Decrease_Health(Damage);
 	        }
 	        if (System.currentTimeMillis() > last_damage + STUN_TIME
 	        		&& (!X_Out_Of_Bounds() || !Y_Out_Of_Bounds()))
@@ -284,7 +284,8 @@ public class GCharacter extends GObject {
     	{
     		Solid = false;
     		Visible = false;
-    		Damage = false;
+    		// TODO: check back later if next line should be uncommented
+    		//Damage = 0;
     	}
     }
     
@@ -639,7 +640,7 @@ public class GCharacter extends GObject {
 		// Initialize values for GCharacter test
 		GCharacter t = new GCharacter();
 		t.X_Position = 32; t.Y_Position = 32; t.Width = 16; t.Height = 16;
-		t.Visible = true; t.Solid = true; t.Damage = true;
+		t.Visible = true; t.Solid = true; t.Damage = 1;
 		t.Sprite_Shift_X = null; t.Sprite_Shift_Y = null;
 		t.Current_Animation = null; t.Animation_List = null;
 		t.Tilesize = 16; t.Current_Animation_Index = 0;
@@ -1065,12 +1066,12 @@ public class GCharacter extends GObject {
 			System.out.print("Alligned_With_Tiles when not alligned success\n");
 		
 		// ====================================================================
-		// Conduct Is_Damage test
+		// Conduct Get_Damage test
 		// ====================================================================
-		t.Damage = true;
-		if (t.Is_Damage())
-			System.out.print("Is_Damage success\n");
+		t.Damage = 1;
+		if (t.Get_Damage() == 1)
+			System.out.print("Get_Damage success\n");
 		else
-			System.out.print("Is_Damage fail\n");
+			System.out.print("Get_Damage fail\n");
 	}
 }

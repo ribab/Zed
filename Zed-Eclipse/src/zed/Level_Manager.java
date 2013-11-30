@@ -50,8 +50,6 @@ public class Level_Manager {
     int scale; // By how many times is the pixels larger?
     int[][] bot_tile_x; // tileset x index of bot_tile[x][y]
     int[][] bot_tile_y; // tileset y index of bot_tile[x][y]
-    //int[][] top_tile_x; // tileset x index of top_tile[x][y]
-    //int[][] top_tile_y; // tileset y index of top_tile[x][y]
     
     File_Manager Files;
     
@@ -154,7 +152,7 @@ public class Level_Manager {
 			            		16, 16,
 			            		false, // tell whether the object is visible
 			            		true, // tell whether the object is solid for collision
-			            		false, // tell whether the object damages the player
+			            		0, // tell whether the object damages the player
 			            		null, null,  // number of pixels each animation is shifted by
 			            		16, // give size of a tile in pixels
 			            		null, // give preinitialized animations

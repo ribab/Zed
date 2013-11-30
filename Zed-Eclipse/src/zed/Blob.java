@@ -63,7 +63,7 @@ public class Blob extends GCharacter {
 		super.Init(
 				tile_x, tile_y, // Tile to put in
 				16, 16,
-				true, true, true, // Visible? Solid?
+				true, true, 1, // Visible? Solid? Damage?
 				sprite_shift_x, sprite_shift_y, // shift for each animation
 				16, // Size of a tile
 				zombie_animations, 0, // Initialize animations and current animation
