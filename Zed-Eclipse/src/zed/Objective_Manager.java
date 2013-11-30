@@ -10,7 +10,7 @@ public class Objective_Manager {
 	
 	Objective complete_the_game;
 	
-	int Point_Count; // Counts the points the player earned by completing objectives
+	short Point_Count; // Counts the points the player earned by completing objectives
 	
 	private long Time_Start; // holds the starting time for the game
 
@@ -21,12 +21,12 @@ public class Objective_Manager {
 		
 		complete_the_game = new Objective(
 				-1, "CONGRATULATIONS\nYou have completed the game\nFeel free to explore the world more",
-				200, 200, -1, 0, true);
+				200, 200, -1, (short) 0, true);
 		
 		objectives[0] = new Objective(0, "You have landed on an island inhabited by an evil dragon.\nYour task is to kill this dragon.",
-				50, 430, -1, 1000, true);
+				50, 430, -1, (short) 1000, true);
 		objectives[1] = new Objective(Zombie.Type, 1, 0, "MEGAKILL",
-				300, 430, 10000, 10000, true);
+				300, 430, 10000, (short) 10000, true);
 		
 		Time_Start = System.currentTimeMillis();
 	}

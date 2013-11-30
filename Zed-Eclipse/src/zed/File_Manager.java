@@ -10,21 +10,21 @@ public class File_Manager {
 	/*
 	 Takes a File item and number of types expected to be returned in the 2d array
 	 */
-	public short[][] Scan_LVL(File level, int types) throws FileNotFoundException{
+	public int[][] Scan_LVL(File level, int types) throws FileNotFoundException{
 		Current_Level = new Scanner(level);//open file
-		short tile[][];
-		tile = new short[types][];//allocate rows
+		int tile[][];
+		tile = new int[types][];//allocate rows
 		int i = 0;
 		int j = -1;
 		while(Current_Level.hasNext() && j<types){//exit if number of types has been meet or EOF
 			if(Current_Level.hasNext("-")){//changes to the next array of objects
-				while(!Current_Level.hasNextShort())Current_Level.next();//skips over non-number characters
+				while(!Current_Level.hasNextInt())Current_Level.next();//skips over non-number characters
 				j++;
 				i = 0;
-				tile[j] = new short[Current_Level.nextShort()];//allocate array in jth row
+				tile[j] = new int[Current_Level.nextInt()];//allocate array in jth row
 			}
-			while(!Current_Level.hasNextShort())Current_Level.next();//skips over non-number characters
-			tile[j][i] = Current_Level.nextShort();//read in strings of numbers
+			while(!Current_Level.hasNextInt())Current_Level.next();//skips over non-number characters
+			tile[j][i] = Current_Level.nextInt();//read in strings of numbers
 			i++;
 		}
 		Current_Level.close();//close file
@@ -37,7 +37,7 @@ public class File_Manager {
 	}
 	
 	//takes destination file, 2d array and row count (not being used currently)
-	public void Save_Info(File dest, int info[][], short rows) throws FileNotFoundException{
+	public void Save_Info(File dest, int info[][], int rows) throws FileNotFoundException{
 		Save = new PrintStream(dest);//open file
 		int length;
 		for(int i = 0; i < rows; i++){
@@ -54,7 +54,7 @@ public class File_Manager {
 	
 	public static void main(String[] args) throws FileNotFoundException{//test for File_Manager
 		File level = new File("levels/0.lvl");
-		short Tile_List[][] = null;
+		int Tile_List[][] = null;
 		File_Manager Files = new File_Manager();
 		Tile_List = Files.Scan_LVL(level, 4);
         for (int i = 0; i < 4; i++ ){

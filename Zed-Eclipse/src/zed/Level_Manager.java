@@ -7,9 +7,9 @@ package zed;
 // java for file input
 import java.io.File;
 import java.io.FileNotFoundException;
-
-
+import java.io.IOException;
 import java.text.DecimalFormat;
+
 
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
@@ -65,9 +65,24 @@ public class Level_Manager {
     
     int current_level_index;
     
+    int[] current_high_scores;
+    
     // Default instantiation for Level_Manager
-    public Level_Manager() throws SlickException {
+    public Level_Manager() throws SlickException, IOException {
 
+    	int[][] prev_high_scores;
+    	File scores = new File("scoreboard.score");
+    	if (scores.isFile())
+    	{
+    		prev_high_scores = Files.Scan_LVL(scores, 1);
+    		current_high_scores = prev_high_scores[0];
+    	}
+    	else
+    	{
+    		scores.createNewFile();
+    		prev_high_scores = new int[0][];
+    		current_high_scores = new int[0];
+    	}
         objectives = new Objective_Manager();
     	Init(0, 10, 5, 5);
     }
@@ -111,8 +126,8 @@ public class Level_Manager {
         bot_tile_x = new int[height][width];
         bot_tile_y = new int[height][width];
         File level = new File("levels/" + String.valueOf(level_index) + ".lvl");
-        short Tile_List[][] = null;
-        short Field_Types = 4;
+        int Tile_List[][] = null;
+        int Field_Types = 4;
         try {
 			Tile_List = Files.Scan_LVL(level, Field_Types);
 		} catch (FileNotFoundException e) {

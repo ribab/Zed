@@ -23,12 +23,12 @@ public class Objective {
 	private int MessageX;
 	private int MessageY;
 	
-	private int Points;
+	private short Points;
 	
 	private boolean Neccesary;
 	
 	// constructor for destroying GObjects objective
-	public Objective(int type, int max, int level, String message, int messagex, int messagey, int messagetimemilli, int points, boolean neccesary) {
+	public Objective(int type, int max, int level, String message, int messagex, int messagey, int messagetimemilli, short points, boolean neccesary) {
 		
 		Points = points;
 		Neccesary = neccesary;
@@ -47,7 +47,7 @@ public class Objective {
 	}
 	
 	// constructor for visiting level objective
-	public Objective(int level, String message, int messagex, int messagey, long messagetimemilli, int points, boolean neccesary){
+	public Objective(int level, String message, int messagex, int messagey, long messagetimemilli, short points, boolean neccesary){
 		
 		Points = points;
 		Neccesary = neccesary;
@@ -66,7 +66,7 @@ public class Objective {
 	}
 	
 	// Specific Constructor
-	public Objective(int type, int max, int level, int cur, boolean completed, String message, int messagex, int messagey, long messagetimemilli, int points, boolean neccesary) {
+	public Objective(int type, int max, int level, int cur, boolean completed, String message, int messagex, int messagey, long messagetimemilli, short points, boolean neccesary) {
 		
 		Points = points;
 		Neccesary = neccesary;
@@ -152,7 +152,7 @@ public class Objective {
 		return MessageY;
 	}
 	
-	int getPoints(){
+	short getPoints(){
 		
 		return Points;
 	}

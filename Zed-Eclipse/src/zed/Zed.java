@@ -5,8 +5,12 @@
 package zed;
 
 // Java for exception handling
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 // Slick for creating game
 import org.newdawn.slick.*;
@@ -14,7 +18,6 @@ import org.newdawn.slick.state.*;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Music;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
@@ -40,7 +43,12 @@ public class Zed extends BasicGameState {
             @Override
             public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
                
-                test = new Level_Manager();
+				try {
+					test = new Level_Manager();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
 
             // Game Updates
