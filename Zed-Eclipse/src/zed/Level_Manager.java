@@ -490,8 +490,19 @@ public class Level_Manager {
     	}
     	DecimalFormat df = new DecimalFormat();
     	df.setMaximumFractionDigits(2);
-    	g.drawString(String.valueOf(df.format(objectives.percentageCompleted()*100)) + "% Completed", 480, 10);
-    	g.drawString(String.valueOf("Score: " + objectives.getScore()), 300, 10);
+
+    	g.scale(0.8f, 0.8f);
+    	g.drawString(String.valueOf(df.format(objectives.percentageCompleted()*100)) + "% Done", 700, 10);
+    	if (objectives.percentageCompleted() == 1.0f)
+    	{
+    		g.drawString("Score: " + String.valueOf(objectives.getScore()), 440, 10);
+    	}
+    	else
+    	{
+        	g.drawString("Points: " + String.valueOf(objectives.getPoints()), 440, 10);
+        	g.drawString("Bonus: " + String.valueOf(objectives.getBonus()), 580, 10);    		
+    	}
+    	g.resetTransform();
     }
     
     // the update function that is called each time Slick updates to update the information
