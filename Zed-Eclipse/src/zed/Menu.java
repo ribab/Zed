@@ -31,7 +31,7 @@ public class Menu extends BasicGameState {
 		button.draw(220, 260);
 		button.draw(360, 260);
 		button.draw(289, 260);
-		g.drawString("load", 224, 267);
+		g.drawString("res", 224, 267);
 		g.drawString("exit", 364, 267);
 		g.drawString("new", 297, 267);
 	}
