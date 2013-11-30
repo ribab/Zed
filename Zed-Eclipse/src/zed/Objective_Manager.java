@@ -2,6 +2,10 @@ package zed;
 
 public class Objective_Manager {
 	
+	// (time to complete)/TIME_FUDGE is time's negative effect on score
+	
+	private static int TIME_FUDGE = 10;
+	
 	Objective[] objectives; // Holds the objectives to complete
 	String[] messages; // Holds the messages displayed
 	
@@ -49,7 +53,7 @@ public class Objective_Manager {
 				}
 				if (objectives[i].isCompleted())
 				{
-					Point_Count++;
+					Point_Count += objectives[i].getPoints();
 					return objectives[i];
 				}
 			}
@@ -57,14 +61,16 @@ public class Objective_Manager {
 		return null;
 	}
 	
-	// Returns the final score. This should be called once the game is over.
-	public int getFinalScore(){
+	// Returns the score.
+	// This should be called once the game is over to record the value
+	// on the high-score list
+	public int getScore(){
 		
 		long end_time = System.currentTimeMillis();
 		
-		if ((Point_Count - (int)(Time_Start - end_time)) < 0)
+		if ((Point_Count - (int)(end_time - Time_Start)/TIME_FUDGE) < 0)
 			return 0;
-		return (Point_Count - (int)(Time_Start - end_time));
+		return (Point_Count - (int)(end_time - Time_Start)/TIME_FUDGE);
 	}
 	
 	// Returns the percentage of necessary objectives that have been completed

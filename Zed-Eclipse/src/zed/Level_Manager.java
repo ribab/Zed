@@ -468,6 +468,7 @@ public class Level_Manager {
     	}
     	
     	g.drawString(String.valueOf(objectives.percentageCompleted()*100) + "% Completed", 480, 10);
+    	g.drawString(String.valueOf("Score: " + objectives.getScore()), 300, 10);
     }
     
     // the update function that is called each time Slick updates to update the information
