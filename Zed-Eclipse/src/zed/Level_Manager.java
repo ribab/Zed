@@ -75,14 +75,14 @@ public class Level_Manager {
     	File scores = new File("scoreboard.score");
     	if (scores.isFile())
     	{
-    		prev_high_scores = Files.Scan_LVL(scores, 1);
+    		prev_high_scores = Files.Scan_LVL(scores, 1); // current_high_scores = Files.Scan_LVL(scores, 1)[0]; does the same thing.
     		current_high_scores = prev_high_scores[0];
     	}
     	else
     	{
     		scores.createNewFile();
     		prev_high_scores = new int[0][];
-    		current_high_scores = new int[0];
+    		current_high_scores = new int[0];//why new an array with no space?
     	}
     	*/
         objectives = new Objective_Manager();
