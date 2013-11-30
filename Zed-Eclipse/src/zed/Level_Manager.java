@@ -94,7 +94,7 @@ public class Level_Manager {
         Empty_Heart = new Image("images/emptyheart.png", false, Image.FILTER_NEAREST);
         Full_Heart.setAlpha(0.5f);
         Empty_Heart.setAlpha(0.5f);
-        maxHealth = player.Get_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
+        maxHealth = player.Get_Max_Health(); //change from "final" if '+ heart containers' added to the game as a feature!
         lifeBar = new boolean[maxHealth];
         for (int i = 0; i < maxHealth; i++){
         	lifeBar[i] = true;
@@ -223,6 +223,9 @@ public class Level_Manager {
         		else if (Tile_List[3][i*3] == Dragon.Type) // dragon spawn
         			npclist[i] = new Dragon(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], dragon_sprites);
+        		else if (Tile_List[3][i*3] == Health_Flower.Type) // health flower spawn
+        			npclist[i] = new Health_Flower(Tile_List[3][i*3+1],
+        					Tile_List[3][i*3+2]);
         	}
         }
         else

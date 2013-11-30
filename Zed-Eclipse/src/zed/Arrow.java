@@ -28,12 +28,6 @@ public class Arrow extends GCharacter {
 		
 		// Define index of first animation on spritesheet
 		int i0 = 0;
-		// Define relative indexes of animations on spritesheet
-		int[] spritesheet_index = {i0, i0 + 1, i0 + 2, i0 + 3};
-		// Define the length of each animation
-		int[] animation_length = {1, 1, 1, 1};
-		// Define whether each animation loops
-		boolean[] looping = {true, true, true, true};
 		// Define how each animation is shifted relative to position
 		int[] sprite_shift_x = {0, 0, -8, -8};
 		int[] sprite_shift_y = {0, -8, -8, 0};

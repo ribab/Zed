@@ -527,10 +527,17 @@ public class GCharacter extends GObject {
 	    	{
 	    		Health = 0; // safeguard in case decreased below 0
 	    	}
+	    	else if (Health - health_dec > Max_Health)
+	    	{
+	    		Health = Max_Health;
+	    	}
 	    	else
 	    	{
 	    		Health -= health_dec; // decrease health
-	    		if (Hurt_Sound != null) {Hurt_Sound.play();}
+	    		if (Hurt_Sound != null && health_dec > 0)
+	    		{
+	    			Hurt_Sound.play();
+	    		}
 	    	}
 	    	last_damage = System.currentTimeMillis();
     	}
