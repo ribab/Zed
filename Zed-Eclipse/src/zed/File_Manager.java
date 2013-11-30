@@ -46,6 +46,7 @@ public class File_Manager {
 			Save.println(length);//stores the number of items in the row
 			for(int j = 0; j < length; j++){//stores the current row
 				Save.print(info[i][j]);
+				Save.print(" ");
 			}
 			Save.println();
 		}
@@ -65,6 +66,9 @@ public class File_Manager {
         	}
         	System.out.println();
         }
-
+        level = new File("score");
+        Tile_List = new int[2][2];
+        Tile_List[0][0] = 1; Tile_List[0][1] = 2; Tile_List[1][0] = 3; Tile_List[1][1] = 4;
+        Files.Save_Info(level, Tile_List, 2);
 	}
 }
