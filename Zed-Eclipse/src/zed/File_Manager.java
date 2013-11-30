@@ -36,15 +36,15 @@ public class File_Manager {
 		Save = null;
 	}
 	
-	//takes destination file, 2d array and row count (not being used currently)
+	//takes destination file, 2d array and row count and stores the 2d array in a file.
 	public void Save_Info(File dest, int info[][], int rows) throws FileNotFoundException{
-		Save = new PrintStream(dest);//open file
+		Save = new PrintStream(dest);//open file (creates file if it doesn't exist)
 		int length;
 		for(int i = 0; i < rows; i++){
-			length = info[i].length;
-			Save.print("- ");
-			Save.println(length);
-			for(int j = 0; j < length; j++){
+			length = info[i].length;//gets the length of a row
+			Save.print("- ");// stores a dash to indicate the start of data from a particular row
+			Save.println(length);//stores the number of items in the row
+			for(int j = 0; j < length; j++){//stores the current row
 				Save.print(info[i][j]);
 			}
 			Save.println();
