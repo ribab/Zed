@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 
+
+import java.util.Arrays;
+
 // Slick for drawing to screen and input
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -19,6 +22,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
+
+import sun.misc.Sort;
 
 /**
  *
@@ -549,6 +554,7 @@ public class Level_Manager {
         		new_high_scores[i] = current_high_scores[i];
         	}
         	new_high_scores[new_high_scores.length - 1] = objectives.getScore();
+        	Arrays.sort(new_high_scores);
         	Files.Save_Info(scores, new_high_scores);
         }
         else if (player.Health <= 0 && !saved)
@@ -560,6 +566,7 @@ public class Level_Manager {
         		new_high_scores[i] = current_high_scores[i];
         	}
         	new_high_scores[new_high_scores.length - 1] = objectives.getPoints();
+        	Arrays.sort(new_high_scores);
         	Files.Save_Info(scores, new_high_scores);
         }
     }
