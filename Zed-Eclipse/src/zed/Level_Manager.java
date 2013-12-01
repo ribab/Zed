@@ -67,26 +67,27 @@ public class Level_Manager {
     
     int[] current_high_scores;
     
+    boolean saved;
+    
     // Default instantiation for Level_Manager
     public Level_Manager() throws SlickException, IOException {
 
-    	/*
-    	int[][] prev_high_scores;
+        objectives = new Objective_Manager();
+    	Init(0, 10, 5, 5);
+    	
+    	saved = false;
+    	int[] prev_high_scores;
     	File scores = new File("scoreboard.score");
     	if (scores.isFile())
     	{
-    		prev_high_scores = Files.Scan_LVL(scores, 1);
-    		current_high_scores = prev_high_scores[0];
+    		prev_high_scores = Files.Scan_LVL(scores, 1)[0];
+    		current_high_scores = prev_high_scores;
     	}
     	else
     	{
-    		scores.createNewFile();
-    		prev_high_scores = new int[0][];
+    		prev_high_scores = new int[0];
     		current_high_scores = new int[0];
     	}
-    	*/
-        objectives = new Objective_Manager();
-    	Init(0, 10, 5, 5);
     }
     
     public void Init(int level_index, int player_x, int player_y, int player_health) throws SlickException{
@@ -508,7 +509,7 @@ public class Level_Manager {
     // the update function that is called each time Slick updates to update the information
     // in the level
     boolean has_ported = false;
-    public void update() throws SlickException
+    public void update() throws SlickException, FileNotFoundException
     {
         player.Update(objectlist, npclist);
         
@@ -537,6 +538,29 @@ public class Level_Manager {
         else
         {
         	has_ported = false;
+        }
+        
+        if (objectives.percentageCompleted() == 1.0f && !saved)
+        {
+        	File scores = new File("scoreboard.score");
+        	int[] new_high_scores = new int[current_high_scores.length + 1];
+        	for (int i = 0; i < current_high_scores.length; i++)
+        	{
+        		new_high_scores[i] = current_high_scores[i];
+        	}
+        	new_high_scores[new_high_scores.length - 1] = objectives.getScore();
+        	Files.Save_Info(scores, new_high_scores);
+        }
+        else if (player.Health <= 0 && !saved)
+        {
+        	File scores = new File("scoreboard.score");
+        	int[] new_high_scores = new int[current_high_scores.length + 1];
+        	for (int i = 0; i < current_high_scores.length; i++)
+        	{
+        		new_high_scores[i] = current_high_scores[i];
+        	}
+        	new_high_scores[new_high_scores.length - 1] = objectives.getPoints();
+        	Files.Save_Info(scores, new_high_scores);
         }
     }
     

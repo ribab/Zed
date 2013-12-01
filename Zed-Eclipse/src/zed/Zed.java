@@ -73,11 +73,11 @@ public class Zed extends BasicGameState {
                  }
                  if (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
                  {
-                     down = true;
+                	 down = true;
                  }
                  if (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
                  {
-                     right = true;
+                	 right = true;
                  }
                  if (input.isKeyDown(Input.KEY_SPACE))
                  {
@@ -95,9 +95,14 @@ public class Zed extends BasicGameState {
                  }
                  
                  test.move_player((right? 1:0) - (left? 1:0),
-                         (down? 1:0) - (up? 1:0));
+                		 (down? 1:0) - (up? 1:0));
                  
-                 test.update();
+                 try {
+                	 test.update();
+                 } catch (FileNotFoundException e) {
+                	 // TODO Auto-generated catch block
+                	 e.printStackTrace();
+                 }
             }
             
             // Game Rendering
