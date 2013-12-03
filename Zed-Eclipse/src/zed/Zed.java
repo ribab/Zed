@@ -32,7 +32,7 @@ import org.newdawn.slick.SlickException;
  * @author Ryan Slyter
  */
 public class Zed extends BasicGameState {
-	Level_Manager test;
+	public static Level_Manager test;
 
 	public Zed(){}
 	
