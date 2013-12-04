@@ -12,7 +12,9 @@ public class Dragon extends GCharacter {
 	static int Type = 100;
 	
 	private static final int NUMBER_OF_FIREBALLS = 3;
-	private static final int FIREBALL_FREQUENCY_MILLI = 3000;
+	private static final int FIREBALL_FREQUENCY_MILLI = 1000;
+	private static final int AI_2_P_DIST = 8;
+	private static final int AI_0_CH_DIST = 5;
 	private GCharacter[] fireballs;
 	private long fireballtimer;
 	
@@ -73,7 +75,7 @@ public class Dragon extends GCharacter {
 				16, // Size of a tile
 				animations, 0, // Initialize animations and current animation
 				3, // Health value
-				1.0f, // Speed value in tiles per second
+				4.0f, // Speed value in tiles per second
 				0, 0); // Initial movement values
 		
 		AI_State_Change_Time = 500; // Time to change state for AI
@@ -165,35 +167,76 @@ public class Dragon extends GCharacter {
 		}
 	}
 	
+	private int ai_state = 0;
+	private int ai_old_x;
+	private int ai_old_y;
+	
 	// Override GCharacter's Artificial Intelligence function
 	// Knows if this character has collided and knows player's position
 	public void Artificial_Intelligence(boolean collision, Player_Character player)
 	{
 		int x_distance = player.Get_X_Position() - X_Position;
 		int y_distance = player.Get_Y_Position() - Y_Position;
-		// Froam around randomly If dragon cannot see the player
-		if (x_distance*x_distance + y_distance*y_distance > 16*5*16*5
-				|| !player.Visible)
+		
+		if (ai_state == 0) // AI STATE FOR DISTANCE ATTACKING
 		{
-			super.Artificial_Intelligence(collision, player);
+			if (x_distance*x_distance + y_distance*y_distance <= 16*AI_0_CH_DIST*16*AI_0_CH_DIST)
+			{
+				ai_state = 1;
+			}
+			else if (x_distance*x_distance > y_distance*y_distance)
+			{
+				X_Movement = 0;
+				if (0 <= y_distance && y_distance <= 8)
+				{
+					Y_Movement = 0;
+				}
+				else
+					Y_Movement = (y_distance > 0)?1:-1;
+				Change_Animation((x_distance > 0)?FRAME_STATE_RIGHT:FRAME_STATE_LEFT);
+				Spit_Fireball();
+			}
+			else // x_distance <= y_distance
+			{
+				if (0 <= x_distance && x_distance <= 8)
+				{
+					X_Movement = 0;
+				}
+				else
+					X_Movement = (x_distance > 0)?1:-1;
+				Y_Movement = 0;
+				Change_Animation((y_distance > 0)?FRAME_STATE_DOWN:FRAME_STATE_UP);
+				Spit_Fireball();
+			}
 		}
-		else // Follow the player if dragon can see the player
+		if (ai_state == 1) // AI STATE FOR RUSHING
 		{
 			if (x_distance*x_distance > y_distance*y_distance)
 			{
-				if (x_distance > 0) {X_Movement = 1;}
-				else                {X_Movement = -1;}
+				X_Movement = (x_distance > 0)?3:-3;
 				Y_Movement = 0;
 			}
-			else // y_distance >= x_distance
+			else
 			{
-				if (y_distance > 0) {Y_Movement = 1;}
-				else                {Y_Movement = -1;}
 				X_Movement = 0;
+				Y_Movement = (y_distance > 0)?3:-3;
 			}
+			ai_state = 2;
 		}
-		Spit_Fireball();
-	}
+		if (ai_state == 2)
+		{
+			//Update_Frame_State();
+			if (collision || (x_distance*x_distance >= AI_2_P_DIST*16*AI_2_P_DIST*16 
+					       || y_distance*y_distance >= AI_2_P_DIST*16*AI_2_P_DIST*16))
+			{
+				if (X_Collision(player) || Y_Collision(player))
+					Spit_Fireball();
+				else
+					ai_state = 0;
+			}
+		} // END AI STATES
+		
+	} // END AI
 	
 	public void Update(GObject[] collision_objects, 
 			GCharacter[] npcs, Player_Character player) 

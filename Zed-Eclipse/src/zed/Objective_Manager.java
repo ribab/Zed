@@ -27,7 +27,7 @@ public class Objective_Manager {
 		
 		objectives[0] = new Objective(0, "You have landed on an island inhabited by an evil dragon.\nYour task is to kill this dragon.",
 				50, 430, -1, 1000, true);
-		objectives[1] = new Objective(Zombie.Type, 1, 0, "MEGAKILL",
+		objectives[1] = new Objective(Dragon.Type, 1, 0, "MEGAKILL",
 				300, 430, 10000, 10000, true);
 		
 		Time_Start = System.currentTimeMillis();

@@ -423,21 +423,21 @@ public class GCharacter extends GObject {
     void Update_Frame_State(){
         
     	// if walking up or down
-        if (Y_Movement == 1) {
+        if (Y_Movement > 0) {
             Change_Animation(FRAME_STATE_DOWN_WALK); // walk down
         }
         
-        else if (Y_Movement == -1) {
+        else if (Y_Movement < 0) {
         	Change_Animation(FRAME_STATE_UP_WALK); // walk up
         }
         
         else // if not walking up or down
         {
-            if (X_Movement == 1) {
+            if (X_Movement > 0) {
                 Change_Animation(FRAME_STATE_RIGHT_WALK); // walk right
             }
             
-            else if (X_Movement == -1) {
+            else if (X_Movement < 0) {
             	Change_Animation(FRAME_STATE_LEFT_WALK); // walk left
             }
             
