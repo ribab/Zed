@@ -1,6 +1,8 @@
 package zed;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
@@ -8,6 +10,9 @@ import org.newdawn.slick.SpriteSheet;
 public class Dragon extends GCharacter {
 	
 	static int Type = 100;
+	
+	private static final int NUMBER_OF_FIREBALLS = 3;
+	private GCharacter[] fireballs;
 	
 	// Zombie default constructor does nothing
 	public Dragon() throws SlickException{
@@ -72,6 +77,57 @@ public class Dragon extends GCharacter {
 		AI_State_Change_Time = 500; // Time to change state for AI
 		
 		Hurt_Sound = new Sound("soundtrack/effects/sword_hit_flesh.wav");
+		
+		// Construct fireballs
+		fireballs = new GCharacter[NUMBER_OF_FIREBALLS];
+		int[] fireball_sprite_shift = {0};
+		int[] fireball_spritesheet_index = {0}; // TODO: change later
+		int[] fireball_animation_length = {1};
+		boolean[] fireball_looping = {true};
+		for (int i = 0; i < NUMBER_OF_FIREBALLS; i++)
+		{
+			fireballs[i] = new GCharacter(
+					-100, // initial x position of the character w.r.t. the game tiles
+		    		-100, // initial y position of the character w.r.t. the game tiles
+		    		16, // initial width in pixels
+		    		16, // initial height in pixels
+		    		true, // initialize whether the character is visible
+		    		true, // initializes whether its solid
+		    		1, // initialize damage to the player
+		            fireball_sprite_shift, // by how many pixels each animation is shifted in x direction
+		            fireball_sprite_shift, // by how many pixels each animation is shifted in y direction
+		            16, // Give the character how large each tile is
+		            sprites, // Give the character the spritesheet file for fetching its animation frames
+		            fireball_spritesheet_index, // Give the character the indexes for the rows of the SpriteSheet to fetch each animation from
+		                                     // index are defined {up,left,down,right,upwalk,leftwalk,downwalk,rightwalk}
+		            fireball_animation_length, // Give the character the length of each animation
+		            fireball_looping, // tell which animations are looping
+		            0, // intialize which animation to start out with
+		            1, // intialize the character's max_health and health
+		            4.0f, // Give the character its speed in tiles per second 
+		            0, // Give the character its initial x_movement value (-1, 0, 1)
+		            0, // Give the character its initial y_movement value (-1, 0, 1)
+		            10
+		            );
+		}
+	}
+	
+	public void Spit_Fireball()
+	{
+		boolean spit = false;
+		for (int i = 0; i < fireballs.length && !spit; i++)
+		{
+			if (fireballs[i].Health > 0)
+			{
+				spit = true;
+				fireballs[i].X_Position = X_Position;
+				fireballs[i].Y_Position = Y_Position;
+				fireballs[i].X_Movement = X_Movement;
+				fireballs[i].Y_Movement = Y_Movement;
+				fireballs[i].Increase_Health(1);
+				fireballs[i].Visible = true;
+			}
+		}
 	}
 	
 	// Override GCharacter's Artificial Intelligence function
@@ -101,7 +157,74 @@ public class Dragon extends GCharacter {
 				X_Movement = 0;
 			}
 		}
+		
+		if (collision)
+		{
+			
+		}
 	}
+	
+	public GObject X_Collision(GObject[] otherobj){
+		
+		GObject return_value = super.X_Collision(otherobj);
+		GObject fireballcol;
+		for (int i = 0; i < fireballs.length; i++)
+		{
+			if ((fireballcol = fireballs[i].X_Collision(otherobj)) != null)
+			{
+				if (fireballcol.Get_Type() != -1)
+					fireballs[i].Decriment_Health();
+			}
+		}
+		return return_value;
+	}
+	
+	public GObject Y_Collision(GObject[] otherobj){
+		
+		GObject return_value = super.Y_Collision(otherobj);
+		GObject fireballcol;
+		for (int i = 0; i < fireballs.length; i++)
+		{
+			if ((fireballcol = fireballs[i].Y_Collision(otherobj)) != null)
+			{
+				if (fireballcol.Get_Type() != -1)
+					fireballs[i].Decriment_Health();
+			}
+		}
+		return return_value;
+	}
+	
+	public void Update_X_Position(){
+		
+		super.Update_X_Position();
+		for (int i = 0; i < fireballs.length; i++)
+		{
+			fireballs[i].Update_X_Position();
+		}
+	}
+	
+	public void Update_Y_Position(){
+		
+		super.Update_Y_Position();
+		for (int i = 0; i < fireballs.length; i++)
+		{
+			fireballs[i].Update_Y_Position();
+		}
+	}
+	
+	public void Render(int zoom, int cur_tile_x, int cur_tile_y, GameContainer gc, Graphics g){
+		
+		super.Render(zoom, cur_tile_x, cur_tile_y, gc, g);
+		
+		if (Visible)
+		{
+			for (int i = 0; i < fireballs.length; i++)
+			{
+				fireballs[i].Render(zoom, cur_tile_x, cur_tile_y, gc, g);
+			}
+		}
+	}
+	
 	public int Get_Type(){
 		
 		return Type;

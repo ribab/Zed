@@ -32,7 +32,7 @@ import org.newdawn.slick.SlickException;
  * @author Ryan Slyter
  */
 public class Zed extends BasicGameState {
-	Level_Manager test;
+	public static Level_Manager test;
 
 	public Zed(){}
 	
@@ -99,6 +99,9 @@ public class Zed extends BasicGameState {
                  
                  try {
                 	 test.update();
+                	 if (test.player.Health <= 0){
+                		 sbg.enterState(2); 
+                	 }
                  } catch (FileNotFoundException e) {
                 	 // TODO Auto-generated catch block
                 	 e.printStackTrace();

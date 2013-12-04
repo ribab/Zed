@@ -1,5 +1,8 @@
 package zed;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
@@ -34,6 +37,36 @@ public class Menu extends BasicGameState {
 		g.drawString("res", 224, 267);
 		g.drawString("exit", 364, 267);
 		g.drawString("new", 297, 267);
+		
+		// New code: attempt to open scoreboard file and display top 3 scores
+		// also change text color so that scores can be easily seen
+		g.setColor(Color.orange);
+		g.drawString("High Scores: ", 25, 150);
+		File scorefile = new File("scoreboard.score");
+		File_Manager scores = new File_Manager();
+		
+		try {
+			int[][] high_scores = scores.Scan_LVL(scorefile, 1);
+			if (high_scores[0].length < 3){
+				int pos = 175;
+				for (int i = 0; i < high_scores[0].length; i++){
+					g.drawString("" + high_scores[0][i],  20,  pos);
+					pos+= 25;
+				}
+			}
+			else{
+				g.drawString("" + high_scores[0][high_scores[0].length - 1], 20, 175);
+				g.drawString("" + high_scores[0][high_scores[0].length - 2], 20, 200);
+				g.drawString("" + high_scores[0][high_scores[0].length - 3], 20, 225);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		// test TODO: delete this
+		Zed temp = new Zed();
+		g.drawString("" + temp.test.objectives.percentageCompleted(), 20, 300);
+		// endtest
 	}
 
 	@Override
