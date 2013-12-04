@@ -102,6 +102,9 @@ public class Zed extends BasicGameState {
                 	 if (test.player.Health <= 0){
                 		 sbg.enterState(2); 
                 	 }
+                	 else if (test.objectives.percentageCompleted() == 1.0f){
+                		 sbg.enterState(3);
+                	 }
                  } catch (FileNotFoundException e) {
                 	 // TODO Auto-generated catch block
                 	 e.printStackTrace();

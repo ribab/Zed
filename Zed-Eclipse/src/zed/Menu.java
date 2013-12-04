@@ -63,10 +63,6 @@ public class Menu extends BasicGameState {
 			e.printStackTrace();
 		}
 		
-		// test TODO: delete this
-		Zed temp = new Zed();
-		g.drawString("" + temp.test.objectives.percentageCompleted(), 20, 300);
-		// endtest
 	}
 
 	@Override
