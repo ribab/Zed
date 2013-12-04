@@ -99,6 +99,9 @@ public class Zed extends BasicGameState {
                  
                  try {
                 	 test.update();
+                	 if (test.player.Health <= 0){
+                		 sbg.enterState(2); 
+                	 }
                  } catch (FileNotFoundException e) {
                 	 // TODO Auto-generated catch block
                 	 e.printStackTrace();

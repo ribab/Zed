@@ -60,7 +60,7 @@ public class GCharacter extends GObject {
     		int height, // initial height in pixels
     		boolean visible, // initialize whether the character is visible
     		boolean solid, // initializes whether its solid
-    		int damage, // initialize whether it damages the player
+    		int damage, // initialize damage to the player
             int[] sprite_shift_x, // by how many pixels each animation is shifted in x direction
             int[] sprite_shift_y, // by how many pixels each animation is shifted in y direction
             int tilesize, // Give the character how large each tile is
