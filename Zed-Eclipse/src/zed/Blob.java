@@ -82,11 +82,14 @@ public class Blob extends GCharacter {
 	// Knows if this character has collided and knows player's position
 	public void Artificial_Intelligence(boolean collision, Player_Character player)
 	{
-		if (moving && this.Alligned_With_Tiles())
+		if (moving)
 		{
-			X_Movement = 0;
-			Y_Movement = 0;
-			moving = false;
+			if (this.Alligned_With_Tiles())
+			{
+				X_Movement = 0;
+				Y_Movement = 0;
+				moving = false;
+			}
 		}
 		else
 		{
@@ -106,6 +109,26 @@ public class Blob extends GCharacter {
 				started_moving = System.currentTimeMillis();
 			}
 		}
+	}
+	
+	public boolean X_Collision(GObject col){
+		
+		boolean iscol = super.X_Collision(col);
+		
+		if (iscol && col.getClass() == this.getClass())
+			X_Movement *= -1;
+		
+		return iscol;
+	}
+	
+	public boolean Y_Collision(GObject col){
+		
+		boolean iscol = super.Y_Collision(col);
+		
+		if (iscol && col.getClass() == this.getClass())
+			Y_Movement *= -1;
+		
+		return iscol;
 	}
 	
 	public int Get_Type(){
