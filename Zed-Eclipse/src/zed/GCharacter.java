@@ -272,8 +272,7 @@ public class GCharacter extends GObject {
 	        	if (!y_col)
 	        		Update_Y_Position();
 	        }
-	        if (X_Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y())
-	           |Y_Collision(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
+	        if (Pixel_Contained(player.Get_Sword_Pos_X(), player.Get_Sword_Pos_Y()))
 	        {
 	        	Decriment_Health(); // kills this character with a sword
 	        }
