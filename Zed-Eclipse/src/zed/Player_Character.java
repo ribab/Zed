@@ -166,7 +166,7 @@ public class Player_Character extends GCharacter {
     // updates the current frame being displayed based on movement values
     void Update_Frame_State(){
     	
-    	if ((Get_Frame_State() < 8 && Get_Frame_State() > 11) || Current_Animation.isStopped())
+    	if (Get_Frame_State() < 8 || Get_Frame_State() > 11 || Current_Animation.isStopped())
     	{
     		super.Update_Frame_State();
     	}
