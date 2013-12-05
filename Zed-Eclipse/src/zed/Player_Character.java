@@ -29,6 +29,11 @@ public class Player_Character extends GCharacter {
     			tilesize, animation_list, current_animation,
     			health, speed, x_movement, y_movement, -1);
     	
+    	Animation_List[8].setLooping(false);
+    	Animation_List[9].setLooping(false);
+    	Animation_List[10].setLooping(false);
+    	Animation_List[11].setLooping(false);
+    	
     	Sword_Drawn = false;
 
 		Hurt_Sound = new Sound("soundtrack/effects/punch.wav");
@@ -106,29 +111,29 @@ public class Player_Character extends GCharacter {
     // starts the sword attack
     // and sets the correct animation to play
     public void Start_Sword_Attack(){
-    	
-    	if (Current_Animation == Animation_List[0] || Current_Animation == Animation_List[4]) // attack up
+    	if (Sword_Drawn != true)
     	{
-    		Change_Animation(8);
-    		Current_Animation.start();
     		Sword_Drawn = true;
-    	}
-    	else if (Current_Animation == Animation_List[1] || Current_Animation == Animation_List[5]) // Attack left
-    	{
-    		Change_Animation(9);
-    		Current_Animation.start();
-    		Sword_Drawn = true;
-    	}
-    	else if (Current_Animation == Animation_List[2] || Current_Animation == Animation_List[6]) // Attack down
-    	{
-    		Change_Animation(10);
-    		Current_Animation.start();
-    		Sword_Drawn = true;
-    	}
-    	else if (Current_Animation == Animation_List[3] || Current_Animation == Animation_List[7])
-    	{
-    		Change_Animation(11);
-    		Sword_Drawn = true;
+	    	if (Current_Animation == Animation_List[0] || Current_Animation == Animation_List[4]) // attack up
+	    	{
+	    		Change_Animation(8);
+	    		Current_Animation.restart();
+	    	}
+	    	else if (Current_Animation == Animation_List[1] || Current_Animation == Animation_List[5]) // Attack left
+	    	{
+	    		Change_Animation(9);
+	    		Current_Animation.restart();
+	    	}
+	    	else if (Current_Animation == Animation_List[2] || Current_Animation == Animation_List[6]) // Attack down
+	    	{
+	    		Change_Animation(10);
+	    		Current_Animation.restart();
+	    	}
+	    	else if (Current_Animation == Animation_List[3] || Current_Animation == Animation_List[7]) // Attack right
+	    	{
+	    		Change_Animation(11);
+	    		Current_Animation.restart();
+	    	}
     	}
     }
     
@@ -136,28 +141,26 @@ public class Player_Character extends GCharacter {
     // and selects the correct animation to play
     public void End_Sword_Attack(){
     	
-    	Sword_Drawn = false;
-    	
     	if (Current_Animation.isStopped())
     	{
 	    	if (Current_Animation == Animation_List[8]) // Stop attacking up
 	    	{
-	    		Current_Animation.restart();
+	    		//Current_Animation.restart();
 	    		Change_Animation(0);
 	    	}
 	    	else if (Current_Animation == Animation_List[9]) // Stop attacking left
 	    	{
-	    		Current_Animation.restart();
+	    		//Current_Animation.restart();
 	    		Change_Animation(1);
 	    	}
 	    	else if (Current_Animation == Animation_List[10]) // Stop attacking down
 	    	{
-	    		Current_Animation.restart();
+	    		//Current_Animation.restart();
 	    		Change_Animation(2);
 	    	}
 	    	else if (Current_Animation == Animation_List[11]) // Stop attacking right
 	    	{
-	    		Current_Animation.restart();
+	    		//Current_Animation.restart();
 	    		Change_Animation(3);
 	    	}
     	}
@@ -166,17 +169,28 @@ public class Player_Character extends GCharacter {
     // updates the current frame being displayed based on movement values
     void Update_Frame_State(){
     	
-    	if (Get_Frame_State() < 8 || Get_Frame_State() > 11 || Current_Animation.isStopped())
+    	if (!Sword_Drawn)
     	{
     		super.Update_Frame_State();
     	}
+    	else
+    	{
+    		if (Current_Animation.isStopped())
+    			End_Sword_Attack();
+    	}
+    }
+    
+    public void Sheath_Sword(){
+    	
+    	Sword_Drawn = false;
+    	End_Sword_Attack();
     }
     
     // gets the position of the point of the sword.
     // If sword isn't drawn, returns -1
     public int Get_Sword_Pos_X(){
     	
-    	if (Sword_Drawn && Current_Animation.getFrame() == 1)
+    	if (Sword_Drawn && Current_Animation.getFrame() == 2)
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
@@ -202,7 +216,7 @@ public class Player_Character extends GCharacter {
     // If the sword isn't drawn, returns -1
     public int Get_Sword_Pos_Y(){
     	
-    	if (Sword_Drawn && Current_Animation.getFrame() == 1)
+    	if (Sword_Drawn && Current_Animation.getFrame() == 2)
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{
@@ -222,6 +236,11 @@ public class Player_Character extends GCharacter {
     		}
     	}
     	return -1;
+    }
+    
+    public void You_Hurt_Me(){
+    	
+    	End_Sword_Attack();
     }
     
     public int Get_Type(){

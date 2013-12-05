@@ -85,7 +85,7 @@ public class Zed extends BasicGameState {
                  }
                  else
                  {
-                	 test.player.End_Sword_Attack();
+                	 test.player.Sheath_Sword();
                  }
                  
                  //new code: going back to the menu from in-game
