@@ -46,18 +46,18 @@ public class Menu extends BasicGameState {
 		File_Manager scores = new File_Manager();
 		
 		try {
-			int[][] high_scores = scores.Scan_LVL(scorefile, 1);
-			if (high_scores[0].length < 3){
+			int[] high_scores = scores.Scan_LVL(scorefile, 1)[0];
+			if (high_scores.length < 3){
 				int pos = 175;
-				for (int i = 0; i < high_scores[0].length; i++){
-					g.drawString("" + high_scores[0][i],  20,  pos);
+				for (int i = 0; i < high_scores.length; i++){
+					g.drawString("" + high_scores[high_scores.length - 1 - i],  20,  pos);
 					pos+= 25;
 				}
 			}
 			else{
-				g.drawString("" + high_scores[0][high_scores[0].length - 1], 20, 175);
-				g.drawString("" + high_scores[0][high_scores[0].length - 2], 20, 200);
-				g.drawString("" + high_scores[0][high_scores[0].length - 3], 20, 225);
+				g.drawString("" + high_scores[high_scores.length - 1], 20, 175);
+				g.drawString("" + high_scores[high_scores.length - 2], 20, 200);
+				g.drawString("" + high_scores[high_scores.length - 3], 20, 225);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

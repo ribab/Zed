@@ -265,10 +265,10 @@ public class Dragon extends GCharacter {
 				fireballs[i].Visible = false;
 				fireballs[i].Solid = false;
 			}
-			else if (fireballs[i].X_Collision(player)
-					|| fireballs[i].Y_Collision(player))
+			else if (fireballs[i].Visible && (fireballs[i].X_Collision(player)
+					|| fireballs[i].Y_Collision(player)))
 			{
-				player.Decriment_Health();
+				player.Decrease_Health(fireballs[i].Damage);
 			}
 		}
 	}

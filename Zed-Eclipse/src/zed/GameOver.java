@@ -33,7 +33,7 @@ public class GameOver extends BasicGameState{
 		g.drawString("YOU HAVE DIED: PRESS SPACEBAR TO RETURN TO MENU", 115, 350);
 		
 		if (score == -1)
-			score = (new Zed()).test.objectives.getScore();
+			score = (new Zed()).test.objectives.getPoints();
 		g.drawString("YOUR SCORE: ", 25, 380);
 		g.drawString("" + score, 25, 393);
 		
