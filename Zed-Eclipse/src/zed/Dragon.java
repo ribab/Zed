@@ -43,7 +43,7 @@ public class Dragon extends GCharacter {
 		// Initialize walking and standing animations
         for (int i = 0; i < 4; i++)
         {
-        	STUN_TIME = 1000; // Set the amount of time stunned if
+        	STUN_TIME = 200; // Set the amount of time stunned if
         	                  // hit by player's sword
         	
 	        animations[i] = new Animation(
