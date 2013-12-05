@@ -223,7 +223,8 @@ public class GObject {
     	
     	if (x >= X_Position
     			&& x < X_Position + Width
-    			&& y >= Y_Position && y < Y_Position + Height)
+    			&& y >= Y_Position
+    			&& y < Y_Position + Height)
     	{
     		return true;
     	}

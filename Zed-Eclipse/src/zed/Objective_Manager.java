@@ -5,7 +5,7 @@ public class Objective_Manager {
 	// (time to complete)/TIME_FUDGE is time's negative effect on score
 	
 	private static int TIME_FUDGE = 10;
-	private static int BONUS_START = 10000;
+	private static int BONUS_START = 50000;
 	
 	Objective[] objectives; // Holds the objectives to complete
 	
