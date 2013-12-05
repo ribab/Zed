@@ -190,7 +190,7 @@ public class Player_Character extends GCharacter {
     // If sword isn't drawn, returns -1
     public int Get_Sword_Pos_X(){
     	
-    	if (Sword_Drawn && Current_Animation.getFrame() == 2)
+    	if (Sword_Drawn && Current_Animation.getFrame() > 0)
     	{
     		if (Current_Animation == Animation_List[8]) // attack up
     		{

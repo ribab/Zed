@@ -5,7 +5,7 @@ public class Objective_Manager {
 	// (time to complete)/TIME_FUDGE is time's negative effect on score
 	
 	private static int TIME_FUDGE = 10;
-	private static int BONUS_START = 100000;
+	private static int BONUS_START = 10000;
 	
 	Objective[] objectives; // Holds the objectives to complete
 	
@@ -18,7 +18,7 @@ public class Objective_Manager {
 
 	// Constructs the objectives
 	public Objective_Manager() {
-		objectives = new Objective[12];
+		objectives = new Objective[23];
 		Point_Count = 0;
 		
 		// COMPLETION OF THE GAME OBJECTIVE
@@ -42,11 +42,33 @@ public class Objective_Manager {
 				50, 430, 5000, 1000, true);
 		objectives[10] = new Objective(15, "You see the dragon.\nDefeat it!",
 				200, 200, 5000, 1000, true);
-		objectives[11] = new Objective(Dragon.Type, 1, 0, "You have defeated the dragon!",
+		objectives[11] = new Objective(Dragon.Type, 1, 15, "You have defeated the dragon!",
 				300, 430, 10000, 4000, true);
 		
-		// OPTIONAL OBJECTIVES
+		// OPTIONAL OBJECTIVES;
 		// TODO: add optional objectives using same function for objectives[11]
+		objectives[12] = new Objective(1, 5, 1, "Ratitatitatitat",
+				200, 200, 2000, 200, false);
+		objectives[13] = new Objective(1, 10, 2, "Ratitastic!",
+				300, 150, 2000, 400, false);
+		objectives[14] = new Objective(1, 12, 3, "Those rats deserved it.",
+				250, 300, 2000, 500, false);
+		objectives[15] = new Objective(0, 10, 4, "No more zombies in this area",
+				100, 100, 2000, 500, false);
+		objectives[16] = new Objective(0, 5, 7, "Killing zombies even though\nthey're already dead...",
+				200, 300, 2000, 400, false);
+		objectives[17] = new Objective(1, 2, 8, "Puttin rats in their place.",
+				150, 200, 2000, 400, false);
+		objectives[18] = new Objective(2, 1, 8, "Cave blobs???\nI thought they lived\nin the forest",
+				350, 100, 2000, 200, false);
+		objectives[19] = new Objective(0, 5, 9, "Killing zombies everwhere!",
+				100, 100, 2000, 600, false);
+		objectives[20] = new Objective(1, 1, 10, "Usually they come in packs...",
+				100, 200, 2000, 100, false);
+		objectives[21] = new Objective(2, 4, 11, "Blobtastic!",
+				125, 400, 2000, 800, false);
+		objectives[22] = new Objective(0, 2, 12, "Zombie Eradication",
+				200, 200, 2000, 500, false);
 		
 		Time_Start = System.currentTimeMillis();
 	}
