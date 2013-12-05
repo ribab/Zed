@@ -10,7 +10,7 @@ import org.newdawn.slick.state.*;
 public class Victory extends BasicGameState {
 
 	Image victory_background;
-	
+	private int score = -1;
 	
 	public Victory(){}
 	
@@ -31,9 +31,10 @@ public class Victory extends BasicGameState {
 		g.scale(1.0f, 1.0f);
 		g.drawString("YOU HAVE WON!!!: PRESS ENTER TO GO BACK TO MENU AND SEE HIGH SCORES", 15, 350);
 		
-		Zed temp = new Zed();
-		g.drawString("YOUR SCORE: ", 25, 200);
-		g.drawString("" + temp.test.objectives.percentageCompleted(), 25, 220);
+		if (score == -1)
+			score = Zed.test.objectives.getScore();
+		g.drawString("YOUR SCORE: ", 25, 380);
+		g.drawString("" + score, 25, 393);
 		
 	}
 

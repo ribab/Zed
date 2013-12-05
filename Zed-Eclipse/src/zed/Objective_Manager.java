@@ -18,17 +18,35 @@ public class Objective_Manager {
 
 	// Constructs the objectives
 	public Objective_Manager() {
-		objectives = new Objective[2];
+		objectives = new Objective[12];
 		Point_Count = 0;
 		
+		// COMPLETION OF THE GAME OBJECTIVE
 		complete_the_game = new Objective(
 				-1, "CONGRATULATIONS\nYou have completed the game\nFeel free to explore the world more",
 				200, 200, -1, 0, true);
 		
+		// REQUIRED OBJECTIVES
 		objectives[0] = new Objective(0, "You have landed on an island inhabited by an evil dragon.\nYour task is to kill this dragon.",
 				50, 430, -1, 1000, true);
-		objectives[1] = new Objective(Dragon.Type, 1, 0, "MEGAKILL",
-				300, 430, 10000, 10000, true);
+		objectives[1] = new Objective(1, "", 0, 0, -1, 1000, true);
+		objectives[2] = new Objective(3, "", 0, 0, -1, 1000, true);
+		objectives[3] = new Objective(4, "", 0, 0, -1, 1000, true);
+		objectives[4] = new Objective(5, "", 0, 0, -1, 1000, true);
+		objectives[5] = new Objective(6, "", 0, 0, -1, 1000, true);
+		objectives[6] = new Objective(7, "", 0, 0, -1, 1000, true);
+		objectives[7] = new Objective(12, "", 0, 0, -1, 1000, true);
+		objectives[8] = new Objective(13, "You hear a dragon in the distance...",
+				50, 430, 5000, 1000, true);
+		objectives[9] = new Objective(14, "The dragon noise is getting louder...",
+				50, 430, 5000, 1000, true);
+		objectives[10] = new Objective(15, "You see the dragon.\nDefeat it!",
+				200, 200, 5000, 1000, true);
+		objectives[11] = new Objective(Dragon.Type, 1, 0, "You have defeated the dragon!",
+				300, 430, 10000, 4000, true);
+		
+		// OPTIONAL OBJECTIVES
+		// TODO: add optional objectives using same function for objectives[11]
 		
 		Time_Start = System.currentTimeMillis();
 	}
