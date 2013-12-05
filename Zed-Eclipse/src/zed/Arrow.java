@@ -73,13 +73,13 @@ public class Arrow extends GCharacter {
 		
 		if (rnd.nextBoolean())
 		{
-			X_Movement = (rnd.nextBoolean()?1:-1);
+			X_Movement = (rnd.nextBoolean()?2:-2);
 			Y_Movement = 0;
 		}
 		else
 		{
 			X_Movement = 0;
-			Y_Movement = (rnd.nextBoolean()?1:-1);
+			Y_Movement = (rnd.nextBoolean()?2:-2);
 		}
 	}
 	

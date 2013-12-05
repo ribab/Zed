@@ -225,25 +225,25 @@ public class Level_Manager {
         		{
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        			npclist[i].Set_Movement(0, -1);
+        			npclist[i].Set_Movement(0, -2);
         		}
         		else if (Tile_List[3][i*3] == Arrow.Type+1) // arrow left
         		{
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        			npclist[i].Set_Movement(-1, 0);
+        			npclist[i].Set_Movement(-2, 0);
         		}
         		else if (Tile_List[3][i*3] == Arrow.Type+2) // arrow down
         		{
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        			npclist[i].Set_Movement(0, 1);
+        			npclist[i].Set_Movement(0, 2);
         		}
         		else if (Tile_List[3][i*3] == Arrow.Type+3) // arrow right
         		{
         			npclist[i] = new Arrow(Tile_List[3][i*3+1],
         					Tile_List[3][i*3+2], character_sprites);
-        			npclist[i].Set_Movement(1, 0);
+        			npclist[i].Set_Movement(2, 0);
         		}
         		else if (Tile_List[3][i*3] == Dragon.Type) // dragon spawn
         			npclist[i] = new Dragon(Tile_List[3][i*3+1],
