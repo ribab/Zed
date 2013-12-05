@@ -169,7 +169,7 @@ public class Player_Character extends GCharacter {
     // updates the current frame being displayed based on movement values
     void Update_Frame_State(){
     	
-    	if (!Sword_Drawn)
+    	if (Current_Animation_Index < 8 || Current_Animation_Index > 11)
     	{
     		super.Update_Frame_State();
     	}
