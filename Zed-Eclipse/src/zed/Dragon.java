@@ -209,7 +209,7 @@ public class Dragon extends GCharacter {
 				Spit_Fireball();
 			}
 		}
-		if (ai_state == 1) // AI STATE FOR RUSHING
+		if (ai_state == 1) // AI STATE FOR RUSH DIRECTION
 		{
 			if (x_distance*x_distance > y_distance*y_distance)
 			{
@@ -223,7 +223,7 @@ public class Dragon extends GCharacter {
 			}
 			ai_state = 2;
 		}
-		if (ai_state == 2)
+		if (ai_state == 2) // AI STATE FOR RUSHING
 		{
 			//Update_Frame_State();
 			if (collision || (x_distance*x_distance >= AI_2_P_DIST*16*AI_2_P_DIST*16 
