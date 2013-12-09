@@ -546,27 +546,57 @@ public class Level_Manager {
         	has_ported = false;
         }
         
+        // save score if win
         if (objectives.percentageCompleted() == 1.0f && !saved)
         {
         	File scores = new File("scoreboard.score");
-        	int[] new_high_scores = new int[current_high_scores.length + 1];
-        	for (int i = 0; i < current_high_scores.length; i++)
+        	int[] new_high_scores;
+        	if (current_high_scores.length >= 10)
+        		new_high_scores = new int[10];
+        	else
+        		new_high_scores = new int[current_high_scores.length + 1];
+        	for (int i = 0; i < new_high_scores.length - 1; i++)
         	{
-        		new_high_scores[i] = current_high_scores[i];
+        		new_high_scores[new_high_scores.length - i - 1] = current_high_scores[current_high_scores.length - i - 1];
         	}
-        	new_high_scores[new_high_scores.length - 1] = objectives.getScore();
+        	if (current_high_scores.length >= 10)
+        	{
+        		new_high_scores[0] = current_high_scores[current_high_scores.length - new_high_scores.length];
+        		Arrays.sort(new_high_scores);
+        		if (objectives.getScore() > new_high_scores[0])
+        			new_high_scores[0] = objectives.getScore();
+        	}
+        	else
+        	{
+        		new_high_scores[0] = objectives.getScore();
+        	}
         	Arrays.sort(new_high_scores);
         	Files.Save_Info(scores, new_high_scores);
         }
+        // Save score if loose
         else if (player.Health <= 0 && !saved)
         {
         	File scores = new File("scoreboard.score");
-        	int[] new_high_scores = new int[current_high_scores.length + 1];
-        	for (int i = 0; i < current_high_scores.length; i++)
+        	int[] new_high_scores;
+        	if (current_high_scores.length >= 10)
+        		new_high_scores = new int[10];
+        	else
+        		new_high_scores = new int[current_high_scores.length + 1];
+        	for (int i = 0; i < new_high_scores.length - 1; i++)
         	{
-        		new_high_scores[i] = current_high_scores[i];
+        		new_high_scores[new_high_scores.length - i - 1] = current_high_scores[current_high_scores.length - i - 1];
         	}
-        	new_high_scores[new_high_scores.length - 1] = objectives.getPoints();
+        	if (current_high_scores.length >= 10)
+        	{
+        		new_high_scores[0] = current_high_scores[current_high_scores.length - new_high_scores.length];
+        		Arrays.sort(new_high_scores);
+        		if (objectives.getPoints() > new_high_scores[0])
+        			new_high_scores[0] = objectives.getPoints();
+        	}
+        	else
+        	{
+        		new_high_scores[0] = objectives.getPoints();
+        	}
         	Arrays.sort(new_high_scores);
         	Files.Save_Info(scores, new_high_scores);
         }
