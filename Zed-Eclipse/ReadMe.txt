@@ -17,14 +17,19 @@ Note: Zombies take 3 hits to kill.
 Installation (for Linux):
 1. Extract tar.gz file containing project
 2. Navigate to project directory inside of the terminal where the Zed.jar file is located.
-3. Run this command inside of the terminal: (although we tested it, if this command doesn't work, e-mail us)
-	java -jar -Djava.library.path=lib/natives/linux Zed.jar
+3a. Run this command inside of the terminal for linux or mac: (although we tested it, if this command doesn't work, e-mail us)
+	Linux 32 bit: java -jar ZedLinux32.jar
+	Linux 64 bit: java -jar ZedLinux64.jar
+	MacOSX: java -jar ZedMacOSX.jar
+3b. Run this for windows
+	Windows 32 bit: Run ZedWindows32.exe
+	Windows 64 bit: Run ZedWindows64.exe
 4. Java Code is located in Zed-Eclipse/src/zed
 
-Run GCharacter unit tests
+Run GCharacter unit tests inside of linux
 1. Run this command inside of the terminal:
 	java -jar -Djava.library.path=lib/natives/linux Zed_GCharacter.jar
 
-Run File_Manager unit tests
+Run File_Manager unit tests inside of linux
 1. Run this command inside of the terminal:
 	java -jar -Djava.library.path=lib/natives/linux Zed_File_Manager.jar
