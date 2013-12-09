@@ -3,16 +3,15 @@ package zed;
 public class Objective_Manager {
 	
 	// (time to complete)/TIME_FUDGE is time's negative effect on score
-	
 	private static int TIME_FUDGE = 10;
 	private static int BONUS_START = 50000;
 	
 	Objective[] objectives; // Holds the objectives to complete
 	
-	Objective complete_the_game;
+	Objective complete_the_game; // Completion of the game objective doesn't get called until the game is completed
 	
 	int Point_Count; // Counts the points the player earned by completing objectives
-	int Final_Bonus = BONUS_START;
+	int Final_Bonus = BONUS_START; // Counts the bonus added to the points when the player wins
 	
 	private long Time_Start; // holds the starting time for the game
 

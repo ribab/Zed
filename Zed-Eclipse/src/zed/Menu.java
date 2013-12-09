@@ -7,15 +7,17 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
+// The main menu screen for resuming a game, starting a new game, or quitting 
 public class Menu extends BasicGameState {
 	Image button;
 	Image menu_background;
 	Music music;
 	
+	// Calls BasicGameState constructors
 	public Menu(){}
-	
 	public Menu(int state){}
 
+	// Initialize images and music for menu
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -26,6 +28,7 @@ public class Menu extends BasicGameState {
         music.loop();
 	}
 
+	// Render the menu
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -65,6 +68,7 @@ public class Menu extends BasicGameState {
 		
 	}
 
+	// Accept input on the menu screen
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int g)
 			throws SlickException {

@@ -238,6 +238,7 @@ public class Player_Character extends GCharacter {
     	return -1;
     }
     
+    // Tells the character that he hurt an NPC
     public void You_Hurt_Me(){
     	
     	End_Sword_Attack();

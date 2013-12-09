@@ -121,6 +121,7 @@ public class Dragon extends GCharacter {
 		fireballtimer = System.currentTimeMillis();
 	}
 	
+	// Called when the dragon wants to spit a fireball
 	public void Spit_Fireball()
 	{
 		boolean spit = false;
@@ -167,9 +168,8 @@ public class Dragon extends GCharacter {
 		}
 	}
 	
+	// Define a variable to keep track of dragon AI state
 	private int ai_state = 0;
-	private int ai_old_x;
-	private int ai_old_y;
 	
 	// Override GCharacter's Artificial Intelligence function
 	// Knows if this character has collided and knows player's position
@@ -238,6 +238,7 @@ public class Dragon extends GCharacter {
 		
 	} // END AI
 	
+	// Controll the update for each individual fireball along with the dragon
 	public void Update(GObject[] collision_objects, 
 			GCharacter[] npcs, Player_Character player) 
 	{
@@ -273,6 +274,7 @@ public class Dragon extends GCharacter {
 		}
 	}
 	
+	// Render the fireballs along with the dragon
 	public void Render(int zoom, int cur_tile_x, int cur_tile_y, GameContainer gc, Graphics g){
 		
 		super.Render(zoom, cur_tile_x, cur_tile_y, gc, g);

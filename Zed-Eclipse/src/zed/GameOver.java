@@ -7,16 +7,17 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
+// Gameover screen displays when the game ends
 public class GameOver extends BasicGameState{
 	
+	Image over_background; // Background to display
+	private int score = -1; // Score to display
 	
-	Image over_background;
-	private int score = -1;
-	
+	// Constructors just call BasicGameState constructors
 	public GameOver(){}
-	
 	public GameOver(int state){}
 
+	// Initialize the background
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -24,6 +25,7 @@ public class GameOver extends BasicGameState{
 		over_background = new Image("images/gameoverlow.png");
 	}
 
+	// Render the gameover screen
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -32,6 +34,7 @@ public class GameOver extends BasicGameState{
 		g.scale(1.0f, 1.0f);
 		g.drawString("YOU HAVE DIED: PRESS SPACEBAR TO RETURN TO MENU", 115, 350);
 		
+		// Initialize and draw the gameover score
 		if (score == -1)
 			score = (new Zed()).test.objectives.getPoints();
 		g.drawString("YOUR SCORE: ", 25, 380);
@@ -39,6 +42,7 @@ public class GameOver extends BasicGameState{
 		
 	}
 
+	// Accept input for the gameover screen
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int g)
 			throws SlickException {

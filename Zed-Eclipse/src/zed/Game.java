@@ -13,6 +13,7 @@ public class Game extends StateBasedGame {
 	public static final int gameover = 2;
 	public static final int victory = 3;
 	
+	// Construct the game
 	public Game() {
 		super("Zed");
 		this.addState(new Menu(menu));
@@ -21,6 +22,7 @@ public class Game extends StateBasedGame {
 		this.addState(new Victory(victory));
 	}
 	
+	// Construct the game with a different name
 	public Game(String gamename) {
 		super(gamename);
 		this.addState(new Menu(menu));
@@ -29,15 +31,12 @@ public class Game extends StateBasedGame {
 		this.addState(new Victory(victory));
 	}
 	
+	// Initialize the state to start in
 	public void initStatesList(GameContainer gc) throws SlickException {
-/*		this.getState(zed).init(gc, this);
-		this.getState(menu).init(gc,  this);
-		this.getState(gameover).init(gc, this);
-		this.getState(victory).init(gc,this);
-*/
 		this.enterState(menu);
 	}
 	
+	// Main entry point for the game process
 	public static void main(String[] args){
 		AppGameContainer appgc;
 		try{appgc = new AppGameContainer(new Game(gamename));

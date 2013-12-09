@@ -7,15 +7,17 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
+// Victory screen that displays when the main character wins
 public class Victory extends BasicGameState {
 
-	Image victory_background;
-	private int score = -1;
+	Image victory_background; // Background image to display
+	private int score = -1; // Score to display
 	
+	// Calls BasicGameState's constructors
 	public Victory(){}
-	
 	public Victory(int state){}
 
+	// Initialize the background image
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
@@ -23,6 +25,7 @@ public class Victory extends BasicGameState {
 		victory_background = new Image("images/zedlow.png");
 	}
 
+	// Render the background image and score
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
@@ -38,6 +41,7 @@ public class Victory extends BasicGameState {
 		
 	}
 
+	// Look for input to get out of victory screen
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int g)
 			throws SlickException {

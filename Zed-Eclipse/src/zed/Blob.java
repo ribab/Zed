@@ -111,6 +111,7 @@ public class Blob extends GCharacter {
 		}
 	}
 	
+	// Change collision for Blob so they don't get stuck together
 	public boolean X_Collision(GObject col){
 		
 		boolean iscol = super.X_Collision(col);
@@ -120,7 +121,6 @@ public class Blob extends GCharacter {
 		
 		return iscol;
 	}
-	
 	public boolean Y_Collision(GObject col){
 		
 		boolean iscol = super.Y_Collision(col);

@@ -95,6 +95,7 @@ public class Level_Manager {
     	}
     }
     
+    // Initialize the level manager with a new level
     public void Init(int level_index, int player_x, int player_y, int player_health) throws SlickException{
 
     	current_level_index = level_index;
@@ -577,6 +578,7 @@ public class Level_Manager {
         player.New_Movement(new_x_mov, new_y_mov);
     }
     
+    // Bubblesort for sorting render order of objects on screen
     private void sort_render_order(GObject[] list)
     {
     	GObject temp;
